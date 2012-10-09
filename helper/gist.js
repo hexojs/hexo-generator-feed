@@ -1,4 +1,4 @@
-var extend = require('../extend');
+var extend = hexo.extend;
 
 extend.helper.register('gist', function(args, content){
   var id = args[0],

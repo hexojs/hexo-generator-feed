@@ -1,4 +1,4 @@
-var extend = require('../extend');
+var extend = hexo.extend;
 
 extend.helper.register('blockquote', function(args, content){
   var result = '<blockquote>' + content;

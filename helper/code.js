@@ -1,5 +1,5 @@
-var extend = require('../extend'),
-  highlight = require('../highlight');
+var extend = hexo.extend,
+  highlight = hexo.util.highlight;
 
 extend.helper.register('code', function(args, content){
   var lang = args[0],

@@ -1,4 +1,4 @@
-var extend = require('../extend');
+var extend = hexo.extend;
 
 extend.helper.register('pullquote', function(args, content){
   var className = args[0] ? args[0] : 'alignright';
