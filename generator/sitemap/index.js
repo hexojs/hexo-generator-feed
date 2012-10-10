@@ -16,7 +16,7 @@ extend.generator.register(function(locals, render, callback){
   _.each(arr, function(item){
     content.push({
       url: {
-        loc: config.url + item.permalink,
+        loc: config.url + '/' + item.permalink,
         lastmod: item.updated.toDate().toISOString()
       }
     });

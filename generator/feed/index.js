@@ -52,9 +52,9 @@ extend.generator.register(function(locals, render, callback){
           },
           _content: '<![CDATA[' + item.title + ']]>'
         },
-        {link: config.url + item.permalink},
+        {link: config.url + '/' + item.permalink},
         {updated: item.date.toDate().toISOString()},
-        {id: config.url + item.permalink},
+        {id: config.url + '/' + item.permalink},
         {
           _name: 'content',
           _attrs: {
