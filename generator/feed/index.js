@@ -68,6 +68,22 @@ extend.generator.register(function(locals, render, callback){
       },
     ];
 
+    if (item.tags){
+      var tags = [];
+
+      item.tags.forEach(function(tag){
+        tags.push({
+          _name: 'category',
+          _attrs: {
+            scheme: config.url + '/' + encodeURIComponent(tag.permalink),
+            term: tag.name
+          }
+        });
+      });
+
+      entry = [].concat(entry, tags);
+    }
+
     content.push({entry: entry});
   });
 
