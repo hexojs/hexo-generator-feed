@@ -55,7 +55,8 @@ extend.generator.register(function(locals, render, callback){
           href: config.url + '/' + item.permalink
         }
       },
-      {updated: item.date.toDate().toISOString()},
+      {published: item.date.toDate().toISOString()},
+      {updated: item.updated.toDate().toISOString()},
       {
         _name: 'content',
         _attrs: {
