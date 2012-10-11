@@ -1,8 +1,7 @@
 var util = hexo.util,
   file = util.file,
   extend = hexo.extend,
-  xml = require('jstoxml'),
-  _ = require('underscore');
+  xml = require('jstoxml');
 
 extend.generator.register(function(locals, render, callback){
   var publicDir = hexo.public_dir,
@@ -13,7 +12,7 @@ extend.generator.register(function(locals, render, callback){
     return b.updated - a.updated;
   });
 
-  _.each(arr, function(item){
+  arr.forEach(function(item){
     content.push({
       url: {
         loc: config.url + '/' + item.permalink,
