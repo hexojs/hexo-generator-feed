@@ -23,6 +23,7 @@ extend.generator.register(function(locals, render, callback){
       }
     },
     {updated: new Date().toISOString()},
+    {id: config.url + '/'},
     {author: 
       {
         name: '<![CDATA[' + config.author + ']]>'
@@ -37,7 +38,7 @@ extend.generator.register(function(locals, render, callback){
     }
   ];
 
-  if (config.email) content[4].author.email = '<![CDATA[' + config.email + ']]>';
+  if (config.email) content[5].author.email = '<![CDATA[' + config.email + ']]>';
   if (config.subtitle) content.splice(1, 0, {subtitle: '<![CDATA[' + config.subtitle + ']]>'});
 
   locals.posts.limit(20).each(function(item){
@@ -55,6 +56,7 @@ extend.generator.register(function(locals, render, callback){
           href: config.url + '/' + item.permalink
         }
       },
+      {id: config.url + '/' + item.permalink},
       {published: item.date.toDate().toISOString()},
       {updated: item.updated.toDate().toISOString()},
       {
