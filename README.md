@@ -1,4 +1,4 @@
-## [Hexo] Plugins
+# [Hexo] Plugins
 
 Official plugins for [Hexo].
 
