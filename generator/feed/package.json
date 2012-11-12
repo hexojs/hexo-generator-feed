@@ -1,18 +1,14 @@
 {
   "name": "hexo-generator-feed",
   "version": "0.0.4",
-  "description": "Node.js Blogging framework. Inspired by Jekyll & Octopress.",
+  "description": "Feed generator plugin for Hexo",
   "main": "index",
   "repository": {
     "type": "git",
     "url": "git://github.com/tommy351/hexo-plugins.git"
   },
-  "keywords": ["website", "blog", "cms", "hexo"],
-  "author": {
-    "name": "Tommy Chen",
-    "email": "tommy351@gmail.com",
-    "url": "http://zespia.tw"
-  },
+  "keywords": ["website", "blog", "cms", "framework", "hexo"],
+  "author": "Tommy Chen <tommy351@gmail.com> (http://zespia.tw)",
   "license": {
     "type": "MIT",
     "url": "https://raw.github.com/tommy351/hexo/master/LICENSE"
