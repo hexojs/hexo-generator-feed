@@ -1,0 +1,25 @@
+{
+  "name": "hexo-migrator-rss",
+  "version": "0.0.1",
+  "description": "RSS migrator plugin for Hexo",
+  "main": "index",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/tommy351/hexo-plugins.git"
+  },
+  "keywords": ["website", "blog", "cms", "framework", "hexo"],
+  "author": "Tommy Chen <tommy351@gmail.com> (http://zespia.tw)",
+  "license": {
+    "type": "MIT",
+    "url": "https://raw.github.com/tommy351/hexo/master/LICENSE"
+  },
+  "engines": {
+    "hexo": "*"
+  },
+  "dependencies": {
+    "feedparser": "*",
+    "moment": "*",
+    "async": "*",
+    "underscore": "*"
+  }
+}
