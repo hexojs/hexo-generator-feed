@@ -8,6 +8,8 @@ extend.generator.register(function(locals, render, callback){
     config = hexo.config,
     content = [];
 
+  console.log('Generating sitemap.');
+
   var arr = [].concat(locals.posts.toArray(), locals.pages.toArray()).sort(function(a, b){
     return b.updated - a.updated;
   });

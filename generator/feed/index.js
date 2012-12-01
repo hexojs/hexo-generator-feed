@@ -7,6 +7,8 @@ extend.generator.register(function(locals, render, callback){
  var publicDir = hexo.public_dir,
     config = hexo.config;
 
+  console.log('Generating feed.');
+
   var content = [
     {title: '<![CDATA[' + config.title + ']]>'},
     {
