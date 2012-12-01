@@ -24,7 +24,7 @@ extend.generator.register(function(locals, render, callback){
     },
     {updated: new Date().toISOString()},
     {id: config.url + '/'},
-    {author: 
+    {author:
       {
         name: '<![CDATA[' + config.author + ']]>'
       }
@@ -56,7 +56,7 @@ extend.generator.register(function(locals, render, callback){
           href: config.url + '/' + item.permalink
         }
       },
-      {id: config.url + '/' + item.permalink},
+      {id: item.permalink},
       {published: item.date.toDate().toISOString()},
       {updated: item.updated.toDate().toISOString()},
       {
@@ -75,7 +75,7 @@ extend.generator.register(function(locals, render, callback){
         tags.push({
           _name: 'category',
           _attrs: {
-            scheme: config.url + '/' + encodeURIComponent(tag.permalink),
+            scheme: tag.permalink,
             term: tag.name
           }
         });
