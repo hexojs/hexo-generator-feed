@@ -55,7 +55,7 @@ extend.generator.register(function(locals, render, callback){
       {
         _name: 'link',
         _attrs: {
-          href: config.url + '/' + item.permalink
+          href: item.permalink
         }
       },
       {id: item.permalink},
