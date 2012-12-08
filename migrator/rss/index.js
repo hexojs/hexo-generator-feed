@@ -29,14 +29,8 @@ extend.migrator.register('rss', function(args){
         console.log('Analyzing.');
 
         async.forEach(posts, function(item, next){
-          var linkArr = (item.origlink ? item.origlink : item.link).split('/').slice(3).reverse();
-
-          for (var i=0, len=linkArr.length; i<len; i++){
-            if (linkArr[i]){
-              var postLink = linkArr[i];
-              break;
-            }
-          }
+          var postLink = (item.origlink ? item.origlink : item.link).split('/').reverse()[0];
+          if (!postLink) postLink = item.title.toLowerCase().split(' ').join('-');
 
           if (item.categories){
             if (_.isArray(item.categories)){
@@ -52,7 +46,7 @@ extend.migrator.register('rss', function(args){
             'title: ' + item.title,
             'date: ' + moment(item.pubdate).format('YYYY-MM-DD HH:mm:ss'),
             'comments: true',
-            tags ? 'tags: ' + tags : '',
+            'tags: ' + (tags ? tags : '')
             '---',
           ];
 
@@ -63,8 +57,6 @@ extend.migrator.register('rss', function(args){
       }
     ], function(err, length){
       if (err) throw err;
-
-      var end = new Date();
       console.log('%d posts migrated.', length);
     });
   }
