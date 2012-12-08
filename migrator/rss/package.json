@@ -1,6 +1,6 @@
 {
   "name": "hexo-migrator-rss",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "RSS migrator plugin for Hexo",
   "main": "index",
   "repository": {
