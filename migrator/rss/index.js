@@ -4,12 +4,12 @@ var extend = hexo.extend,
   feedparser = require('feedparser'),
   moment = require('moment'),
   async = require('async'),
-  _ = require('underscore');
+  _ = require('underscore'),
+  tomd = require('to-markdown').toMarkdown;
 
 extend.migrator.register('rss', function(args){
   var source = args.shift(),
-    target = hexo.source_dir + '_posts/',
-    start = new Date();
+    target = hexo.source_dir + '_posts/';
 
   if (!source){
     console.log('\nUsage: hexo migrate rss <source>\n\nMore info: http://zespia.tw/hexo/docs/migrate.html\n');
@@ -56,7 +56,7 @@ extend.migrator.register('rss', function(args){
             '---',
           ];
 
-          file.write(target + postLink + '.md', content.join('\n') + '\n\n' + item.description, next);
+          file.write(target + postLink + '.md', content.join('\n') + '\n\n' + tomd(item.description), next);
         }, function(){
           next(null, posts.length);
         });
@@ -65,7 +65,7 @@ extend.migrator.register('rss', function(args){
       if (err) throw err;
 
       var end = new Date();
-      console.log('%d posts migrated in %d ms.', length, end.getTime() - start.getTime());
+      console.log('%d posts migrated.', length);
     });
   }
 });
