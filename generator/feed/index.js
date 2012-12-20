@@ -1,13 +1,11 @@
 var util = hexo.util,
   file = util.file,
   extend = hexo.extend,
+  route = hexo.route,
   xml = require('jstoxml');
 
 extend.generator.register(function(locals, render, callback){
- var publicDir = hexo.public_dir,
-    config = hexo.config;
-
-  console.log('Generating feed.');
+  var config = hexo.config;
 
   var content = [
     {title: '<![CDATA[' + config.title + ']]>'},
@@ -97,5 +95,6 @@ extend.generator.register(function(locals, render, callback){
     _content: content
   }, {header: true, indent: '  '});
 
-  file.write(publicDir + 'atom.xml', result, callback);
+  route.set('atom.xml', result);
+  callback();
 });

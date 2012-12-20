@@ -1,14 +1,12 @@
 var util = hexo.util,
   file = util.file,
   extend = hexo.extend,
+  route = hexo.route,
   xml = require('jstoxml');
 
 extend.generator.register(function(locals, render, callback){
-  var publicDir = hexo.public_dir,
-    config = hexo.config,
+  var config = hexo.config,
     content = [];
-
-  console.log('Generating sitemap.');
 
   var arr = [].concat(locals.posts.toArray(), locals.pages.toArray()).sort(function(a, b){
     return b.updated - a.updated;
@@ -31,5 +29,6 @@ extend.generator.register(function(locals, render, callback){
     _content: content
   }, {header: true, indent: '  '});
 
-  file.write(publicDir + 'sitemap.xml', result, callback);
+  route.set('sitemap.xml', result);
+  callback();
 });
