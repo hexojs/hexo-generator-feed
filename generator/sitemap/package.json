@@ -1,6 +1,6 @@
 {
   "name": "hexo-generator-sitemap",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Sitemap generator plugin for Hexo",
   "main": "index",
   "repository": {
@@ -14,7 +14,7 @@
     "url": "https://raw.github.com/tommy351/hexo/master/LICENSE"
   },
   "engines": {
-    "hexo": "0.3.0"
+    "hexo": ">=0.3.0"
   },
   "dependencies": {
     "jstoxml": "*"
