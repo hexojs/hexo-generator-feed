@@ -56,6 +56,7 @@ extend.migrator.register('wordpress', function(args){
         }
 
         postContent = _.isObject(postContent) ? '' : tomd(postContent);
+        postContent = postContent.replace(/\r\n/g, '\n');
 
         switch (item['wp:post_type'][0]){
           case 'post':
