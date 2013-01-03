@@ -45,10 +45,18 @@ extend.migrator.register('wordpress', function(args){
           postContent = item['content:encoded'][0],
           postComment = item['wp:comment_status'][0] === 'open' ? true : false;
 
-        if (!postLink || _.isObject(postLink)) postLink = postTitle.toLowerCase().split(' ').join('-');
         if (_.isObject(postTitle)) postTitle = '';
+        if (!postLink || _.isObject(postLink)) {
+          if (postTitle)
+            postLink = postTitle.toLowerCase().split(' ').join('-');
+          else {
+            // Have to use post_id if both title and post_name are empty
+            postLink = item['wp:post_id'][0];
+          }
+        }
 
         postContent = _.isObject(postContent) ? '' : tomd(postContent);
+        postContent = postContent.replace(/\r\n/g, '\n');
 
         switch (item['wp:post_type'][0]){
           case 'post':
