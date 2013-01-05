@@ -84,7 +84,7 @@ extend.migrator.register('wordpress', function(args){
               '---'
             ];
 
-            file.write(sourceDir + postStatus + postLink + '.md', content.join('\n') + '\n\n' + postContent, next);
+            file.write(sourceDir + postStatus + decodeURIComponent(postLink) + '.md', content.join('\n') + '\n\n' + postContent, next);
             break;
 
           case 'page':
