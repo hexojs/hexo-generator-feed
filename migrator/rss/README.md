@@ -4,44 +4,10 @@ This plugin can migrate your blog from RSS to Hexo.
 
 ## Usage
 
-### Install
+Execute the following command after installed. `source` is the file path or URL of RSS.
 
 ```
-npm install hexo-migrator-rss --save
-```
-
-### Enable
-
-Add `hexo-migrator-rss` to `plugins` in `_config.yml`.
-
-``` yaml
-plugins:
-- hexo-migrator-rss
-```
-
-### Disable
-
-Remove `hexo-migrator-rss` from `plugins` in `_config.yml`.
-
-``` yaml
-plugins:
-- hexo-migrator-rss
-```
-
-### Update
-
-Execute the following command.
-
-```
-npm update
-```
-
-### Uninstall
-
-Execute the following command. Don't forget to disable the plugin before uninstalling.
-
-```
-npm uninstall hexo-migrator-rss
+hexo migrate rss <source>
 ```
 
 [Hexo]: http://zespia.tw/hexo

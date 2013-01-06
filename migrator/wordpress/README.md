@@ -4,44 +4,12 @@ This plugin can migrate your blog from WordPress to Hexo.
 
 ## Usage
 
-### Install
+Export your WordPress in "Tools" → "Export" → "WordPress" in your dashboard.
+
+Execute the following command after installed. `source` is the file path or URL of WordPress export file.
 
 ```
-npm install hexo-migrator-wordpress --save
-```
-
-### Enable
-
-Add `hexo-migrator-wordpress` to `plugins` in `_config.yml`.
-
-``` yaml
-plugins:
-- hexo-migrator-wordpress
-```
-
-### Disable
-
-Remove `hexo-migrator-wordpress` from `plugins` in `_config.yml`.
-
-``` yaml
-plugins:
-- hexo-migrator-wordpress
-```
-
-### Update
-
-Execute the following command.
-
-```
-npm update
-```
-
-### Uninstall
-
-Execute the following command. Don't forget to disable the plugin before uninstalling.
-
-```
-npm uninstall hexo-migrator-wordpress
+hexo migrate rss <source>
 ```
 
 [Hexo]: http://zespia.tw/hexo
