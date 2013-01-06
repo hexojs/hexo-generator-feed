@@ -1,6 +1,6 @@
 {
   "name": "hexo-migrator-wordpress",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "WordPress migrator plugin for Hexo",
   "main": "index",
   "repository": {
