@@ -68,20 +68,22 @@ extend.generator.register(function(locals, render, callback){
       },
     ];
 
-    if (item.tags){
-      var tags = [];
+    if (item.tags || item.categories){
+      var items = [].concat(item.tags, item.categories),
+        categories = [];
 
-      item.tags.forEach(function(tag){
-        tags.push({
+      items.forEach(function(item){
+        if (!item) return;
+        categories.push({
           _name: 'category',
           _attrs: {
-            scheme: tag.permalink,
-            term: tag.name
+            scheme: item.permalink,
+            term: item.name
           }
         });
       });
 
-      entry = [].concat(entry, tags);
+      entry = [].concat(entry, categories);
     }
 
     content.push({entry: entry});
