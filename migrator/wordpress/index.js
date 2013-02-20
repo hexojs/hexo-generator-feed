@@ -75,11 +75,8 @@ extend.migrator.register('wordpress', function(args){
             if (postTag.length) postTag = '\n- ' + _.uniq(postTag).join('\n- ');
 
             var content = [
-              '---',
-              'layout: post',
               'title: ' + postTitle,
               'date: ' + postDate,
-              'comments: ' + postComment,
               'tags: ' + (postTag ? postTag : ''),
               '---'
             ];
@@ -91,11 +88,8 @@ extend.migrator.register('wordpress', function(args){
             length++;
 
             var content = [
-              '---',
-              'layout: page',
               'title: ' + postTitle,
               'date: ' + postDate,
-              'comments: ' + postComment,
               '---'
             ];
 

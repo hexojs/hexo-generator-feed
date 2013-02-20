@@ -41,12 +41,9 @@ extend.migrator.register('rss', function(args){
           }
 
           var content = [
-            '---',
-            'layout: post',
             'title: ' + item.title,
             'date: ' + moment(item.pubdate).format('YYYY-MM-DD HH:mm:ss'),
-            'comments: true',
-            'tags: ' + (tags ? tags : '')
+            'tags: ' + (tags ? tags : ''),
             '---',
           ];
 
