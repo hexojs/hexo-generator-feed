@@ -10,7 +10,7 @@ var extend = hexo.extend,
   tomd = require('to-markdown').toMarkdown;
 
 extend.migrator.register('wordpress', function(args){
-  var source = args.shift();
+  var source = args._.shift();
 
   if (!source) return console.log('\nUsage: hexo migrate wordpress <source>\n\nMore info: http://zespia.tw/hexo/docs/migrate.html\n');
 

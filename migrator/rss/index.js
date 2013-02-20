@@ -8,7 +8,7 @@ var extend = hexo.extend,
   tomd = require('to-markdown').toMarkdown;
 
 extend.migrator.register('rss', function(args){
-  var source = args.shift(),
+  var source = args._.shift(),
     target = hexo.source_dir + '_posts/';
 
   if (!source){
