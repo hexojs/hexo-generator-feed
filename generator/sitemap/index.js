@@ -1,6 +1,4 @@
-var util = hexo.util,
-  file = util.file,
-  extend = hexo.extend,
+var extend = hexo.extend,
   route = hexo.route,
   xml = require('jstoxml');
 
