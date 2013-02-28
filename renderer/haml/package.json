@@ -1,6 +1,6 @@
 {
   "name": "hexo-renderer-haml",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Haml renderer plugin for Hexo",
   "main": "index",
   "repository": {

@@ -1,8 +1,8 @@
 var md = require('discount'),
   extend = hexo.extend;
 
-var markdown = function(file, content){
-  return md.parse(content, md.flags.extraFootnote);
+var markdown = function(data, options){
+  return md.parse(data.text, md.flags.extraFootnote);
 };
 
 extend.renderer.register('md', 'html', markdown, true);

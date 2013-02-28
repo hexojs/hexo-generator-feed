@@ -1,14 +1,14 @@
 var less = require('less'),
-  path = require('path'),
-  extend = hexo.extend;
+  path = require('path');
 
-extend.renderer.register('less', 'css', function(file, content, callback){
+hexo.extend.renderer.register('less', 'css', function(data, options, callback){
   var parser = new(less.Parser)({
-    paths: path.dirname(file).split(path.sep)
+    paths: path.dirname(data.path).split('/'),
+    filename: path.basename(data.path)
   });
 
-  parser.parse(content, function(err, tree){
-    if (err) throw err;
-    callback(null, tree.toCSS());
+  parser.parse(data.text, function(err, tree){
+    if (err) return callback(err);
+    callback(null, tree.toCSS(options));
   });
 });

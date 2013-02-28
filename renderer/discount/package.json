@@ -1,6 +1,6 @@
 {
   "name": "hexo-renderer-discount",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Discount is a more powerful replacement of built-in markdown parser for Hexo",
   "main": "index",
   "repository": {

@@ -1,6 +1,5 @@
-var coffee = require('coffee-script'),
-  extend = hexo.extend;
+var coffee = require('coffee-script');
 
-extend.renderer.register('coffee', 'js', function(file, content){
-  return coffee.compile(content);
+hexo.extend.renderer.register('coffee', 'js', function(data, options){
+  return coffee.compile(data.text);
 }, true);

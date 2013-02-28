@@ -1,9 +1,5 @@
-var haml = require('hamljs'),
-  extend = hexo.extend;
+var haml = require('hamljs');
 
-extend.renderer.register('haml', 'html', function(file, content, locals){
-  var options = {locals: locals};
-  if (file) options.filename = file;
-
-  return haml.render(content, locals);
+hexo.extend.renderer.register('haml', 'html', function(data, locals){
+  return haml.render(data.text, locals);
 }, true);

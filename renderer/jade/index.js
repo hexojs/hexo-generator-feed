@@ -1,10 +1,5 @@
-var jade = require('jade'),
-  extend = hexo.extend;
+var jade = require('jade');
 
-extend.renderer.register('jade', 'html', function(file, content, locals){
-  var options = {};
-  if (file) options.filename = file;
-
-  var fn = jade.compile(content, options);
-  return fn(locals);
+hexo.extend.renderer.register('jade', 'html', function(data, locals){
+  return jade.compile(data.text, {filename: data.path})(locals);
 }, true);
