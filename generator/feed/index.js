@@ -66,12 +66,11 @@ extend.generator.register(function(locals, render, callback){
       },
     ];
 
-    if (item.tags || item.categories){
-      var items = [].concat(item.tags, item.categories),
-        categories = [];
+    var items = [].concat(item.tags.toArray(), item.categories.toArray());
 
+    if (items.length){
+      var categories = [];
       items.forEach(function(item){
-        if (!item) return;
         categories.push({
           _name: 'category',
           _attrs: {
