@@ -14,7 +14,7 @@
     "url": "https://raw.github.com/tommy351/hexo/master/LICENSE"
   },
   "engines": {
-    "hexo": "*"
+    "hexo": ">= 1.0.0"
   },
   "dependencies": {
     "hamljs": "*"
