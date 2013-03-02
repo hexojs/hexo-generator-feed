@@ -39,7 +39,7 @@ extend.generator.register(function(locals, render, callback){
   if (config.email) content[5].author.email = '<![CDATA[' + config.email + ']]>';
   if (config.subtitle) content.splice(1, 0, {subtitle: '<![CDATA[' + config.subtitle + ']]>'});
 
-  locals.posts.limit(20).each(function(item){
+  locals.posts.sort('date', -1).limit(20).each(function(item){
     var entry = [
       {
         _name: 'title',
