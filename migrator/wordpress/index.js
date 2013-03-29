@@ -40,7 +40,7 @@ extend.migrator.register('wordpress', function(args){
 
       async.forEach(arr, function(item, next){
         var postTitle = item.title[0],
-          postID = item['wp:post_id'][0],
+          id = item['wp:post_id'][0],
           postDate = item['wp:post_date'][0],
           postLink = item['wp:post_name'][0],
           postContent = item['content:encoded'][0],
@@ -86,7 +86,7 @@ extend.migrator.register('wordpress', function(args){
 
             var content = [
               'title: "' + postTitle.replace(/"/g, '\\"') + '"',
-              'postID: ' + postID,
+              'id: ' + id,
               'date: ' + postDate,
               'tags: ' + (postTag ? postTag : ''),
               'categories: ' + (categories || 'uncategory'),
