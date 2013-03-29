@@ -40,6 +40,7 @@ extend.migrator.register('wordpress', function(args){
 
       async.forEach(arr, function(item, next){
         var postTitle = item.title[0],
+          id = item['wp:post_id'][0],
           postDate = item['wp:post_date'][0],
           postLink = item['wp:post_name'][0],
           postContent = item['content:encoded'][0],
@@ -64,20 +65,31 @@ extend.migrator.register('wordpress', function(args){
 
             var postStatus = item['wp:status'][0] === 'publish' ? '_posts/' : '_drafts/',
               cats = item.category,
+              categories = [],
               postTag = [];
 
             _.each(cats, function(item){
-              if (!_.isString(item) && item.$.domain === 'tag'){
-                postTag.push(item._);
+              if (!_.isString(item)){
+                switch(item.$.domain){
+                  case 'post_tag':
+                    postTag.push(item._);
+                    break;
+                  case 'category':
+                    categories.push(item._);
+                    break;
+                }
               }
             });
 
             if (postTag.length) postTag = '\n- ' + _.uniq(postTag).join('\n- ');
+            if (categories.length) categories = '\n- ' + _.uniq(categories).join('\n- ');
 
             var content = [
-              'title: ' + postTitle,
+              'title: "' + postTitle.replace(/"/g, '\\"') + '"',
+              'id: ' + id,
               'date: ' + postDate,
               'tags: ' + (postTag ? postTag : ''),
+              'categories: ' + (categories || 'uncategory'),
               '---'
             ];
 
