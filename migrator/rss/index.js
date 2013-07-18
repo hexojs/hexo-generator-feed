@@ -1,7 +1,7 @@
 var extend = hexo.extend,
   util = hexo.util,
   file = util.file,
-  feedparser = require('feedparser'),
+  feedparser = require('ortoo-feedparser'),
   moment = require('moment'),
   async = require('async'),
   _ = require('underscore'),
