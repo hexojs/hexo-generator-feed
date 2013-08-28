@@ -3,7 +3,7 @@ var less = require('less'),
 
 hexo.extend.renderer.register('less', 'css', function(data, options, callback){
   var parser = new(less.Parser)({
-    paths: path.dirname(data.path).split('/'),
+    paths: path.dirname(data.path),
     filename: path.basename(data.path)
   });
 
