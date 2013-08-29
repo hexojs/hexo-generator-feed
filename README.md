@@ -2,13 +2,8 @@
 
 Official plugins for [Hexo].
 
-## List
-
-[Plugin List](http://zespia.tw/hexo/plugins/)
-
-## Development
-
-[Plugin development](http://zespia.tw/hexo/docs/plugin-development.html)
+- [Plugin List](https://github.com/tommy351/hexo/wiki/Plugins)
+- [Plugin development](http://zespia.tw/hexo/docs/plugins.html)
 
 ## Usage
 
@@ -16,25 +11,6 @@ Official plugins for [Hexo].
 
 ```
 npm install <plugin-name> --save
-```
-
-### Enable
-
-Add plugin name to `plugins` in `_config.yml`.
-
-``` yaml
-plugins:
-- plugin-one
-- plugin-name
-```
-
-### Disable
-
-Remove plugin name from `plugins` in `_config.yml`.
-
-``` yaml
-plugins:
-- plugin-one
 ```
 
 ### Update
