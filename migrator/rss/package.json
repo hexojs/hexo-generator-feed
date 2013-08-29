@@ -17,7 +17,7 @@
     "hexo": "*"
   },
   "dependencies": {
-    "feedparser": "*",
+    "ortoo-feedparser": "*",
     "moment": "*",
     "async": "*",
     "underscore": "*",
