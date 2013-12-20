@@ -1,0 +1,241 @@
+{
+  "version": "1.0",
+  "encoding": "UTF-8",
+  "feed": {
+    "xmlns": "http://www.w3.org/2005/Atom",
+    "xmlns$openSearch": "http://a9.com/-/spec/opensearchrss/1.0/",
+    "xmlns$blogger": "http://schemas.google.com/blogger/2008",
+    "xmlns$georss": "http://www.georss.org/georss",
+    "xmlns$gd": "http://schemas.google.com/g/2005",
+    "xmlns$thr": "http://purl.org/syndication/thread/1.0",
+    "id": {
+      "$t": "tag:blogger.com,1999:blog-123234234234/"
+    },
+    "updated": {
+      "$t": "2013-12-20T12:09:41.695+02:00"
+    },
+    "category": [
+      {
+        "term": "javascript"
+      },
+      {
+        "term": "programming"
+      },
+      {
+        "term": "web development"
+      },
+      {
+        "term": "python"
+      },
+      {
+        "term": "software development"
+      }
+    ],
+    "title": {
+      "type": "text",
+      "$t": "Blog title"
+    },
+    "subtitle": {
+      "type": "html",
+      "$t": "Subtitle of blog"
+    },
+    "link": [
+      {
+        "rel": "http://schemas.google.com/g/2005#feed",
+        "type": "application/atom+xml",
+        "href": "http://www.blog.info/feeds/posts/default"
+      },
+      {
+        "rel": "self",
+        "type": "application/atom+xml",
+        "href": "http://www.blogger.com/feeds/123234234234/posts/default?alt=json&max-results=10"
+      },
+      {
+        "rel": "alternate",
+        "type": "text/html",
+        "href": "http://www.blog.info/"
+      },
+      {
+        "rel": "hub",
+        "href": "http://pubsubhubbub.appspot.com/"
+      },
+      {
+        "rel": "next",
+        "type": "application/atom+xml",
+        "href": "http://www.blogger.com/feeds/123234234234//posts/default?alt=json&start-index=11&max-results=10"
+      }
+    ],
+    "author": [
+      {
+        "name": {
+          "$t": "Blog author"
+        },
+        "email": {
+          "$t": "noreply@blogger.com"
+        },
+        "gd$image": {
+          "rel": "http://schemas.google.com/g/2005#thumbnail",
+          "width": "32",
+          "height": "32",
+          "src": "//lh4.googleusercontent.com/-123234234234//AAAAAAAAAAI/AAAAAAAABPk/SCLI6q1eA_A/s512-c/photo.jpg"
+        }
+      }
+    ],
+    "generator": {
+      "version": "7.00",
+      "uri": "http://www.blogger.com",
+      "$t": "Blogger"
+    },
+    "openSearch$totalResults": {
+      "$t": "253"
+    },
+    "openSearch$startIndex": {
+      "$t": "1"
+    },
+    "openSearch$itemsPerPage": {
+      "$t": "10"
+    },
+    "entry": [
+      {
+        "id": {
+          "$t": "tag:blogger.com,1999:blog-7507869444539635439.post-1915353450947961844"
+        },
+        "published": {
+          "$t": "2013-12-15T17:42:00.000+02:00"
+        },
+        "updated": {
+          "$t": "2013-12-15T17:42:04.408+02:00"
+        },
+        "category": [
+          {
+            "scheme": "http://www.blogger.com/atom/ns#",
+            "term": "javascript"
+          },
+          {
+            "scheme": "http://www.blogger.com/atom/ns#",
+            "term": "node"
+          },
+          {
+            "scheme": "http://www.blogger.com/atom/ns#",
+            "term": "web development"
+          }
+        ],
+        "title": {
+          "type": "text",
+          "$t": "Article"
+        },
+        "content": {
+          "type": "html",
+          "$t": "Just thought to mention I published an article."
+        },
+        "link": [
+          {
+            "rel": "edit",
+            "type": "application/atom+xml",
+            "href": "http://www.blogger.com/feeds/123234234234//posts/default/123234234234/"
+          },
+          {
+            "rel": "self",
+            "type": "application/atom+xml",
+            "href": "http://www.blogger.com/feeds/123234234234//posts/default/123234234234/"
+          },
+          {
+            "rel": "alternate",
+            "type": "text/html",
+            "href": "http://www.blog.info/2013/12/article.html",
+            "title": "Node.js - Learn to Develop Static Site Generators"
+          }
+        ],
+        "author": [
+          {
+            "name": {
+              "$t": "Blog Author"
+            },
+            "uri": {
+              "$t": "https://plus.google.com/123234234234/"
+            },
+            "email": {
+              "$t": "noreply@blogger.com"
+            },
+            "gd$image": {
+              "rel": "http://schemas.google.com/g/2005#thumbnail",
+              "width": "32",
+              "height": "32",
+              "src": "//lh4.googleusercontent.com/-123234234234//AAAAAAAAAAI/AAAAAAAABPk/123234234234//s512-c/photo.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "id": {
+          "$t": "tag:blogger.com,1999:blog-123234234234/.post-123234234234/"
+        },
+        "published": {
+          "$t": "2013-11-22T14:23:00.000+02:00"
+        },
+        "updated": {
+          "$t": "2013-12-20T12:09:41.706+02:00"
+        },
+        "category": [
+          {
+            "scheme": "http://www.blogger.com/atom/ns#",
+            "term": "node"
+          },
+          {
+            "scheme": "http://www.blogger.com/atom/ns#",
+            "term": "software development"
+          },
+          {
+            "scheme": "http://www.blogger.com/atom/ns#",
+            "term": "web development"
+          }
+        ],
+        "title": {
+          "type": "text",
+          "$t": "Another Article"
+        },
+        "content": {
+          "type": "html",
+          "$t": "I have to admit I'm not that strong at DevOps related things. I would probably make a terrible server admin. Fortunately things have become easier to understand during the past few years so even if you weren't born with a silvery Unix spoon in mouth, you can still get something simple working. In this post I will try to go some basic concepts and share my experiences with one particular service I have been trying out.<br /><br />When it comes to deploying there are multiple approaches. The old skool way is simply to FTP the files on the server on change. Once you get bored of that you might maybe set up rsync (keeps files in sync automatically). Or you could use some version control based scheme in which the server pulls the changes on deploy.<br /><br />These simple ways might be more or less alright in limited usage. At some point you might run into a wall, though. And managing the server may become cumbersome. What if you need to revert some change for instance? There are better ways.<br /><br /><h2>Continuous Integration and co.</h2>Continuous Integration and associated concepts have made a big impact on the industry during the past few years. The value of these concepts lies within automation and the visibility they give to the development process.<br /><br />Your Continuous Integration server may execute your tests, some of them heavy, after each push. This means you will be able to catch possible regressions earlier and fix them cheaper.<br /><br />Continuous Delivery builds upon this idea. The idea is that should the tests pass, you may deploy the build manually. The process will then copy your build to the server and rig it up.<br /><br />Continuous Deployment actually goes one step further and automates this step. That takes some serious trust in your code!<br /><br /><h2>Setting Up Continuous Delivery Using Node.js and Wercker</h2><div><a href=\"http://blog.wercker.com/2013/09/03/ContinuousDelivery-with-wercker-digitalocean-and-nodejs.html\">The Wercker guys do a great job at explaining</a> how to set up a continuous delivery setup using their system. It is currently in free beta and well worth checking out. They support a variety of platforms and make it very easy to integrate with services like GitHub. I used <a href=\"https://www.digitalocean.com/\">Digital Ocean</a> for hosting when testing.</div><div><br /></div><div>Digital Ocean is one of those affordable options when it comes to hosting. <a href=\"https://raymii.org/s/articles/Digital_Ocean_Sucks._Use_Digital_Ocean.html\">Remy Van Elst goes through the pros and cons of DO</a>&nbsp;at his blog. Note that even though Digital Ocean shows prices in both monthly and hourly charges, it is important to note that the hourly charge might not be the same you could expect based on services like Amazon's EC2.</div><div><br /></div><div>Even though your server is in \"off\" state, it still gets billed! This has to do with the fact that DO still keeps the IP and hardware reserved for you. As long as you are aware of this fact you should be fine, though. The price is hard to beat.</div><div><br /></div><div>As you can see based on the Wercker tutorial, they use a YAML based configuration scheme for defining how to build your project and how to deploy it. There are various base boxes to choose from. Each box comes with various dependencies set up already. For instance Node.js developers may want to use `wercker/nodejs` box.</div><div><br /></div><div>In order to give you some idea of how to set up a basic build with Bower, Grunt, SASS, NPM and all that jazz, consider the Wercker configuration below:</div><div><br /></div><div><pre style=\"border: none; font-family: 'Bitstream Vera Sans Mono', monospace; font-size: 13px; overflow: auto; padding: 10px;\"><span class=\"l-Scalar-Plain\">box</span><span class=\"p-Indicator\">:</span> <span class=\"l-Scalar-Plain\">wercker/nodejs</span><br /><span class=\"l-Scalar-Plain\">build</span><span class=\"p-Indicator\">:</span><br />    <span class=\"l-Scalar-Plain\">steps</span><span class=\"p-Indicator\">:</span><br />        <span class=\"p-Indicator\">-</span> <span class=\"l-Scalar-Plain\">script</span><span class=\"p-Indicator\">:</span><br />            <span class=\"l-Scalar-Plain\">name</span><span class=\"p-Indicator\">:</span> <span class=\"l-Scalar-Plain\">install compass</span><br />            <span class=\"l-Scalar-Plain\">code</span><span class=\"p-Indicator\">:</span> <span class=\"l-Scalar-Plain\">sudo gem install compass --no-ri --no-rdoc</span><br />        <span class=\"p-Indicator\">-</span> <span class=\"l-Scalar-Plain\">script</span><span class=\"p-Indicator\">:</span><br />            <span class=\"l-Scalar-Plain\">name</span><span class=\"p-Indicator\">:</span> <span class=\"l-Scalar-Plain\">install grunt</span><br />            <span class=\"l-Scalar-Plain\">code</span><span class=\"p-Indicator\">:</span> <span class=\"l-Scalar-Plain\">sudo npm install -g grunt-cli</span><br />        <span class=\"p-Indicator\">-</span> <span class=\"l-Scalar-Plain\">script</span><span class=\"p-Indicator\">:</span><br />            <span class=\"l-Scalar-Plain\">name</span><span class=\"p-Indicator\">:</span> <span class=\"l-Scalar-Plain\">install bower</span><br />            <span class=\"l-Scalar-Plain\">code</span><span class=\"p-Indicator\">:</span> <span class=\"l-Scalar-Plain\">sudo npm install -g bower</span><br />        <span class=\"p-Indicator\">-</span> <span class=\"l-Scalar-Plain\">script</span><span class=\"p-Indicator\">:</span><br />            <span class=\"l-Scalar-Plain\">cwd</span><span class=\"p-Indicator\">:</span> <span class=\"l-Scalar-Plain\">frontend/</span><br />            <span class=\"l-Scalar-Plain\">name</span><span class=\"p-Indicator\">:</span> <span class=\"l-Scalar-Plain\">install npm dependencies</span><br />            <span class=\"l-Scalar-Plain\">code</span><span class=\"p-Indicator\">:</span> <span class=\"p-Indicator\">|</span><br />                <span class=\"no\" style=\"color: #60add5;\">mkdir -p $WERCKER_CACHE_DIR/wercker/npm</span><br />                <span class=\"no\" style=\"color: #60add5;\">npm config set cache $WERCKER_CACHE_DIR/wercker/npm</span><br />                <span class=\"no\" style=\"color: #60add5;\">sudo npm install --save-dev</span><br />        <span class=\"p-Indicator\">-</span> <span class=\"l-Scalar-Plain\">script</span><span class=\"p-Indicator\">:</span><br />            <span class=\"l-Scalar-Plain\">cwd</span><span class=\"p-Indicator\">:</span> <span class=\"l-Scalar-Plain\">frontend/</span><br />            <span class=\"l-Scalar-Plain\">name</span><span class=\"p-Indicator\">:</span> <span class=\"l-Scalar-Plain\">install bower dependencies</span><br />            <span class=\"l-Scalar-Plain\">code</span><span class=\"p-Indicator\">:</span> <span class=\"l-Scalar-Plain\">bower install --config.storage.cache=$WERCKER_CACHE_DIR/wercker/bower</span><br />        <span class=\"p-Indicator\">-</span> <span class=\"l-Scalar-Plain\">script</span><span class=\"p-Indicator\">:</span><br />            <span class=\"l-Scalar-Plain\">cwd</span><span class=\"p-Indicator\">:</span> <span class=\"l-Scalar-Plain\">frontend/</span><br />            <span class=\"l-Scalar-Plain\">name</span><span class=\"p-Indicator\">:</span> <span class=\"l-Scalar-Plain\">build project using grunt</span><br />            <span class=\"l-Scalar-Plain\">code</span><span class=\"p-Indicator\">:</span> <span class=\"l-Scalar-Plain\">grunt build</span><br />        <span class=\"p-Indicator\">-</span> <span class=\"l-Scalar-Plain\">script</span><span class=\"p-Indicator\">:</span><br />            <span class=\"l-Scalar-Plain\">name</span><span class=\"p-Indicator\">:</span> <span class=\"l-Scalar-Plain\">echo nodejs information</span><br />            <span class=\"l-Scalar-Plain\">code</span><span class=\"p-Indicator\">:</span> <span class=\"p-Indicator\">|</span><br />                <span class=\"no\" style=\"color: #60add5;\">echo \"node version $(node -v) running\"</span><br />                <span class=\"no\" style=\"color: #60add5;\">echo \"npm version $(npm -v) running\"</span><br /><span class=\"l-Scalar-Plain\">deploy</span><span class=\"p-Indicator\">:</span><br />    <span class=\"l-Scalar-Plain\">steps</span><span class=\"p-Indicator\">:</span><br />        <span class=\"p-Indicator\">-</span> <span class=\"l-Scalar-Plain\">add-to-known_hosts</span><span class=\"p-Indicator\">:</span><br />            <span class=\"l-Scalar-Plain\">hostname</span><span class=\"p-Indicator\">:</span> <span class=\"l-Scalar-Plain\">$SERVER_IP</span><br />            <span class=\"l-Scalar-Plain\">fingerprint</span><span class=\"p-Indicator\">:</span> <span class=\"l-Scalar-Plain\">ff:ff:ff:ff:ff:ff:ff:ff:ff</span><br />        <span class=\"p-Indicator\">-</span> <span class=\"l-Scalar-Plain\">mktemp</span><span class=\"p-Indicator\">:</span><br />            <span class=\"l-Scalar-Plain\">envvar</span><span class=\"p-Indicator\">:</span> <span class=\"l-Scalar-Plain\">PRIVATEKEY_PATH</span><br />        <span class=\"p-Indicator\">-</span> <span class=\"l-Scalar-Plain\">create-file</span><span class=\"p-Indicator\">:</span><br />            <span class=\"l-Scalar-Plain\">name</span><span class=\"p-Indicator\">:</span> <span class=\"l-Scalar-Plain\">write key</span><br />            <span class=\"l-Scalar-Plain\">filename</span><span class=\"p-Indicator\">:</span> <span class=\"l-Scalar-Plain\">$PRIVATEKEY_PATH</span><br />            <span class=\"l-Scalar-Plain\">content</span><span class=\"p-Indicator\">:</span> <span class=\"l-Scalar-Plain\">$WERCKER_PRIVATE</span><br />            <span class=\"l-Scalar-Plain\">overwrite</span><span class=\"p-Indicator\">:</span> <span class=\"l-Scalar-Plain\">true</span><br />        <span class=\"p-Indicator\">-</span> <span class=\"l-Scalar-Plain\">script</span><span class=\"p-Indicator\">:</span><br />            <span class=\"l-Scalar-Plain\">cwd</span><span class=\"p-Indicator\">:</span> <span class=\"l-Scalar-Plain\">frontend/</span><br />            <span class=\"l-Scalar-Plain\">name</span><span class=\"p-Indicator\">:</span> <span class=\"l-Scalar-Plain\">transfer application</span><br />            <span class=\"l-Scalar-Plain\">code</span><span class=\"p-Indicator\">:</span> <span class=\"p-Indicator\">|</span><br />              <span class=\"no\" style=\"color: #60add5;\">pwd</span><br />              <span class=\"no\" style=\"color: #60add5;\">ls -la</span><br />              <span class=\"no\" style=\"color: #60add5;\">tar czf - * | ssh -i $PRIVATEKEY_PATH -l root $SERVER_IP \"cd /var/local/www; tar xvzf -\"</span><br />        <span class=\"p-Indicator\">-</span> <span class=\"l-Scalar-Plain\">script</span><span class=\"p-Indicator\">:</span><br />            <span class=\"l-Scalar-Plain\">name</span><span class=\"p-Indicator\">:</span> <span class=\"l-Scalar-Plain\">start application</span><br />            <span class=\"l-Scalar-Plain\">code</span><span class=\"p-Indicator\">:</span> <span class=\"p-Indicator\">|</span><br />              <span class=\"no\" style=\"color: #60add5;\">ssh -i $PRIVATEKEY_PATH -l root $SERVER_IP \"if [[ \\\"\\$(status node-app)\\\" = *start/running* ]]; then stop node-app -n ; fi\"</span><br />              <span class=\"no\" style=\"color: #60add5;\">ssh -i $PRIVATEKEY_PATH -l root $SERVER_IP start node-app</span></pre></div><div><br /></div><div>Yes, I admit it's a bit chunky. Let's go through some basic concepts to dig into the meat so to speak. First of all I choose to use the Node.js base box provided by the Wercker guys. On my build step I install some dependencies and then build the project. My project isn't exactly conventional as my server source is within `frontend/` directory. This is the reason why I use `cwd` every once in a while.<br /><br />Some of the data is cached so it is faster to build the project later on. You would normally want to execute your tests in the build step too. In this case I was just interested in getting the basic flow to work.<br /><br />On my deploy step I first do some configuration necessary to make the communication between Wercker and my server to work. In this case I just point to the server by ip although you might want to use a real domain instead. In case you are wondering about that fingerprint bit, it is possible to generate it like this:<br /><br /><ul><li>ssh-keyscan -p 22 -t rsa hostname &gt; key.pub</li><li>ssh-keygen -l -f key.pub</li></ul><br />It is a security feature that should help to avoid MITM attacks if I remember correctly. Anyway, that's something that is easy to set up and hence you should do it.<br /><br />After I have the connection related issues sorted I actually transfer the data to the server using a tar pipe. This is a trick I learned from some version of Stack Overflow. It speeds up transfer immensely especially if you have a lot of small files around. I recommend giving it a go just to see how powerful technique it is.<br /><br />Once the build has been copied to server I simply execute the server. For this purpose I have set up a simple upstart script. The nice thing about it is that you don't even need a supervisor like forever or monit as it will be able to keep your server up should it crash for a reason or another. It is preferable to run your server with a user that has limited rights. That way you mitigate the amount of possible damage an attacker may be able to do to your server.<br /><br />For some reason the upstart scripts Node.js people like to use seem usually awfully complex. For this reason I asked a couple of friends to provide examples of good ones. Here's <a href=\"https://gist.github.com/nnarhinen/7367732\">one by nnarhinen</a>. <a href=\"https://github.com/opinsys/debbox/blob/master/debian.default/debbox.upstart\">Another one from opinsys</a>. Combine and extend based on your needs.<br /><br /><h2>Conclusion</h2></div><div>Continuous delivery systems like Wercker make the developer's life a step simpler. It takes some pain out of deployment and allows us to focus on actually getting things done faster. You can never be quite fast enough. There are still some good things, like containers, in horizon. They promise to simplify deployment even further and make it faster to execute tests. For instance you could easily have multiple databases against which to run your tests in parallel. But that's a topic for another post if I ever get into that world.</div><div><br /></div><div>I hope this post inspired some of you to give some system a go! Please share your experiences in the comment section below. It would be very nice to hear what sort of setups you use in practice and how you benefit from them.</div>"
+        },
+        "link": [
+          {
+            "rel": "edit",
+            "type": "application/atom+xml",
+            "href": "http://www.blogger.com/feeds/123234234234//posts/default/123234234234/"
+          },
+          {
+            "rel": "self",
+            "type": "application/atom+xml",
+            "href": "http://www.blogger.com/feeds/123234234234//posts/default/123234234234/"
+          },
+          {
+            "rel": "alternate",
+            "type": "text/html",
+            "href": "http://www.blog.info/2013/11/another-article.html",
+            "title": "Another Article"
+          }
+        ],
+        "author": [
+          {
+            "name": {
+              "$t": "Blog Author"
+            },
+            "uri": {
+              "$t": "https://plus.google.com/123234234234/"
+            },
+            "email": {
+              "$t": "noreply@blogger.com"
+            },
+            "gd$image": {
+              "rel": "http://schemas.google.com/g/2005#thumbnail",
+              "width": "32",
+              "height": "32",
+              "src": "//lh4.googleusercontent.com/-123234234234//AAAAAAAAAAI/AAAAAAAABPk/123234234234//s512-c/photo.jpg"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
