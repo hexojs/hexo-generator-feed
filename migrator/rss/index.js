@@ -12,7 +12,7 @@ extend.migrator.register('rss', function(args){
     target = hexo.source_dir + '_posts/';
 
   if (!source){
-    console.log('\nUsage: hexo migrate rss <source>\n\nMore info: http://zespia.tw/hexo/docs/migrate.html\n');
+    console.log('\nUsage: hexo migrate rss <source>\n\nMore info: http://zespia.tw/hexo/docs/migration.html\n');
   } else {
     async.waterfall([
       function(next){
