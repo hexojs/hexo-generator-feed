@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"
+  xmlns:atom="http://www.w3.org/2005/Atom"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title><%-: config.title | cdata %></title>
+    <link><%- encodeURI(config.url) %>/</link>
+    <atom:link href="<%- encodeURI(feed_url) %>" rel="self" type="application/rss+xml"/>
+    <description><%-: config.description | cdata %></description>
+    <pubDate><%= new Date().toUTCString() %></pubDate>
+    <generator>http://zespia.tw/hexo/</generator>
+    <% posts.each(function(post){ %>
+    <item>
+      <title><%-: post.title | cdata %></title>
+      <link><%- encodeURI(post.permalink) %></link>
+      <guid><%- encodeURI(post.permalink) %></guid>
+      <pubDate><%= post.date.toDate().toUTCString() %></pubDate>
+      <% if (post.excerpt){ %><description><%-: post.excerpt | cdata %></description><% } %>
+      <content:encoded><%-: post.content | cdata %></content:encoded>
+      <% if (post.comments){ %><comments><%- encodeURI(post.permalink) %>#disqus_comments</comments><% } %>
+    </item>
+    <% }) %>
+  </channel>
+</rss>

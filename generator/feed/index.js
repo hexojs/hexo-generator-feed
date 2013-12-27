@@ -1,99 +1,54 @@
-var extend = hexo.extend,
-  route = hexo.route,
-  xml = require('jstoxml');
+var ejs = require('ejs'),
+  _ = require('lodash'),
+  path = require('path'),
+  file = hexo.util.file2;
 
-extend.generator.register(function(locals, render, callback){
+ejs.filters.cdata = function(str){
+  return '<![CDATA[' + (str || '') + ']]>';
+};
+
+var atomTmplSrc = path.join(__dirname, 'atom.ejs'),
+  atomTmpl = ejs.compile(file.readFileSync(atomTmplSrc));
+
+var rss2TmplSrc = path.join(__dirname, 'rss2.ejs'),
+  rss2Tmpl = ejs.compile(file.readFileSync(rss2TmplSrc));
+
+hexo.extend.generator.register(function(locals, render, callback){
   var config = hexo.config;
 
-  var content = [
-    {title: '<![CDATA[' + config.title + ']]>'},
-    {
-      _name: 'link',
-      _attrs: {
-        href: config.url + '/atom.xml',
-        rel: 'self'
-      }
-    },
-    {
-      _name: 'link',
-      _attrs: {
-        href: config.url
-      }
-    },
-    {updated: new Date().toISOString()},
-    {id: config.url + '/'},
-    {author:
-      {
-        name: '<![CDATA[' + config.author + ']]>'
-      }
-    },
-    {
-      _name: 'generator',
-      _attrs: {
-        uri: 'http://zespia.tw/hexo'
-      },
-      _content: 'Hexo'
-    }
-  ];
+  var feedConfig = _.extend({
+    type: 'atom',
+    limit: 20
+  }, config.feed);
 
-  if (config.email) content[5].author.email = '<![CDATA[' + config.email + ']]>';
-  if (config.subtitle) content.splice(1, 0, {subtitle: '<![CDATA[' + config.subtitle + ']]>'});
+  // Restrict feed type
+  if (feedConfig.type !== 'atom' && feedConfig.type !== 'rss2'){
+    feedConfig.type = 'atom';
+  }
 
-  locals.posts.sort('date', -1).limit(20).each(function(item){
-    var entry = [
-      {
-        _name: 'title',
-        _attrs: {
-          type: 'html'
-        },
-        _content: '<![CDATA[' + item.title + ']]>'
-      },
-      {
-        _name: 'link',
-        _attrs: {
-          href: item.permalink
-        }
-      },
-      {id: item.permalink},
-      {published: item.date.toDate().toISOString()},
-      {updated: item.updated.toDate().toISOString()},
-      {
-        _name: 'content',
-        _attrs: {
-          type: 'html'
-        },
-        _content: '<![CDATA[' + item.content + ']]>'
-      },
-    ];
+  // Set default feed path
+  if (!feedConfig.path){
+    feedConfig.path = feedConfig.type + '.xml';
+  }
 
-    var items = [].concat(item.tags.toArray(), item.categories.toArray());
+  // Add extension name if don't have
+  if (!path.extname(feedConfig.path)){
+    feedConfig.path += '.xml';
+  }
 
-    if (items.length){
-      var categories = [];
-      items.forEach(function(item){
-        categories.push({
-          _name: 'category',
-          _attrs: {
-            scheme: item.permalink,
-            term: item.name
-          }
-        });
-      });
+  // Determine which template to use
+  if (feedConfig.type === 'rss2'){
+    var template = rss2Tmpl;
+  } else {
+    var template = atomTmpl;
+  }
 
-      entry = [].concat(entry, categories);
-    }
-
-    content.push({entry: entry});
+  var xml = template({
+    config: config,
+    posts: locals.posts.sort('date', -1).limit(feedConfig.limit),
+    feed_url: config.root + feedConfig.path
   });
 
-  var result = xml.toXML({
-    _name: 'feed',
-    _attrs: {
-      xmlns: 'http://www.w3.org/2005/Atom'
-    },
-    _content: content
-  }, {header: true, indent: '  '});
-
-  route.set('atom.xml', result);
+  hexo.route.set(feedConfig.path, xml);
   callback();
 });

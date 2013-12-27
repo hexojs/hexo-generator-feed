@@ -1,22 +1,20 @@
 {
   "name": "hexo-generator-feed",
-  "version": "0.0.10",
+  "version": "0.1.0",
   "description": "Feed generator plugin for Hexo",
   "main": "index",
   "repository": {
     "type": "git",
     "url": "git://github.com/tommy351/hexo-plugins.git"
   },
-  "keywords": ["website", "blog", "cms", "framework", "hexo"],
+  "keywords": ["hexo", "rss", "feed", "atom"],
   "author": "Tommy Chen <tommy351@gmail.com> (http://zespia.tw)",
   "license": {
     "type": "MIT",
     "url": "https://raw.github.com/tommy351/hexo/master/LICENSE"
   },
-  "engines": {
-    "hexo": ">= 1.0.0"
-  },
   "dependencies": {
-    "jstoxml": "*"
+    "ejs": "0.8.5",
+    "lodash": "2.4.1"
   }
 }
