@@ -8,7 +8,7 @@ You can configure this plugin in `_config.yml`.
 
 ``` yaml
 sitemap:
-    path: atom.xml
+    path: sitemap.xml
 ```
 
 - **path** - Sitemap path. (Default: sitemap.xml)
