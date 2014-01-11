@@ -1,28 +1,26 @@
-# [Hexo] Plugins
+# Feed generator
 
-Official plugins for [Hexo].
+Generate Atom 1.0 or RSS 2.0 feed.
 
-- [Plugin List](https://github.com/tommy351/hexo/wiki/Plugins)
-- [Plugin development](http://zespia.tw/hexo/docs/plugins.html)
-
-## Usage
-
-### Install
+## Install
 
 ```
-npm install <plugin-name> --save
+$ npm install hexo-generator-feed --save
 ```
 
-### Update
+## Options
 
-```
-npm update
+You can configure this plugin in `_config.yml`.
+
+``` yaml
+feed:
+    type: atom
+    path: atom.xml
+    limit: 20
 ```
 
-### Uninstall
-
-```
-npm uninstall <plugin-name>
-```
+- **type** - Feed type. (atom/rss2)
+- **path** - Feed path. (Default: atom.xml/rss2.xml)
+- **limit** - Maximum number of posts in the feed
 
 [Hexo]: http://zespia.tw/hexo

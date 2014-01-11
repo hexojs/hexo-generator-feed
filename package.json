@@ -5,7 +5,10 @@
   "main": "index",
   "repository": {
     "type": "git",
-    "url": "git://github.com/tommy351/hexo-plugins.git"
+    "url": "https://github.com/hexojs/hexo-generator-feed.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hexojs/hexo-generator-feed/issues"
   },
   "keywords": ["hexo", "rss", "feed", "atom"],
   "author": "Tommy Chen <tommy351@gmail.com> (http://zespia.tw)",
