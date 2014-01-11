@@ -15,15 +15,11 @@ npm install <plugin-name> --save
 
 ### Update
 
-Execute the following command.
-
 ```
 npm update
 ```
 
 ### Uninstall
-
-Execute the following command. Don't forget to disable the plugin before uninstalling.
 
 ```
 npm uninstall <plugin-name>

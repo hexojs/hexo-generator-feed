@@ -1,4 +1,4 @@
-# JSOn migrator plugin for [Hexo]
+# JSON migrator
 
 This plugin can migrate your Blogspot blog from JSON to Hexo.
 

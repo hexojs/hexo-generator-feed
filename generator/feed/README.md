@@ -1,6 +1,6 @@
-# Feed generator for [Hexo]
+# Feed generator
 
-This plugin can generate Atom 1.0 and RSS 2.0 feed.
+Generate Atom 1.0 or RSS 2.0 feed.
 
 ## Options
 

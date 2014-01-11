@@ -1,6 +1,6 @@
-# Sitemap generator for [Hexo]
+# Sitemap generator
 
-This plugin can generate sitemap.
+Generate sitemap.
 
 ## Options
 

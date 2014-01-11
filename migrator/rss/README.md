@@ -1,6 +1,6 @@
-# RSS migrator plugin for [Hexo]
+# RSS migrator
 
-This plugin can migrate your blog from RSS to Hexo.
+Migrate your blog from RSS to Hexo.
 
 ## Usage
 

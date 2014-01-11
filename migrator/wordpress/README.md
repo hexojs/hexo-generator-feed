@@ -1,6 +1,6 @@
-# WordPress migrator plugin for [Hexo]
+# WordPress migrator
 
-This plugin can migrate your blog from WordPress to Hexo.
+Migrate your blog from WordPress to Hexo.
 
 ## Usage
 
