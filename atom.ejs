@@ -21,7 +21,7 @@
     <published><%= post.date.toDate().toISOString() %></published>
     <updated><%= post.updated.toDate().toISOString() %></updated>
     <content type="html"><%-: post.content | cdata %></content>
-    <% if (post.excerpt){ %><summary type="html"><%-: post.excerpt | cdata %></summary><% } %>
+    <% if (post.description){ %><summary type="html"><%-: post.description | cdata %></summary><% } %>
     <% [].concat(post.tags.toArray(), post.categories.toArray()).forEach(function(category){ %>
       <category term="<%= category.name %>" scheme="<%- encodeURI(category.permalink) %>"/>
     <% }) %>
