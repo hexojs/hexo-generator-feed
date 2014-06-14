@@ -4,7 +4,7 @@ Generate Atom 1.0 or RSS 2.0 feed.
 
 ## Install
 
-```
+``` bash
 $ npm install hexo-generator-feed --save
 ```
 
@@ -22,5 +22,3 @@ feed:
 - **type** - Feed type. (atom/rss2)
 - **path** - Feed path. (Default: atom.xml/rss2.xml)
 - **limit** - Maximum number of posts in the feed
-
-[Hexo]: http://zespia.tw/hexo

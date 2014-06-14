@@ -1,5 +1,5 @@
 var ejs = require('ejs'),
-  _ = require('lodash'),
+  merge = require('utils-merge'),
   path = require('path'),
   file = hexo.util.file2;
 
@@ -16,7 +16,7 @@ var rss2TmplSrc = path.join(__dirname, 'rss2.ejs'),
 hexo.extend.generator.register(function(locals, render, callback){
   var config = hexo.config;
 
-  var feedConfig = _.extend({
+  var feedConfig = merge({
     type: 'atom',
     limit: 20
   }, config.feed);
