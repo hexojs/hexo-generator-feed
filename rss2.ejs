@@ -15,7 +15,11 @@
       <link><%- encodeURI(post.permalink) %></link>
       <guid><%- encodeURI(post.permalink) %></guid>
       <pubDate><%= post.date.toDate().toUTCString() %></pubDate>
-      <% if (post.excerpt){ %><description><%-: post.excerpt | cdata %></description><% } %>
+      <description>
+      <% if (post.description){ %><%-: post.description | cdata %>
+      <% } else if (post.excerpt){ %><%-: post.excerpt | cdata %>
+      <% } else {%><%-: post.content.substring(0, 140) | cdata %><% } %>
+      </description>
       <content:encoded><%-: post.content | cdata %></content:encoded>
       <% if (post.comments){ %><comments><%- encodeURI(post.permalink) %>#disqus_comments</comments><% } %>
     </item>
