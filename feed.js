@@ -21,6 +21,8 @@ module.exports = function(locals, render, callback){
     limit: 20
   }, config.feed);
 
+  var limit = (feedConfig.limit === false) ? undefined : feedConfig.limit;
+
   // Restrict feed type
   if (feedConfig.type !== 'atom' && feedConfig.type !== 'rss2'){
     feedConfig.type = 'atom';
@@ -45,7 +47,7 @@ module.exports = function(locals, render, callback){
 
   var xml = template({
     config: config,
-    posts: locals.posts.sort('date', -1).limit(feedConfig.limit),
+    posts: locals.posts.sort('date', -1).limit(limit),
     feed_url: config.root + feedConfig.path
   });
 
