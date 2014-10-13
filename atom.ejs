@@ -4,7 +4,7 @@
   <% if (config.subtitle){ %><subtitle><%-: config.subtitle | cdata %></subtitle><% } %>
   <link href="<%- encodeURI(feed_url) %>" rel="self"/>
   <link href="<%- encodeURI(config.url) %>/"/>
-  <updated><%= new Date().toISOString() %></updated>
+  <updated><% if (posts){ %><%= posts.first().date.toDate().toISOString() %><% } else { %><%= new Date().toISOString() %><% } %></updated>
   <id><%- config.url %>/</id>
   <% if (config.author){ %>
   <author>
