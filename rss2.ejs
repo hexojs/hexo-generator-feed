@@ -7,8 +7,8 @@
     <link><%- encodeURI(config.url) %>/</link>
     <atom:link href="<%- encodeURI(feed_url) %>" rel="self" type="application/rss+xml"/>
     <description><%-: config.description | cdata %></description>
-    <pubDate><%= new Date().toUTCString() %></pubDate>
-    <generator>http://zespia.tw/hexo/</generator>
+    <pubDate><%= posts.first().updated.toDate().toUTCString() %></pubDate>
+    <generator>http://hexo.io/</generator>
     <% posts.each(function(post){ %>
     <item>
       <title><%-: post.title | cdata %></title>

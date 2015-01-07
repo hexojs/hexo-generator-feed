@@ -1,4 +1,6 @@
-# Feed generator
+# hexo-generator-feed
+
+[![NPM version](https://badge.fury.io/js/hexo-generator-feed.svg)](http://badge.fury.io/js/hexo-generator-feed)
 
 Generate Atom 1.0 or RSS 2.0 feed.
 
@@ -14,9 +16,9 @@ You can configure this plugin in `_config.yml`.
 
 ``` yaml
 feed:
-    type: atom
-    path: atom.xml
-    limit: 20
+  type: atom
+  path: atom.xml
+  limit: 20
 ```
 
 - **type** - Feed type. (atom/rss2)

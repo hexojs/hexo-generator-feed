@@ -4,7 +4,7 @@
   <% if (config.subtitle){ %><subtitle><%-: config.subtitle | cdata %></subtitle><% } %>
   <link href="<%- encodeURI(feed_url) %>" rel="self"/>
   <link href="<%- encodeURI(config.url) %>/"/>
-  <updated><%= new Date().toISOString() %></updated>
+  <updated><%= posts.first().updated.toISOString() %></updated>
   <id><%- config.url %>/</id>
   <% if (config.author){ %>
   <author>
@@ -12,14 +12,14 @@
     <% if (config.email){ %><email><%-: config.email | cdata %></email><% } %>
   </author>
   <% } %>
-  <generator uri="http://zespia.tw/hexo/">Hexo</generator>
+  <generator uri="http://hexo.io/">Hexo</generator>
   <% posts.each(function(post){ %>
   <entry>
     <title><%-: post.title | cdata %></title>
     <link href="<%- encodeURI(post.permalink) %>"/>
     <id><%- post.permalink %></id>
-    <published><%= post.date.toDate().toISOString() %></published>
-    <updated><%= post.updated.toDate().toISOString() %></updated>
+    <published><%= post.date.toISOString() %></published>
+    <updated><%= post.updated.toISOString() %></updated>
     <content type="html"><%-: post.content | cdata %></content>
     <summary type="html">
     <% if (post.description){ %><%-: post.description | cdata %>
