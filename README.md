@@ -10,6 +10,9 @@ Generate Atom 1.0 or RSS 2.0 feed.
 $ npm install hexo-generator-feed --save
 ```
 
+- Hexo 3: 1.x
+- Hexo 2: 0.x
+
 ## Options
 
 You can configure this plugin in `_config.yml`.
