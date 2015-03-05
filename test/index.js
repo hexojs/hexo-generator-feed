@@ -18,6 +18,7 @@ describe('Feed generator', function(){
   var Post = hexo.model('Post');
   var generator = require('../lib/generator').bind(hexo);
   var posts;
+  var locals;
 
   before(function(){
     return Post.insert([
@@ -26,6 +27,7 @@ describe('Feed generator', function(){
       {source: 'baz', slug: 'baz', date: 1e8 - 1}
     ]).then(function(data){
       posts = Post.sort('-date');
+      locals = hexo.locals.toObject();
     });
   });
 
@@ -36,7 +38,7 @@ describe('Feed generator', function(){
       limit: 2
     };
 
-    var result = generator(hexo.locals);
+    var result = generator(locals);
 
     result.path.should.eql('atom.xml');
     result.data.should.eql(atomTmpl({
@@ -53,7 +55,7 @@ describe('Feed generator', function(){
       limit: 2
     };
 
-    var result = generator(hexo.locals);
+    var result = generator(locals);
 
     result.path.should.eql('rss2.xml');
     result.data.should.eql(rss2Tmpl({
@@ -70,7 +72,7 @@ describe('Feed generator', function(){
       limit: 0
     };
 
-    var result = generator(hexo.locals);
+    var result = generator(locals);
 
     result.path.should.eql('atom.xml');
     result.data.should.eql(atomTmpl({

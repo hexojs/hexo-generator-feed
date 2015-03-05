@@ -34,7 +34,7 @@
     "gulp-jshint": "^1.8.6",
     "gulp-load-plugins": "^0.8.0",
     "gulp-mocha": "^2.0.0",
-    "hexo": "^3.0.0-beta.1",
+    "hexo": "^3.0.0",
     "jshint-stylish": "^1.0.0",
     "mocha": "^2.0.1",
     "rimraf": "^2.2.8"
