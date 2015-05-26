@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
+  <% var url = config.url + config.root %>
   <title><%-: config.title | cdata %></title>
   <% if (config.subtitle){ %><subtitle><%-: config.subtitle | cdata %></subtitle><% } %>
   <link href="<%- encodeURI(feed_url) %>" rel="self"/>
-  <link href="<%- encodeURI(config.url) %>/"/>
+  <link href="<%- encodeURI(url) %>/"/>
   <updated><%= posts.first().updated.toISOString() %></updated>
-  <id><%- config.url %>/</id>
+  <id><%- url %>/</id>
   <% if (config.author){ %>
   <author>
     <name><%-: config.author | cdata %></name>
@@ -16,8 +17,8 @@
   <% posts.each(function(post){ %>
   <entry>
     <title><%-: post.title | cdata %></title>
-    <link href="<%- encodeURI(post.permalink) %>"/>
-    <id><%- post.permalink %></id>
+    <link href="<%- encodeURI(url + post.path) %>"/>
+    <id><%- url + post.path %></id>
     <published><%= post.date.toISOString() %></published>
     <updated><%= post.updated.toISOString() %></updated>
     <content type="html"><%-: post.content | cdata %></content>
@@ -27,7 +28,7 @@
     <% } else {%><%-: post.content.substring(0, 140) | cdata %><% } %>
     </summary>
     <% [].concat(post.tags.toArray(), post.categories.toArray()).forEach(function(category){ %>
-      <category term="<%= category.name %>" scheme="<%- encodeURI(category.permalink) %>"/>
+      <category term="<%= category.name %>" scheme="<%- encodeURI(url + category.path) %>"/>
     <% }) %>
   </entry>
   <% }) %>
