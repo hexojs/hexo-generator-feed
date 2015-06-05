@@ -1,6 +1,6 @@
 {
   "name": "hexo-generator-feed",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Feed generator plugin for Hexo",
   "main": "index",
   "scripts": {
@@ -24,7 +24,7 @@
   "license": "MIT",
   "dependencies": {
     "ejs": "^1.0.0",
-    "utils-merge": "^1.0.0"
+    "object-assign": "^3.0.0"
   },
   "devDependencies": {
     "chai": "^1.9.1",

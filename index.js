@@ -1,7 +1,7 @@
-var merge = require('utils-merge');
+var assign = require('object-assign');
 var pathFn = require('path');
 
-var config = hexo.config.feed = merge({
+var config = hexo.config.feed = assign({
   type: 'atom',
   limit: 20
 }, hexo.config.feed);
