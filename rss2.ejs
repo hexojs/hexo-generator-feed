@@ -5,7 +5,7 @@
   <channel>
     <% var url = config.url + config.root %>
     <title><%-: config.title | cdata %></title>
-    <link><%- encodeURI(url) %>/</link>
+    <link><%- encodeURI(url) %></link>
     <atom:link href="<%- encodeURI(feed_url) %>" rel="self" type="application/rss+xml"/>
     <description><%-: config.description | cdata %></description>
     <pubDate><%= posts.first().updated.toDate().toUTCString() %></pubDate>
