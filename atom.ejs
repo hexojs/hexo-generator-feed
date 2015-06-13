@@ -4,9 +4,9 @@
   <title><%-: config.title | cdata %></title>
   <% if (config.subtitle){ %><subtitle><%-: config.subtitle | cdata %></subtitle><% } %>
   <link href="<%- encodeURI(feed_url) %>" rel="self"/>
-  <link href="<%- encodeURI(url) %>/"/>
+  <link href="<%- encodeURI(url) %>"/>
   <updated><%= posts.first().updated.toISOString() %></updated>
-  <id><%- url %>/</id>
+  <id><%- url %></id>
   <% if (config.author){ %>
   <author>
     <name><%-: config.author | cdata %></name>
