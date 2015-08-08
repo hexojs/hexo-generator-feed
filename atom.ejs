@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <% var url = config.url + config.root %>
   <title><%-: config.title | cdata %></title>
   <% if (config.subtitle){ %><subtitle><%-: config.subtitle | cdata %></subtitle><% } %>
   <link href="<%- encodeURI(feed_url) %>" rel="self"/>

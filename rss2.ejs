@@ -3,7 +3,6 @@
   xmlns:atom="http://www.w3.org/2005/Atom"
   xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <% var url = config.url + config.root %>
     <title><%-: config.title | cdata %></title>
     <link><%- encodeURI(url) %></link>
     <atom:link href="<%- encodeURI(feed_url) %>" rel="self" type="application/rss+xml"/>
@@ -22,7 +21,7 @@
       <% } else {%><%-: post.content.substring(0, 140) | cdata %><% } %>
       </description>
       <content:encoded><%-: post.content | cdata %></content:encoded>
-      <% if (post.comments){ %><comments><%- encodeURI(url + post.path) %>#disqus_comments</comments><% } %>
+      <% if (post.comments){ %><comments><%- encodeURI(url + post.path) %>#disqus_thread</comments><% } %>
     </item>
     <% }) %>
   </channel>
