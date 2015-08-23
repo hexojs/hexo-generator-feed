@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>{{ config.title | e }}</title>
+  {% if config.subtitle %}<subtitle>{{ config.subtitle | e }}</subtitle>{% endif %}
+  <link href="{{ feed_url | uriencode }}" rel="self"/>
+  <link href="{{ url | uriencode }}"/>
+  <updated>{{ posts.first().updated.toISOString() }}</updated>
+  <id>{{ url }}</id>
+  {% if config.author %}
+  <author>
+    <name>{{ config.author | e }}</name>
+    {% if config.email %}<email>{{ config.email | e }}</email>{% endif %}
+  </author>
+  {% endif %}
+  <generator uri="http://hexo.io/">Hexo</generator>
+  {% for post in posts.toArray() %}
+  <entry>
+    <title>{{ post.title | e }}</title>
+    <link href="{{ (url + post.path) | uriencode }}"/>
+    <id>{{ url + post.path }}</id>
+    <published>{{ post.date.toISOString() }}</published>
+    <updated>{{ post.updated.toISOString() }}</updated>
+    <content type="html">{{ post.content | e }}</content>
+    <summary type="html">
+    {% if post.description %}
+      {{ post.description | e }}
+    {% elif post.excerpt %}
+      {{ post.excerpt | e }}
+    {% elif post.content %}
+      {{ post.content.substring(0, 140) | e }}
+    {% endif %}
+    </summary>
+    {% for category in post.categories.toArray() %}
+      <category term="{{ category.name }}" scheme="{{ (url + category.path) | uriencode }}"/>
+    {% endfor %}
+    {% for tag in post.tags.toArray() %}
+      <category term="{{ tag.name }}" scheme="{{ (url + tag.path) | uriencode }}"/>
+    {% endfor %}
+  </entry>
+  {% endfor %}
+</feed>
