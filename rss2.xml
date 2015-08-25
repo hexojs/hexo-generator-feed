@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"
+  xmlns:atom="http://www.w3.org/2005/Atom"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>{{ config.title | e }}</title>
+    <link>{{ url | uriencode }}</link>
+    <atom:link href="{{ feed_url | uriencode }}" rel="self" type="application/rss+xml"/>
+    <description>{{ config.description | e }}</description>
+    <pubDate>{{ posts.first().updated.toDate().toUTCString() }}</pubDate>
+    <generator>http://hexo.io/</generator>
+    {% for post in posts.toArray() %}
+    <item>
+      <title>{{ post.title | e }}</title>
+      <link>{{ (url + post.path) | uriencode }}</link>
+      <guid>{{ (url + post.path) | uriencode }}</guid>
+      <pubDate>{{ post.date.toDate().toUTCString() }}</pubDate>
+      <description>
+      {% if post.description %}
+        {{ post.description | e }}
+      {% elif post.excerpt %}
+        {{ post.excerpt | e }}
+      {% elif post.content %}
+        {{ post.content.substring(0, 140) | e }}
+      {% endif %}
+      </description>
+      <content:encoded>{{ post.content | e }}</content:encoded>
+      {% if post.comments %}<comments>{{ (url + post.path) | uriencode }}#disqus_thread</comments>{% endif %}
+    </item>
+    {% endfor %}
+  </channel>
+</rss>
