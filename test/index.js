@@ -115,9 +115,9 @@ describe('Feed generator', function() {
       path: 'atom.xml'
     };
 
-    var checkURL = function(root, path, valid) {
-      hexo.config.url = root;
-      hexo.config.path = path;
+    var checkURL = function(url, root, valid) {
+      hexo.config.url = url;
+      hexo.config.root = root;
 
       var result = generator(locals);
       var $ = cheerio.load(result.data);
