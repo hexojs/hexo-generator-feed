@@ -7,7 +7,7 @@
     <link>{{ url | uriencode }}</link>
     <atom:link href="{{ feed_url | uriencode }}" rel="self" type="application/rss+xml"/>
     <description>{{ config.description | e }}</description>
-    <pubDate>{{ posts.first().updated.toDate().toUTCString() }}</pubDate>
+    <pubDate>{{ posts.data.length > 0 ? posts.first().updated.toDate().toUTCString() : '' }}</pubDate>
     <generator>http://hexo.io/</generator>
     {% for post in posts.toArray() %}
     <item>
