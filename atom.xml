@@ -4,7 +4,7 @@
   {% if config.subtitle %}<subtitle>{{ config.subtitle | e }}</subtitle>{% endif %}
   <link href="{{ feed_url | uriencode }}" rel="self"/>
   <link href="{{ url | uriencode }}"/>
-  <updated>{{ posts.data.length > 1 ? posts.first().updated.toISOString() : '' }}</updated>
+  <updated>{{ posts.data.length > 0 ? posts.first().updated.toISOString() : '' }}</updated>
   <id>{{ url }}</id>
   {% if config.author %}
   <author>
