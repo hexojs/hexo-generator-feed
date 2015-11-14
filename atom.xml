@@ -3,6 +3,7 @@
   <title>{{ config.title | e }}</title>
   {% if config.subtitle %}<subtitle>{{ config.subtitle | e }}</subtitle>{% endif %}
   <link href="{{ feed_url | uriencode }}" rel="self"/>
+  {% if config.feed.hub %}<link href="{{ config.feed.hub | uriencode }}" rel="hub"/>{% endif %}
   <link href="{{ url | uriencode }}"/>
   <updated>{{ posts.first().updated.toISOString() }}</updated>
   <id>{{ url }}</id>

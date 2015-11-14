@@ -6,6 +6,7 @@
     <title>{{ config.title | e }}</title>
     <link>{{ url | uriencode }}</link>
     <atom:link href="{{ feed_url | uriencode }}" rel="self" type="application/rss+xml"/>
+    {% if config.feed.hub %}<atom:link href="{{ config.feed.hub | uriencode }}" rel="hub"/>{% endif %}
     <description>{{ config.description | e }}</description>
     <pubDate>{{ posts.first().updated.toDate().toUTCString() }}</pubDate>
     <generator>http://hexo.io/</generator>
