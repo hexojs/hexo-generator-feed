@@ -21,7 +21,9 @@
     <id>{{ url + post.path }}</id>
     <published>{{ post.date.toISOString() }}</published>
     <updated>{{ post.updated.toISOString() }}</updated>
+    {% if (config.feed.content) { %}
     <content type="html">{{ post.content | e }}</content>
+    {% } %}
     <summary type="html">
     {% if post.description %}
       {{ post.description | e }}

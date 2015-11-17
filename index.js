@@ -4,7 +4,8 @@ var pathFn = require('path');
 var config = hexo.config.feed = assign({
   type: 'atom',
   limit: 20,
-  hub: ''
+  hub: '',
+  content: true
 }, hexo.config.feed);
 
 var type = config.type.toLowerCase();
