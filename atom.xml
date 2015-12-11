@@ -2,25 +2,37 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>{{ config.title | e }}</title>
   {% if config.subtitle %}<subtitle>{{ config.subtitle | e }}</subtitle>{% endif %}
-  <link href="{{ feed_url | uriencode }}" rel="self"/>
+  <link href="{{ feed_url | uriencode }}" rel="self" type="application/atom+xml"/>
+  <link href="{{ config.url }}" rel="alternate" type="application/atom+xml"/>
   {% if config.feed.hub %}<link href="{{ config.feed.hub | uriencode }}" rel="hub"/>{% endif %}
-  <link href="{{ url | uriencode }}"/>
   <updated>{{ posts.first().updated.toISOString() }}</updated>
   <id>{{ url }}</id>
   {% if config.author %}
   <author>
     <name>{{ config.author | e }}</name>
+	<uri>{{ config.url }}</uri>
     {% if config.email %}<email>{{ config.email | e }}</email>{% endif %}
   </author>
   {% endif %}
   <generator uri="http://hexo.io/">Hexo</generator>
   {% for post in posts.toArray() %}
   <entry>
-    <title>{{ post.title | e }}</title>
-    <link href="{{ (url + post.path) | uriencode }}"/>
+    <title type="html">{{ post.title | e }}</title>
+    <link href="{{ (url + post.path) | uriencode }}" rel="alternate" type="text/html"/>
     <id>{{ url + post.path }}</id>
     <published>{{ post.date.toISOString() }}</published>
     <updated>{{ post.updated.toISOString() }}</updated>
+	<author>
+	{% if post.authorId %}
+	  {% set author = authors[post.authorId] %}
+	  <name>{{ author.name }}</name>
+	  <email>{{ author.email }}</email>
+	{% else %}	  
+	  <name>{{ config.author }}</name>
+	  <email>{{ config.email }}</email>	  
+	{% endif %}
+	  <uri>{{ config.url }}</uri>
+	</author>
     {% if config.feed.content %}
     <content type="html">{{ post.content | e }}</content>
     {% endif %}
