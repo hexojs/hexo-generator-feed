@@ -21,6 +21,14 @@ if (type !== 'atom' && type !== 'rss2') {
 if (!config.path) {
   config.path = config.type + '.xml';
 }
+// Set alt feed path
+if (!config.altpath) {
+  config.altpath = 'feed/index.html'
+}
+// Set itunes feed path
+if (!config.itunespath) {
+  config.itunespath = 'itunes.xml'
+}
 
 // Add extension name if don't have
 if (!pathFn.extname(config.path)) {
@@ -28,3 +36,5 @@ if (!pathFn.extname(config.path)) {
 }
 
 hexo.extend.generator.register('feed', require('./lib/generator'));
+hexo.extend.generator.register('altfeed', require('./lib/alternategenerator'));
+//hexo.extend.generator.register('itunesfeed', require('./lib/itunesgenerator'));
