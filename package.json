@@ -19,11 +19,13 @@
     "feed",
     "atom",
     "generator",
-	"WesternDevs"
+    "WesternDevs"
   ],
   "author": "Donald Belcham <donald.belcham@gmail.com> (http://westerndevs.com)",
   "license": "MIT",
   "dependencies": {
+    "hexo-util": "^0.4.1",
+    "moment": "^2.10.6",
     "nunjucks": "^1.3.4",
     "object-assign": "^4.0.1"
   },

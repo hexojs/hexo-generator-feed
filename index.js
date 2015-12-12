@@ -37,4 +37,4 @@ if (!pathFn.extname(config.path)) {
 
 hexo.extend.generator.register('feed', require('./lib/generator'));
 hexo.extend.generator.register('altfeed', require('./lib/alternategenerator'));
-//hexo.extend.generator.register('itunesfeed', require('./lib/itunesgenerator'));
+hexo.extend.generator.register('itunesfeed', require('./lib/itunesgenerator'));
