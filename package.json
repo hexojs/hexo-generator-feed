@@ -1,6 +1,6 @@
 {
   "name": "hexo-generator-feed-westerndevs",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Feed generator plugin for Hexo customized for Western Devs",
   "main": "index",
   "scripts": {
