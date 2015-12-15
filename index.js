@@ -21,7 +21,7 @@ if (type !== 'atom' && type !== 'rss2') {
 if (!config.path) {
   config.path = config.type + '.xml';
 }
-}
+
 // Set itunes feed path
 if (!config.itunespath) {
   config.itunespath = 'itunes.xml'
