@@ -31,7 +31,7 @@
 				<itunes:author>Western Devs</itunes:author>
 				<itunes:subtitle>{{ post.description }}</itunes:subtitle>
 				<itunes:summary><![CDATA[{{ post.content }}!]]></itunes:summary>
-				{% if post.libsyn %}
+				{% if post.podcast.libsynId %}
 				<enclosure url="http://traffic.libsyn.com/westerndevspodcast/{{post.podcast.filename}}" length="{{post.podcast.filesize}}" type="audio/mpeg" />
 				{% else %}
 				<enclosure url="http://cdn.westerndevs.com/podcasts/{{post.podcast.filename}}" length="{{post.podcast.filesize}}" type="audio/mpeg" />
