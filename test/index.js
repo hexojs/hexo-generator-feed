@@ -1,4 +1,6 @@
-var should = require('chai').should();
+'use strict';
+
+var should = require('chai').should(); // eslint-disable-line
 var Hexo = require('hexo');
 var nunjucks = require('nunjucks');
 var env = new nunjucks.Environment();
@@ -36,19 +38,11 @@ describe('Feed generator', function() {
   var locals;
 
   before(function() {
-    return Post.insert([{
-      source: 'foo',
-      slug: 'foo',
-      date: 1e8
-    }, {
-      source: 'bar',
-      slug: 'bar',
-      date: 1e8 + 1
-    }, {
-      source: 'baz',
-      slug: 'baz',
-      date: 1e8 - 1
-    }]).then(function(data) {
+    return Post.insert([
+      {source: 'foo', slug: 'foo', date: 1e8},
+      {source: 'bar', slug: 'bar', date: 1e8 + 1},
+      {source: 'baz', slug: 'baz', date: 1e8 - 1}
+    ]).then(function(data) {
       posts = Post.sort('-date');
       locals = hexo.locals.toObject();
     });
@@ -124,7 +118,7 @@ describe('Feed generator', function() {
 
       $('feed>id').text().should.eql(valid);
       $('feed>entry>link').attr('href').should.eql(valid);
-    }
+    };
 
     checkURL('http://localhost/', '/', 'http://localhost/');
 

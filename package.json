@@ -4,13 +4,13 @@
   "description": "Feed generator plugin for Hexo",
   "main": "index",
   "scripts": {
-    "test": "gulp test"
+    "eslint": "eslint .",
+    "jscs": "jscs .",
+    "test": "mocha test/index.js",
+    "test-cov": "istanbul cover --print both _mocha -- test/index.js"
   },
   "directories": {
     "lib": "./lib"
-  },
-  "engines": {
-    "node": ">= 0.10.0"
   },
   "repository": "hexojs/hexo-generator-feed",
   "keywords": [
@@ -29,15 +29,12 @@
   "devDependencies": {
     "chai": "^3.2.0",
     "cheerio": "^0.19.0",
-    "coveralls": "^2.11.2",
-    "gulp": "^3.8.9",
-    "gulp-istanbul": "^0.10.0",
-    "gulp-jshint": "^1.8.6",
-    "gulp-load-plugins": "^0.10.0",
-    "gulp-mocha": "^2.0.0",
+    "eslint": "^1.10.3",
+    "eslint-config-hexo": "^1.0.2",
     "hexo": "^3.0.0",
-    "jshint-stylish": "^2.0.1",
+    "jscs": "^2.9.0",
+    "jscs-preset-hexo": "^1.0.1",
     "mocha": "^2.0.1",
-    "rimraf": "^2.2.8"
+    "istanbul": "^0.4.2"
   }
 }

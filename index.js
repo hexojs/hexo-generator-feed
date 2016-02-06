@@ -1,3 +1,6 @@
+/* global hexo */
+'use strict';
+
 var assign = require('object-assign');
 var pathFn = require('path');
 
