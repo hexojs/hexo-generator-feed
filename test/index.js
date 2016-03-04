@@ -62,7 +62,7 @@ describe('Feed generator', function() {
       config: hexo.config,
       url: urlConfig.url,
       posts: posts.limit(2),
-      feed_url: hexo.config.root + 'atom.xml'
+      feed_url: urlConfig.url + 'atom.xml'
     }));
   });
 
