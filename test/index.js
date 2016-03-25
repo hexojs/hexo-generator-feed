@@ -98,7 +98,7 @@ describe('Feed generator', function() {
     }));
   });
 
-  it('Preserves HTML in the content field', function(){
+  it('Preserves HTML in the content field', function() {
     hexo.config.feed = {
       type: 'rss2',
       path: 'rss2.xml',
@@ -127,7 +127,6 @@ describe('Feed generator', function() {
     description.should.be.equal('<h6>TestHTML</h6>');
 
   });
-
 
   it('Relative URL handling', function() {
     hexo.config.feed = {
