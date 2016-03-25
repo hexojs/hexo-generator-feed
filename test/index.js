@@ -9,11 +9,6 @@ var fs = require('fs');
 var assign = require('object-assign');
 var cheerio = require('cheerio');
 
-nunjucks.configure({
-  autoescape: false,
-  watch: false
-});
-
 env.addFilter('uriencode', function(str) {
   return encodeURI(str);
 });
@@ -39,7 +34,7 @@ describe('Feed generator', function() {
 
   before(function() {
     return Post.insert([
-      {source: 'foo', slug: 'foo', date: 1e8},
+      {source: 'foo', slug: 'foo', content: '<h6>TestHTML</h6>', date: 1e8},
       {source: 'bar', slug: 'bar', date: 1e8 + 1},
       {source: 'baz', slug: 'baz', date: 1e8 - 1}
     ]).then(function(data) {
@@ -103,6 +98,36 @@ describe('Feed generator', function() {
     }));
   });
 
+  it('Preserves HTML in the content field', function() {
+    hexo.config.feed = {
+      type: 'rss2',
+      path: 'rss2.xml',
+      content: true
+    };
+    var result = generator(locals);
+    var $ = cheerio.load(result.data, {xmlMode: true});
+
+    var description = $('content\\\:encoded').html()
+      .replace(/^<!\[CDATA\[/, '')
+      .replace(/\]\]>$/, '');
+
+    description.should.be.equal('<h6>TestHTML</h6>');
+
+    hexo.config.feed = {
+      type: 'atom',
+      path: 'atom.xml',
+      content: true
+    };
+    result = generator(locals);
+    $ = cheerio.load(result.data, {xmlMode: true});
+    description = $('content[type="html"]').html()
+      .replace(/^<!\[CDATA\[/, '')
+      .replace(/\]\]>$/, '');
+
+    description.should.be.equal('<h6>TestHTML</h6>');
+
+  });
+
   it('Relative URL handling', function() {
     hexo.config.feed = {
       type: 'atom',
@@ -132,4 +157,5 @@ describe('Feed generator', function() {
     checkURL('http://localhost/b/l/o/g', '/', 'http://localhost/b/l/o/g/');
 
   });
+
 });

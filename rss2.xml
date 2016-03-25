@@ -3,30 +3,30 @@
   xmlns:atom="http://www.w3.org/2005/Atom"
   xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>{{ config.title | e }}</title>
+    <title>{{ config.title }}</title>
     <link>{{ url | uriencode }}</link>
     <atom:link href="{{ feed_url | uriencode }}" rel="self" type="application/rss+xml"/>
     {% if config.feed.hub %}<atom:link href="{{ config.feed.hub | uriencode }}" rel="hub"/>{% endif %}
-    <description>{{ config.description | e }}</description>
+    <description>{{ config.description }}</description>
     <pubDate>{{ posts.first().updated.toDate().toUTCString() }}</pubDate>
     <generator>http://hexo.io/</generator>
     {% for post in posts.toArray() %}
     <item>
-      <title>{{ post.title | e }}</title>
+      <title>{{ post.title }}</title>
       <link>{{ (url + post.path) | uriencode }}</link>
       <guid>{{ (url + post.path) | uriencode }}</guid>
       <pubDate>{{ post.date.toDate().toUTCString() }}</pubDate>
       <description>
       {% if post.description %}
-        {{ post.description | e }}
+        {{ post.description }}
       {% elif post.excerpt %}
-        {{ post.excerpt | e }}
+        {{ post.excerpt }}
       {% elif post.content %}
-        {{ post.content.substring(0, 140) | e }}
+        {{ post.content.substring(0, 140) }}
       {% endif %}
       </description>
-      {% if config.feed.content %}
-      <content:encoded>{{ post.content | e }}</content:encoded>
+      {% if config.feed.content and post.content %}
+      <content:encoded><![CDATA[{{ post.content | safe }}]]></content:encoded>
       {% endif %}
       {% if post.comments %}<comments>{{ (url + post.path) | uriencode }}#disqus_thread</comments>{% endif %}
     </item>
