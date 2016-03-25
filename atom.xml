@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>{{ config.title | e }}</title>
-  {% if config.subtitle %}<subtitle>{{ config.subtitle | e }}</subtitle>{% endif %}
+  <title>{{ config.title }}</title>
+  {% if config.subtitle %}<subtitle>{{ config.subtitle }}</subtitle>{% endif %}
   <link href="{{ feed_url | uriencode }}" rel="self"/>
   {% if config.feed.hub %}<link href="{{ config.feed.hub | uriencode }}" rel="hub"/>{% endif %}
   <link href="{{ url | uriencode }}"/>
@@ -9,28 +9,28 @@
   <id>{{ url }}</id>
   {% if config.author %}
   <author>
-    <name>{{ config.author | e }}</name>
-    {% if config.email %}<email>{{ config.email | e }}</email>{% endif %}
+    <name>{{ config.author }}</name>
+    {% if config.email %}<email>{{ config.email }}</email>{% endif %}
   </author>
   {% endif %}
   <generator uri="http://hexo.io/">Hexo</generator>
   {% for post in posts.toArray() %}
   <entry>
-    <title>{{ post.title | e }}</title>
+    <title>{{ post.title }}</title>
     <link href="{{ (url + post.path) | uriencode }}"/>
     <id>{{ url + post.path }}</id>
     <published>{{ post.date.toISOString() }}</published>
     <updated>{{ post.updated.toISOString() }}</updated>
-    {% if config.feed.content %}
-    <content type="html">{{ post.content | e }}</content>
+    {% if config.feed.content and post.content %}
+    <content type="html"><![CDATA[{{ post.content | safe }}]]></content>
     {% endif %}
     <summary type="html">
     {% if post.description %}
-      {{ post.description | e }}
+      {{ post.description }}
     {% elif post.excerpt %}
-      {{ post.excerpt | e }}
+      {{ post.excerpt }}
     {% elif post.content %}
-      {{ post.content.substring(0, 140) | e }}
+      {{ post.content.substring(0, 140) }}
     {% endif %}
     </summary>
     {% for category in post.categories.toArray() %}
