@@ -22,7 +22,12 @@
     <published>{{ post.date.toISOString() }}</published>
     <updated>{{ post.updated.toISOString() }}</updated>
     {% if config.feed.content %}
-    <content type="html">{{ post.content | e }}</content>
+    <content type="html">
+      {{ post.content | e }}
+      {% if config.feed.footer %}
+        {{ config.feed.footer | e }}
+      {% endif %}
+    </content>
     {% endif %}
     <summary type="html">
     {% if post.description %}
