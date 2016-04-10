@@ -26,7 +26,12 @@
       {% endif %}
       </description>
       {% if config.feed.content %}
-      <content:encoded>{{ post.content | e }}</content:encoded>
+      <content:encoded>
+        {{ post.content | e }}
+        {% if config.feed.footer %}
+            {{ config.feed.footer | e }}
+        {% endif %}
+      </content:encoded>
       {% endif %}
       {% if post.comments %}<comments>{{ (url + post.path) | uriencode }}#disqus_thread</comments>{% endif %}
     </item>
