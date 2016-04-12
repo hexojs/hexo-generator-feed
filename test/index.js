@@ -29,6 +29,9 @@ describe('Feed generator', function() {
   });
   var Post = hexo.model('Post');
   var generator = require('../lib/generator').bind(hexo);
+
+  (require('../node_modules/hexo/lib/plugins/helper'))(hexo);
+
   var posts;
   var locals;
 
