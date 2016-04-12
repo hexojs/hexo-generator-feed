@@ -34,10 +34,10 @@
     {% endif %}
     </summary>
     {% for category in post.categories.toArray() %}
-      <category term="{{ category.name }}" scheme="{{ (url + category.path) | uriencode }}"/>
+      <category term="{{ escape(category.name) }}" scheme="{{ (url + category.path) | uriencode }}"/>
     {% endfor %}
     {% for tag in post.tags.toArray() %}
-      <category term="{{ tag.name }}" scheme="{{ (url + tag.path) | uriencode }}"/>
+      <category term="{{ escape(tag.name) }}" scheme="{{ (url + tag.path) | uriencode }}"/>
     {% endfor %}
   </entry>
   {% endfor %}
