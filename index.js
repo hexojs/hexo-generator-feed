@@ -25,9 +25,4 @@ if (!config.path) {
   config.path = config.type + '.xml';
 }
 
-// Add extension name if don't have
-if (!pathFn.extname(config.path)) {
-  config.path += '.xml';
-}
-
 hexo.extend.generator.register('feed', require('./lib/generator'));
