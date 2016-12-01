@@ -13,6 +13,10 @@ $ npm install hexo-generator-feed --save
 - Hexo 3: 1.x
 - Hexo 2: 0.x
 
+## Use
+
+In the [front-matter](https://hexo.io/docs/front-matter.html) of your post, you can optionally add a `description` setting to write a summary for the post. Otherwise the summary will default to the excerpt or the first 140 characters of the post.
+
 ## Options
 
 You can configure this plugin in `_config.yml`.
