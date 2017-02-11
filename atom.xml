@@ -37,7 +37,6 @@
         {{ delim_pos }}
 	{{ delim_pos > -1 }}
         {% if delim_pos > -1 %}
-	  {{ post.raw }}
           {{ short_content.substring(0, delim_pos+1) }}
         {% else %}
           {{ short_content }}
