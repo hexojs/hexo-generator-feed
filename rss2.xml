@@ -22,7 +22,7 @@
       {% elif post.excerpt %}
         {{ post.excerpt }}
       {% elif post.content %}
-        {{ post.content.substring(0, config.content_limit) }}
+        {{ post.content.substring(0, config.feed.content_limit) }}
       {% endif %}
       </description>
       {% if config.feed.content and post.content %}
