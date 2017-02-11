@@ -37,7 +37,7 @@
           {{ short_content.substring(0, delim_pos) }}
         {% else %}
           {{ short_content }}
-        {% end %}
+        {% endif %}
       {% else %}
         {{ short_content }}
       {% endif %}
