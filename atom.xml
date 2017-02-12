@@ -30,7 +30,11 @@
     {% elif post.excerpt %}
       {{ post.excerpt }}
     {% elif post.content %}
-       {{ post.feedShortContent }}
+       {% if not config.feed.content and config.feed.content_limit %}
+         {{ post.feedShortContent }}
+       {% else %}
+         {{ post.content }}
+       {% endif %}
     {% endif %}
     </summary>
     {% for category in post.categories.toArray() %}
