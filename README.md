@@ -29,7 +29,7 @@ feed:
   hub:
   content:
   content_limit: 140
-  content_limit_delim: ' '
+  content_limit_delim: [".", ":", ",", " "]
 ```
 
 - **type** - Feed type. (atom/rss2)
@@ -38,4 +38,4 @@ feed:
 - **hub** - URL of the PubSubHubbub hubs (Leave it empty if you don't use it)
 - **content** - (optional) set to 'true' to include the contents of the entire post in the feed.
 - **content_limit** - (optional) Default length of post content used in summary. Only used, if **content** setting is false and no custom post description present.
-- **content_limit_delim** - (optional) If **content_limit** is used to shorten post contents, only cut at the last occurrence of this delimiter before reaching the character limit. Not used by default.
+- **content_limit_delim** - (optional) A list of delimiters used to shorten the post content to a feed summary, if **content_limit** is set. If any of the contained delimiters is contained in the post content, cut at its occurence instead of the exact position according to **content_limit**. Delimiters in the list are probed in order for occurrence in the post content. Not used by default.
