@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/">
   <title>{{ config.title }}</title>
   {% if config.subtitle %}<subtitle>{{ config.subtitle }}</subtitle>{% endif %}
   <link href="{{ feed_url | uriencode }}" rel="self"/>
@@ -43,6 +43,9 @@
     {% for tag in post.tags.toArray() %}
       <category term="{{ tag.name }}" scheme="{{ (url + tag.path) | uriencode }}"/>
     {% endfor %}
+    {% if post.thumbnail %}
+        <media:thumbnail url="{{ (url + post.thumbnail) | uriencode }}" width="48" height="48" />
+    {% endif %}
   </entry>
   {% endfor %}
 </feed>

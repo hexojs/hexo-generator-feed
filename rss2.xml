@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0"
   xmlns:atom="http://www.w3.org/2005/Atom"
-  xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  xmlns:content="http://purl.org/rss/1.0/modules/content/"
+  xmlns:media="http://search.yahoo.com/mrss/">
   <channel>
     <title>{{ config.title }}</title>
     <link>{{ url | uriencode }}</link>
@@ -33,6 +34,13 @@
       <content:encoded><![CDATA[{{ post.content | safe }}]]></content:encoded>
       {% endif %}
       {% if post.comments %}<comments>{{ (url + post.path) | uriencode }}#disqus_thread</comments>{% endif %}
+      
+      {% if post.featured_image %}
+      <media:content medium="image" url="{{ (url + post.featured_image) | uriencode }}" />
+      {% endif %}
+      {% if post.thumbnail %}
+      <media:thumbnail url="{{ (url + post.thumbnail) | uriencode }}" width="48" height="48" />
+      {% endif %}
     </item>
     {% endfor %}
   </channel>
