@@ -114,7 +114,7 @@ describe('Feed generator', function() {
       .replace(/^<!\[CDATA\[/, '')
       .replace(/\]\]>$/, '');
 
-    description.should.be.equal('<h6>TestHTML</h6>');
+    description.should.be.equal(encodeURI('<h6>TestHTML</h6>'));
 
     hexo.config.feed = {
       type: 'atom',
@@ -127,7 +127,7 @@ describe('Feed generator', function() {
       .replace(/^<!\[CDATA\[/, '')
       .replace(/\]\]>$/, '');
 
-    description.should.be.equal('<h6>TestHTML</h6>');
+    description.should.be.equal(encodeURI('<h6>TestHTML</h6>'));
 
   });
 
