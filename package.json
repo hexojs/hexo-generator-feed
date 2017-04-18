@@ -1,5 +1,5 @@
 {
-  "name": "hexo-generator-feed",
+  "name": "hexo-generator-xfeed",
   "version": "1.2.2",
   "description": "Feed generator plugin for Hexo",
   "main": "index",
