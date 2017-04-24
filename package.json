@@ -27,14 +27,15 @@
     "object-assign": "^4.1.1"
   },
   "devDependencies": {
+    "babel-eslint": "^7.2.3",
     "chai": "^3.5.0",
     "cheerio": "^0.22.0",
-    "eslint": "^2.13.1",
+    "eslint": "^2.4.0",
     "eslint-config-hexo": "^1.0.4",
     "hexo": "^3.3.1",
+    "istanbul": "^0.4.5",
     "jscs": "^3.0.7",
     "jscs-preset-hexo": "^1.0.1",
-    "mocha": "^3.2.0",
-    "istanbul": "^0.4.5"
+    "mocha": "^3.2.0"
   }
 }
