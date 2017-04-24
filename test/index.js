@@ -13,6 +13,10 @@ env.addFilter('uriencode', function(str) {
   return encodeURI(str);
 });
 
+env.addFilter('noControlChars', function(str) {
+  return str.replace(/[\x00-\x1F\x7F]/g, '');
+});
+
 var atomTmplSrc = pathFn.join(__dirname, '../atom.xml');
 var atomTmpl = nunjucks.compile(fs.readFileSync(atomTmplSrc, 'utf8'), env);
 var rss2TmplSrc = pathFn.join(__dirname, '../rss2.xml');

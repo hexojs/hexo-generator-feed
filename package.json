@@ -1,6 +1,6 @@
 {
   "name": "hexo-generator-feed",
-  "version": "1.2.0",
+  "version": "1.2.2",
   "description": "Feed generator plugin for Hexo",
   "main": "index",
   "scripts": {
@@ -23,18 +23,19 @@
   "author": "Tommy Chen <tommy351@gmail.com> (http://zespia.tw)",
   "license": "MIT",
   "dependencies": {
-    "nunjucks": "^2.4.1",
-    "object-assign": "^4.0.1"
+    "nunjucks": "^3.0.0",
+    "object-assign": "^4.1.1"
   },
   "devDependencies": {
+    "babel-eslint": "^7.2.3",
     "chai": "^3.5.0",
-    "cheerio": "^0.20.0",
+    "cheerio": "^0.22.0",
     "eslint": "^2.4.0",
-    "eslint-config-hexo": "^1.0.3",
-    "hexo": "^3.0.0",
-    "jscs": "^2.11.0",
+    "eslint-config-hexo": "^1.0.4",
+    "hexo": "^3.3.1",
+    "istanbul": "^0.4.5",
+    "jscs": "^3.0.7",
     "jscs-preset-hexo": "^1.0.1",
-    "mocha": "^2.4.5",
-    "istanbul": "^0.4.2"
+    "mocha": "^3.2.0"
   }
 }
