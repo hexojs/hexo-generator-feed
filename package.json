@@ -1,5 +1,5 @@
 {
-  "name": "hexo-generator-xfeed",
+  "name": "hexo-generator-feed",
   "version": "1.2.2",
   "description": "Feed generator plugin for Hexo",
   "main": "index",
@@ -29,7 +29,7 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "cheerio": "^0.22.0",
-    "eslint": "^3.19.0",
+    "eslint": "^2.13.1",
     "eslint-config-hexo": "^1.0.4",
     "hexo": "^3.3.1",
     "jscs": "^3.0.7",

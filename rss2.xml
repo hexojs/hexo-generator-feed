@@ -26,7 +26,7 @@
       {% endif %}
       </description>
       {% if config.feed.content and post.content %}
-      <content:encoded><![CDATA[{{ post.content | uriencode }}]]></content:encoded>
+      <content:encoded><![CDATA[{{ post.content | noControlChars | safe }}]]></content:encoded>
       {% endif %}
       {% if post.comments %}<comments>{{ (url + post.path) | uriencode }}#disqus_thread</comments>{% endif %}
     </item>

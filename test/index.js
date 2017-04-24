@@ -13,6 +13,10 @@ env.addFilter('uriencode', function(str) {
   return encodeURI(str);
 });
 
+env.addFilter('noControlChars', function(str) {
+  return str.replace(/[\x00-\x1F\x7F]/g, '');
+});
+
 var atomTmplSrc = pathFn.join(__dirname, '../atom.xml');
 var atomTmpl = nunjucks.compile(fs.readFileSync(atomTmplSrc, 'utf8'), env);
 var rss2TmplSrc = pathFn.join(__dirname, '../rss2.xml');
@@ -114,7 +118,7 @@ describe('Feed generator', function() {
       .replace(/^<!\[CDATA\[/, '')
       .replace(/\]\]>$/, '');
 
-    description.should.be.equal(encodeURI('<h6>TestHTML</h6>'));
+    description.should.be.equal('<h6>TestHTML</h6>');
 
     hexo.config.feed = {
       type: 'atom',
@@ -127,7 +131,7 @@ describe('Feed generator', function() {
       .replace(/^<!\[CDATA\[/, '')
       .replace(/\]\]>$/, '');
 
-    description.should.be.equal(encodeURI('<h6>TestHTML</h6>'));
+    description.should.be.equal('<h6>TestHTML</h6>');
 
   });
 
