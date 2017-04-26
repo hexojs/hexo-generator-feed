@@ -1,4 +1,6 @@
-var should = require('chai').should();
+'use strict';
+
+var should = require('chai').should(); // eslint-disable-line
 var Hexo = require('hexo');
 var nunjucks = require('nunjucks');
 var env = new nunjucks.Environment();
@@ -7,13 +9,12 @@ var fs = require('fs');
 var assign = require('object-assign');
 var cheerio = require('cheerio');
 
-nunjucks.configure({
-  autoescape: false,
-  watch: false
-});
-
 env.addFilter('uriencode', function(str) {
   return encodeURI(str);
+});
+
+env.addFilter('noControlChars', function(str) {
+  return str.replace(/[\x00-\x1F\x7F]/g, '');
 });
 
 var atomTmplSrc = pathFn.join(__dirname, '../atom.xml');
@@ -32,23 +33,18 @@ describe('Feed generator', function() {
   });
   var Post = hexo.model('Post');
   var generator = require('../lib/generator').bind(hexo);
+
+  (require('../node_modules/hexo/lib/plugins/helper'))(hexo);
+
   var posts;
   var locals;
 
   before(function() {
-    return Post.insert([{
-      source: 'foo',
-      slug: 'foo',
-      date: 1e8
-    }, {
-      source: 'bar',
-      slug: 'bar',
-      date: 1e8 + 1
-    }, {
-      source: 'baz',
-      slug: 'baz',
-      date: 1e8 - 1
-    }]).then(function(data) {
+    return Post.insert([
+      {source: 'foo', slug: 'foo', content: '<h6>TestHTML</h6>', date: 1e8},
+      {source: 'bar', slug: 'bar', date: 1e8 + 1},
+      {source: 'baz', slug: 'baz', date: 1e8 - 1}
+    ]).then(function(data) {
       posts = Post.sort('-date');
       locals = hexo.locals.toObject();
     });
@@ -109,6 +105,36 @@ describe('Feed generator', function() {
     }));
   });
 
+  it('Preserves HTML in the content field', function() {
+    hexo.config.feed = {
+      type: 'rss2',
+      path: 'rss2.xml',
+      content: true
+    };
+    var result = generator(locals);
+    var $ = cheerio.load(result.data, {xmlMode: true});
+
+    var description = $('content\\\:encoded').html()
+      .replace(/^<!\[CDATA\[/, '')
+      .replace(/\]\]>$/, '');
+
+    description.should.be.equal('<h6>TestHTML</h6>');
+
+    hexo.config.feed = {
+      type: 'atom',
+      path: 'atom.xml',
+      content: true
+    };
+    result = generator(locals);
+    $ = cheerio.load(result.data, {xmlMode: true});
+    description = $('content[type="html"]').html()
+      .replace(/^<!\[CDATA\[/, '')
+      .replace(/\]\]>$/, '');
+
+    description.should.be.equal('<h6>TestHTML</h6>');
+
+  });
+
   it('Relative URL handling', function() {
     hexo.config.feed = {
       type: 'atom',
@@ -124,7 +150,7 @@ describe('Feed generator', function() {
 
       $('feed>id').text().should.eql(valid);
       $('feed>entry>link').attr('href').should.eql(valid);
-    }
+    };
 
     checkURL('http://localhost/', '/', 'http://localhost/');
 
@@ -138,4 +164,5 @@ describe('Feed generator', function() {
     checkURL('http://localhost/b/l/o/g', '/', 'http://localhost/b/l/o/g/');
 
   });
+
 });
