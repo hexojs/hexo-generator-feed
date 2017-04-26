@@ -8,7 +8,9 @@ var config = hexo.config.feed = assign({
   type: 'atom',
   limit: 20,
   hub: '',
-  content: true
+  content: true,
+  content_limit: 140,
+  content_limit_delim: ''
 }, hexo.config.feed);
 
 var type = config.type.toLowerCase();
