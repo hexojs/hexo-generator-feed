@@ -35,5 +35,7 @@ if (!pathFn.extname(config.path)) {
   config.path += '.xml';
 }
 
+
 hexo.extend.generator.register('feed', require('./lib/generator'));
+hexo.extend.generator.register('authorfeed', require('./lib/generator-author'));
 hexo.extend.generator.register('itunesfeed', require('./lib/itunesgenerator'));
