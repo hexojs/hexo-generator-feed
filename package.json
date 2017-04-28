@@ -1,7 +1,7 @@
 {
-  "name": "hexo-generator-feed",
+  "name": "hexo-generator-feed-westerndevs",
   "version": "1.2.2",
-  "description": "Feed generator plugin for Hexo",
+  "description": "Feed generator plugin for Hexo customized for Western Devs",
   "main": "index",
   "scripts": {
     "eslint": "eslint .",
@@ -18,11 +18,13 @@
     "rss",
     "feed",
     "atom",
-    "generator"
+    "generator",
+    "WesternDevs"
   ],
-  "author": "Tommy Chen <tommy351@gmail.com> (http://zespia.tw)",
+  "author": "Donald Belcham <donald.belcham@gmail.com> (http://westerndevs.com)",
   "license": "MIT",
   "dependencies": {
+    "moment": "^2.10.6",
     "nunjucks": "^3.0.0",
     "object-assign": "^4.1.1"
   },

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xml:lang="en-US">
+	<channel>
+		<title>Western Devs :: Panel discussions on .NET, software practices, and smoked meat</title>
+		<link>{{config.url}}</link>
+		<atom:link href="http://www.westerndevs.com/itunes.xml" rel="self" type="application/rss+xml" />
+		<language>en-us</language>
+		<copyright>&#x2117; &amp; &#xA9; 2015 Western Devs</copyright>
+		<itunes:subtitle>Semi-regular technical discussions on various topics</itunes:subtitle>
+		<itunes:author>Western Devs</itunes:author>
+		<itunes:summary>A group of software developers, mostly from western Canada, mostly in the Microsoft .NET space, and all west of someplace else get together to discuss topics that tickle their fancy.</itunes:summary>
+		<description>A group of software developers, mostly from western Canada, mostly in the Microsoft .NET space, and all west of someplace else get together to discuss topics that tickle their fancy.</description>
+		<itunes:owner>
+			<itunes:name>Dylan Smith</itunes:name>
+			<itunes:email>dylanfromwinnipeg@gmail.com</itunes:email>
+		</itunes:owner>
+		<itunes:image href="http://www.westerndevs.com/images/Western_Dev_V_rgb.png" />
+		<itunes:explicit>No</itunes:explicit>
+		<itunes:category text="Technology" />
+		<pubDate>{{ pubDate.format("ddd, DD MMM YYYY HH:mm:ss Z") }}</pubDate>
+		<lastBuildDate>{{updatedDate.format("ddd, DD MMM YYYY HH:mm:ss Z") }}</lastBuildDate>
+		<generator>Hexo</generator>
+		<managingEditor>dylanfromwinnipeg@gmail.com (Dylan Smith)</managingEditor>
+		{% for post in podcasts %}
+			<item>
+				<title>{{ post.title }}</title>
+				<link>{{config.url}}{{ post.url }}</link>
+				<pubDate>{{ post.date.format("ddd, DD MMM YYYY HH:mm:ss Z") }}</pubDate>
+				<guid>{{config.url}}/podcasts/{{ post.slug }}</guid>
+				<description><![CDATA[{{ post.content }}!]]></description>
+				<itunes:author>Western Devs</itunes:author>
+				<itunes:subtitle>{{ post.description }}</itunes:subtitle>
+				<itunes:summary><![CDATA[{{ post.content }}!]]></itunes:summary>
+				{% if post.podcast.libsynId %}
+				<enclosure url="http://traffic.libsyn.com/westerndevspodcast/{{post.podcast.filename}}" length="{{post.podcast.filesize}}" type="audio/mpeg" />
+				{% else %}
+				<enclosure url="http://cdn.westerndevs.com/podcasts/{{post.podcast.filename}}" length="{{post.podcast.filesize}}" type="audio/mpeg" />
+				{% endif %}
+				<itunes:duration>{{post.podcast.length}}</itunes:duration>
+				<itunes:explicit>No</itunes:explicit>
+			</item>
+		{% endfor %}
+	</channel> 
+</rss>

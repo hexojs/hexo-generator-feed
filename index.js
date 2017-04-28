@@ -25,9 +25,17 @@ if (!config.path) {
   config.path = config.type + '.xml';
 }
 
+// Set itunes feed path
+if (!config.itunespath) {
+  config.itunespath = 'itunes.xml'
+}
+
 // Add extension name if don't have
 if (!pathFn.extname(config.path)) {
   config.path += '.xml';
 }
 
+
 hexo.extend.generator.register('feed', require('./lib/generator'));
+hexo.extend.generator.register('authorfeed', require('./lib/generator-author'));
+hexo.extend.generator.register('itunesfeed', require('./lib/itunesgenerator'));
