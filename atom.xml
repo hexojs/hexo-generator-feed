@@ -30,7 +30,17 @@
     {% elif post.excerpt %}
       {{ post.excerpt }}
     {% elif post.content %}
-      {{ post.content.substring(0, 140) }}
+      {% set short_content = post.content.substring(0, config.feed.content_limit) %}
+      {% if config.feed.content_limit_delim %}
+        {% set delim_pos = short_content.lastIndexOf(config.feed.content_limit_delim) %}
+        {% if delim_pos > -1 %}
+          {{ short_content.substring(0, delim_pos) }}
+        {% else %}
+          {{ short_content }}
+        {% endif %}
+      {% else %}
+        {{ short_content }}
+      {% endif %}
     {% endif %}
     </summary>
     {% for category in post.categories.toArray() %}
