@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>{{ config.title }}</title>
+  {% if icon %}<icon>{{ icon }}</icon>{% endif %}
   {% if config.subtitle %}<subtitle>{{ config.subtitle }}</subtitle>{% endif %}
   <link href="{{ feed_url | uriencode }}" rel="self"/>
   {% if config.feed.hub %}<link href="{{ config.feed.hub | uriencode }}" rel="hub"/>{% endif %}
