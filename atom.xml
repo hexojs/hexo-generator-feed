@@ -29,9 +29,9 @@
     {% if post.description %}
       {{ post.description }}
     {% elif post.excerpt %}
-      {{ post.excerpt }}
+      {{ post.excerpt | striptags }}
     {% elif post.content %}
-      {{ post.content.substring(0, 140) }}
+      {{ post.content | striptags | truncate(140) }}
     {% endif %}
     </summary>
     {% for category in post.categories.toArray() %}
