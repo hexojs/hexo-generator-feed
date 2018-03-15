@@ -28,6 +28,8 @@
     <summary type="html">
     {% if post.description %}
       {{ post.description }}
+    {% elif post.intro %}
+      {{ post.intro }}
     {% elif post.excerpt %}
       {{ post.excerpt }}
     {% elif post.content %}
