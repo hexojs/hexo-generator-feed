@@ -10,7 +10,8 @@ var config = hexo.config.feed = assign({
   hub: '',
   content: true,
   content_limit: 140,
-  content_limit_delim: ''
+  content_limit_delim: '',
+  order_by: '-date'
 }, hexo.config.feed);
 
 var type = config.type.toLowerCase();
