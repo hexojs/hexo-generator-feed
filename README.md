@@ -30,6 +30,7 @@ feed:
   content:
   content_limit: 140
   content_limit_delim: ' '
+  order_by: -date
 ```
 
 - **type** - Feed type. (atom/rss2)
@@ -39,3 +40,4 @@ feed:
 - **content** - (optional) set to 'true' to include the contents of the entire post in the feed.
 - **content_limit** - (optional) Default length of post content used in summary. Only used, if **content** setting is false and no custom post description present.
 - **content_limit_delim** - (optional) If **content_limit** is used to shorten post contents, only cut at the last occurrence of this delimiter before reaching the character limit. Not used by default.
+- **order_by** - Feed order-by. (Default: -date)
