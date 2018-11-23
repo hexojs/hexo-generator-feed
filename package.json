@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "babel-eslint": "^9.0.0",
-    "chai": "^3.5.0",
+    "chai": "^4.2.0",
     "cheerio": "^0.22.0",
     "eslint": "^2.4.0",
     "eslint-config-hexo": "^1.0.4",
@@ -39,6 +39,6 @@
     "istanbul": "^0.4.5",
     "jscs": "^3.0.7",
     "jscs-preset-hexo": "^1.0.1",
-    "mocha": "^3.2.0"
+    "mocha": "^5.2.0"
   }
 }
