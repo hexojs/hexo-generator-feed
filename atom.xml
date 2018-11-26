@@ -46,6 +46,9 @@
       {% endif %}
     {% endif %}
     </summary>
+    {% if post.image %}
+    <enclosure url="{{ url + post.image) | uriencode }}" type="image" />
+    {% endif %}
     {% for category in post.categories.toArray() %}
       <category term="{{ category.name }}" scheme="{{ (url + category.path) | uriencode }}"/>
     {% endfor %}
