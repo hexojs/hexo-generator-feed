@@ -37,6 +37,9 @@
         {% endif %}
       {% endif %}
       </description>
+      {% if post.image %}
+      <enclosure url="{{ (url + post.image) | uriencode }}" type="image" />
+      {% endif %}
       {% if config.feed.content and post.content %}
       <content:encoded><![CDATA[{{ post.content | noControlChars | safe }}]]></content:encoded>
       {% endif %}
