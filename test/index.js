@@ -43,7 +43,7 @@ describe('Feed generator', function() {
     return Post.insert([
       {source: 'foo', slug: 'foo', content: '<h6>TestHTML</h6>', date: 1e8},
       {source: 'bar', slug: 'bar', date: 1e8 + 1},
-      {source: 'baz', slug: 'baz', date: 1e8 - 1}
+      {source: 'baz', slug: 'baz', title: 'With Image', image: 'test.png', date: 1e8 - 1}
     ]).then(function(data) {
       posts = Post.sort('-date');
       locals = hexo.locals.toObject();
@@ -54,7 +54,7 @@ describe('Feed generator', function() {
     hexo.config.feed = {
       type: 'atom',
       path: 'atom.xml',
-      limit: 2
+      limit: 3
     };
     hexo.config = assign(hexo.config, urlConfig);
     var result = generator(locals);
@@ -63,7 +63,7 @@ describe('Feed generator', function() {
     result.data.should.eql(atomTmpl.render({
       config: hexo.config,
       url: urlConfig.url,
-      posts: posts.limit(2),
+      posts: posts.limit(3),
       feed_url: hexo.config.root + 'atom.xml'
     }));
   });
@@ -72,7 +72,7 @@ describe('Feed generator', function() {
     hexo.config.feed = {
       type: 'rss2',
       path: 'rss2.xml',
-      limit: 2
+      limit: 3
     };
     hexo.config = assign(hexo.config, urlConfig);
     var result = generator(locals);
@@ -81,7 +81,7 @@ describe('Feed generator', function() {
     result.data.should.eql(rss2Tmpl.render({
       config: hexo.config,
       url: urlConfig.url,
-      posts: posts.limit(2),
+      posts: posts.limit(3),
       feed_url: hexo.config.root + 'rss2.xml'
     }));
   });
@@ -163,6 +163,32 @@ describe('Feed generator', function() {
 
     checkURL('http://localhost/b/l/o/g', '/', 'http://localhost/b/l/o/g/');
 
+  });
+
+  it('Prints an enclosure on `image` metadata', function() {
+    hexo.config.feed = {
+      type: 'atom',
+      path: 'atom.xml'
+    };
+
+    var checkURL = function(url, root, selector) {
+      hexo.config.url = url;
+      hexo.config.root = root;
+
+      var result = generator(locals);
+      var $ = cheerio.load(result.data);
+
+      $(selector).length.should.eq(1);
+    };
+
+    checkURL('http://localhost/', '/', 'feed>entry:nth-of-type(3)>content[type="image"]');
+
+    hexo.config.feed = {
+      type: 'rss2',
+      path: 'rss2.xml',
+      content: true
+    };
+    checkURL('http://localhost/', '/', 'item:nth-of-type(3)>enclosure');
   });
 
 });
