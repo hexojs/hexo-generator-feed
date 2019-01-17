@@ -13,6 +13,7 @@
     "lib": "./lib"
   },
   "repository": "hexojs/hexo-generator-feed",
+  "homepage": "https://hexo.io/",
   "keywords": [
     "hexo",
     "rss",
@@ -39,5 +40,8 @@
     "jscs": "^3.0.7",
     "jscs-preset-hexo": "^1.0.1",
     "mocha": "^5.2.0"
+  },
+  "engines": {
+    "node": ">=6.9.0"
   }
 }
