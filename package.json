@@ -26,8 +26,7 @@
     ],
   "license": "MIT",
   "dependencies": {
-    "nunjucks": "^3.0.0",
-    "object-assign": "^4.1.1"
+    "nunjucks": "^3.0.0"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",
