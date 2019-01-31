@@ -12,6 +12,12 @@
   "directories": {
     "lib": "./lib"
   },
+  "files": [
+    "lib/",
+    "atom.xml",
+    "index.js",
+    "rss2.xml"
+  ],
   "repository": "hexojs/hexo-generator-feed",
   "homepage": "https://hexo.io/",
   "keywords": [
