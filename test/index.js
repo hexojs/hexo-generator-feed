@@ -6,7 +6,6 @@ var nunjucks = require('nunjucks');
 var env = new nunjucks.Environment();
 var pathFn = require('path');
 var fs = require('fs');
-var assign = require('object-assign');
 var cheerio = require('cheerio');
 
 env.addFilter('uriencode', function(str) {
@@ -56,7 +55,7 @@ describe('Feed generator', function() {
       path: 'atom.xml',
       limit: 3
     };
-    hexo.config = assign(hexo.config, urlConfig);
+    hexo.config = Object.assign(hexo.config, urlConfig);
     var result = generator(locals);
 
     result.path.should.eql('atom.xml');
@@ -74,7 +73,7 @@ describe('Feed generator', function() {
       path: 'rss2.xml',
       limit: 3
     };
-    hexo.config = assign(hexo.config, urlConfig);
+    hexo.config = Object.assign(hexo.config, urlConfig);
     var result = generator(locals);
 
     result.path.should.eql('rss2.xml');
@@ -92,7 +91,7 @@ describe('Feed generator', function() {
       path: 'atom.xml',
       limit: 0
     };
-    hexo.config = assign(hexo.config, urlConfig);
+    hexo.config = Object.assign(hexo.config, urlConfig);
 
     var result = generator(locals);
 

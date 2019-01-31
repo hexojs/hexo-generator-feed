@@ -1,10 +1,9 @@
 /* global hexo */
 'use strict';
 
-var assign = require('object-assign');
 var pathFn = require('path');
 
-var config = hexo.config.feed = assign({
+var config = hexo.config.feed = Object.assignn({
   type: 'atom',
   limit: 20,
   hub: '',

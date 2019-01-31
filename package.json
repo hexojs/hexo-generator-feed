@@ -12,7 +12,14 @@
   "directories": {
     "lib": "./lib"
   },
+  "files": [
+    "lib/",
+    "atom.xml",
+    "index.js",
+    "rss2.xml"
+  ],
   "repository": "hexojs/hexo-generator-feed",
+  "homepage": "https://hexo.io/",
   "keywords": [
     "hexo",
     "rss",
@@ -26,8 +33,7 @@
     ],
   "license": "MIT",
   "dependencies": {
-    "nunjucks": "^3.0.0",
-    "object-assign": "^4.1.1"
+    "nunjucks": "^3.0.0"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",
@@ -40,5 +46,8 @@
     "jscs": "^3.0.7",
     "jscs-preset-hexo": "^1.0.1",
     "mocha": "^5.2.0"
+  },
+  "engines": {
+    "node": ">=6.9.0"
   }
 }

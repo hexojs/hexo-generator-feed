@@ -4,4 +4,5 @@ tmp/
 *.log
 .idea/
 coverage/
-*.lock
+package-lock.json
+yarn.lock

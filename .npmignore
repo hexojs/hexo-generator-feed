@@ -6,3 +6,9 @@ coverage/
 gulpfile.js
 .idea/
 appveyor.yml
+.eslintignore
+.eslintrc
+.npmignore
+package-lock.json
+yarn.lock
+.jscsrc
