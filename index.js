@@ -3,7 +3,7 @@
 
 var pathFn = require('path');
 
-var config = hexo.config.feed = Object.assignn({
+var config = hexo.config.feed = Object.assign({
   type: 'atom',
   limit: 20,
   hub: '',
