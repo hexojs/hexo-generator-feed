@@ -13,7 +13,7 @@ env.addFilter('uriencode', function(str) {
 });
 
 env.addFilter('noControlChars', function(str) {
-  return str.replace(/[\x00-\x1F\x7F]/g, '');
+  return str.replace(/[\x00-\x1F\x7F]/g, ''); // eslint-disable-line no-control-regex
 });
 
 var atomTmplSrc = pathFn.join(__dirname, '../atom.xml');
@@ -33,10 +33,10 @@ describe('Feed generator', function() {
   var Post = hexo.model('Post');
   var generator = require('../lib/generator').bind(hexo);
 
-  (require('../node_modules/hexo/lib/plugins/helper'))(hexo);
+  require('../node_modules/hexo/lib/plugins/helper')(hexo);
 
-  var posts;
-  var locals;
+  var posts,
+    locals;
 
   before(function() {
     return Post.insert([
@@ -113,7 +113,7 @@ describe('Feed generator', function() {
     var result = generator(locals);
     var $ = cheerio.load(result.data, {xmlMode: true});
 
-    var description = $('content\\\:encoded').html()
+    var description = $('content\\:encoded').html()
       .replace(/^<!\[CDATA\[/, '')
       .replace(/\]\]>$/, '');
 
