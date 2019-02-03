@@ -11,4 +11,3 @@ appveyor.yml
 .npmignore
 package-lock.json
 yarn.lock
-.jscsrc

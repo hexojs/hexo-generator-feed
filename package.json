@@ -5,7 +5,6 @@
   "main": "index",
   "scripts": {
     "eslint": "eslint .",
-    "jscs": "jscs .",
     "test": "mocha test/index.js",
     "test-cov": "istanbul cover --print both _mocha -- test/index.js"
   },
@@ -39,12 +38,10 @@
     "babel-eslint": "^9.0.0",
     "chai": "^4.2.0",
     "cheerio": "^0.22.0",
-    "eslint": "^2.4.0",
-    "eslint-config-hexo": "^1.0.4",
+    "eslint": "^5.13.0",
+    "eslint-config-hexo": "^3.0.0",
     "hexo": "^3.3.1",
     "istanbul": "^0.4.5",
-    "jscs": "^3.0.7",
-    "jscs-preset-hexo": "^1.0.1",
     "mocha": "^5.2.0"
   },
   "engines": {
