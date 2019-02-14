@@ -155,10 +155,10 @@ describe('Feed generator', function() {
 
     var GOOD = 'http://localhost/blog/';
 
-    checkURL('http://localhost/blog', '/blog/', GOOD);
-    checkURL('http://localhost/blog', '/blog', GOOD);
-    checkURL('http://localhost/blog/', '/blog/', GOOD);
-    checkURL('http://localhost/blog/', '/blog', GOOD);
+    checkURL('http://localhost', '/blog/', GOOD);
+    checkURL('http://localhost', '/blog', GOOD);
+    checkURL('http://localhost/', '/blog/', GOOD);
+    checkURL('http://localhost/', '/blog', GOOD);
 
     checkURL('http://localhost/b/l/o/g', '/', 'http://localhost/b/l/o/g/');
 
