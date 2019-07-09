@@ -194,7 +194,7 @@ describe('Feed generator', function() {
     };
 
     var domain = 'http://example.com/';
-    
+
     var checkURL = function(root, valid) {
       hexo.config.url = domain;
       hexo.config.root = root;
@@ -206,7 +206,7 @@ describe('Feed generator', function() {
     };
     checkURL('/', '/' + file);
 
-    checkURL('blo g/', "blo%20g/" + file);
+    checkURL('blo g/', 'blo%20g/' + file);
   });
 
   it('Prints an enclosure on `image` metadata', function() {
