@@ -13,8 +13,8 @@
     {% for post in posts.toArray() %}
     <item>
       <title>{{ post.title }}</title>
-      <link>{{ (url + post.path) | uriencode }}</link>
-      <guid>{{ (url + post.path) | uriencode }}</guid>
+      <link>{{ url }}{{ post.path | uriencode }}</link>
+      <guid>{{ url }}{{ post.path | uriencode }}</guid>
       <pubDate>{{ post.date.toDate().toUTCString() }}</pubDate>
       <description>
       {% if post.description %}
@@ -43,7 +43,7 @@
       {% if config.feed.content and post.content %}
       <content:encoded><![CDATA[{{ post.content | noControlChars | safe }}]]></content:encoded>
       {% endif %}
-      {% if post.comments %}<comments>{{ (url + post.path) | uriencode }}#disqus_thread</comments>{% endif %}
+      {% if post.comments %}<comments>{{ url }}{{ post.path | uriencode }}#disqus_thread</comments>{% endif %}
     </item>
     {% endfor %}
   </channel>
