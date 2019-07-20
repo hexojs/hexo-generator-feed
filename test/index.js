@@ -164,6 +164,51 @@ describe('Feed generator', function() {
 
   });
 
+  it('IDN handling', function() {
+    hexo.config.feed = {
+      type: 'atom',
+      path: 'atom.xml'
+    };
+
+    var checkURL = function(url, root, valid) {
+      hexo.config.url = url;
+      hexo.config.root = root;
+
+      var result = generator(locals);
+      var $ = cheerio.load(result.data);
+
+      $('feed>id').text().should.eql(valid);
+      $('feed>entry>link').attr('href').should.eql(valid);
+    };
+    var IDN = 'http://gôg.com/';
+    checkURL(IDN, '/', IDN);
+
+    checkURL(IDN, 'blo g/', IDN);
+  });
+
+  it('Root encoding', function() {
+    var file = 'atom.xml';
+    hexo.config.feed = {
+      type: 'atom',
+      path: file
+    };
+
+    var domain = 'http://example.com/';
+
+    var checkURL = function(root, valid) {
+      hexo.config.url = domain;
+      hexo.config.root = root;
+
+      var result = generator(locals);
+      var $ = cheerio.load(result.data);
+
+      $('feed>link').attr('href').should.eql(valid);
+    };
+    checkURL('/', '/' + file);
+
+    checkURL('blo g/', 'blo%20g/' + file);
+  });
+
   it('Prints an enclosure on `image` metadata', function() {
     hexo.config.feed = {
       type: 'atom',
