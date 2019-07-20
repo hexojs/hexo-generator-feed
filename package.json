@@ -6,7 +6,7 @@
   "scripts": {
     "eslint": "eslint .",
     "test": "mocha test/index.js",
-    "test-cov": "istanbul cover --print both _mocha -- test/index.js"
+    "test-cov": "nyc npm run test"
   },
   "directories": {
     "lib": "./lib"
@@ -41,8 +41,8 @@
     "eslint": "^6.0.1",
     "eslint-config-hexo": "^3.0.0",
     "hexo": "^3.3.1",
-    "istanbul": "^0.4.5",
-    "mocha": "^6.0.2"
+    "mocha": "^6.0.2",
+    "nyc": "14.1.1"
   },
   "engines": {
     "node": ">=8.6.0"
