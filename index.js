@@ -1,9 +1,9 @@
 /* global hexo */
 'use strict';
 
-var pathFn = require('path');
+const pathFn = require('path');
 
-var config = hexo.config.feed = Object.assign({
+const config = hexo.config.feed = Object.assign({
   type: 'atom',
   limit: 20,
   hub: '',
@@ -13,7 +13,7 @@ var config = hexo.config.feed = Object.assign({
   order_by: '-date'
 }, hexo.config.feed);
 
-var type = config.type.toLowerCase();
+const type = config.type.toLowerCase();
 
 // Check feed type
 if (type !== 'atom' && type !== 'rss2') {
