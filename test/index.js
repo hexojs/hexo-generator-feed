@@ -173,7 +173,7 @@ describe('Feed generator', () => {
 
   });
 
-  it('IDN handling', () => {
+  describe('IDN handling', () => {
     hexo.config.feed = {
       type: 'atom',
       path: 'atom.xml'
