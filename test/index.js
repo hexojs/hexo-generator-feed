@@ -7,6 +7,7 @@ const env = new nunjucks.Environment();
 const pathFn = require('path');
 const fs = require('fs');
 const cheerio = require('cheerio');
+const urlFn = require('url');
 
 env.addFilter('uriencode', str => {
   return encodeURI(str);
@@ -14,6 +15,14 @@ env.addFilter('uriencode', str => {
 
 env.addFilter('noControlChars', str => {
   return str.replace(/[\x00-\x1F\x7F]/g, ''); // eslint-disable-line no-control-regex
+});
+
+env.addFilter('urlencode', str => {
+  return urlFn.format({
+    protocol: urlFn.parse(str).protocol,
+    hostname: urlFn.parse(str).hostname,
+    pathname: encodeURI(urlFn.parse(str).pathname)
+  });
 });
 
 const atomTmplSrc = pathFn.join(__dirname, '../atom.xml');
@@ -135,6 +144,7 @@ describe('Feed generator', () => {
   });
 
   it('Relative URL handling', () => {
+    hexo.config.permalink = ':year/';
     hexo.config.feed = {
       type: 'atom',
       path: 'atom.xml'
@@ -148,7 +158,6 @@ describe('Feed generator', () => {
       const $ = cheerio.load(result.data);
 
       $('feed>id').text().should.eql(valid);
-      $('feed>entry>link').attr('href').should.eql(valid);
     };
 
     checkURL('http://localhost/', '/', 'http://localhost/');
@@ -170,20 +179,30 @@ describe('Feed generator', () => {
       path: 'atom.xml'
     };
 
-    const checkURL = function(url, root, valid) {
+    const checkURL = function(url, root) {
       hexo.config.url = url;
       hexo.config.root = root;
 
       const result = generator(locals);
       const $ = cheerio.load(result.data);
 
-      $('feed>id').text().should.eql(valid);
-      $('feed>entry>link').attr('href').should.eql(valid);
-    };
-    const IDN = 'http://gôg.com/';
-    checkURL(IDN, '/', IDN);
+      if (url[url.length - 1] !== '/') url += '/';
+      const punyIDN = urlFn.format({
+        protocol: urlFn.parse(url).protocol,
+        hostname: urlFn.parse(url).hostname,
+        pathname: encodeURI(urlFn.parse(url).pathname)
+      });
 
-    checkURL(IDN, 'blo g/', IDN);
+      $('feed>id').text().should.eql(punyIDN);
+    };
+
+    it('No root', () => {
+      checkURL('http://gôg.com/', '/');
+    });
+
+    it('With root', () => {
+      checkURL('http://gôg.com/bár', '/bár/');
+    });
   });
 
   it('Root encoding', () => {
