@@ -173,7 +173,7 @@ describe('Feed generator', () => {
 
   });
 
-  describe('IDN handling', () => {
+  it('IDN handling', () => {
     hexo.config.feed = {
       type: 'atom',
       path: 'atom.xml'
@@ -196,13 +196,9 @@ describe('Feed generator', () => {
       $('feed>id').text().should.eql(punyIDN);
     };
 
-    it('No root', () => {
-      checkURL('http://gôg.com/', '/');
-    });
+    checkURL('http://gôg.com/', '/');
 
-    it('With root', () => {
-      checkURL('http://gôg.com/bár', '/bár/');
-    });
+    checkURL('http://gôg.com/bár', '/bár/');
   });
 
   it('Root encoding', () => {
