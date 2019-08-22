@@ -5,9 +5,9 @@
   {% if config.subtitle %}<subtitle>{{ config.subtitle }}</subtitle>{% endif %}
   <link href="{{ feed_url | uriencode }}" rel="self"/>
   {% if config.feed.hub %}<link href="{{ config.feed.hub | uriencode }}" rel="hub"/>{% endif %}
-  <link href="{{ url }}"/>
+  <link href="{{ url | urlencode }}"/>
   <updated>{{ posts.first().updated.toISOString() }}</updated>
-  <id>{{ url }}</id>
+  <id>{{ url | urlencode }}</id>
   {% if config.author %}
   <author>
     <name>{{ config.author }}</name>
@@ -18,8 +18,8 @@
   {% for post in posts.toArray() %}
   <entry>
     <title>{{ post.title }}</title>
-    <link href="{{ url }}{{ post.path | uriencode }}"/>
-    <id>{{ url }}{{ post.path }}</id>
+    <link href="{{ post.permalink | urlencode }}"/>
+    <id>{{ post.permalink | urlencode }}</id>
     <published>{{ post.date.toISOString() }}</published>
     <updated>{{ post.updated.toISOString() }}</updated>
     {% if config.feed.content and post.content %}
@@ -47,13 +47,13 @@
     {% endif %}
     </summary>
     {% if post.image %}
-    <content src="{{ url }}{{ post.image | uriencode }}" type="image" />
+    <content src="{{ url | urlencode }}{{ post.image | uriencode }}" type="image" />
     {% endif %}
     {% for category in post.categories.toArray() %}
-      <category term="{{ category.name }}" scheme="{{ url }}{{ category.path | uriencode }}"/>
+      <category term="{{ category.name }}" scheme="{{ url | urlencode }}{{ category.path | uriencode }}"/>
     {% endfor %}
     {% for tag in post.tags.toArray() %}
-      <category term="{{ tag.name }}" scheme="{{ url }}{{ tag.path | uriencode }}"/>
+      <category term="{{ tag.name }}" scheme="{{ url | urlencode }}{{ tag.path | uriencode }}"/>
     {% endfor %}
   </entry>
   {% endfor %}
