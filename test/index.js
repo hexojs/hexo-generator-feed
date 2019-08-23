@@ -144,7 +144,6 @@ describe('Feed generator', () => {
   });
 
   it('Relative URL handling', () => {
-    hexo.config.permalink = ':year/';
     hexo.config.feed = {
       type: 'atom',
       path: 'atom.xml'
