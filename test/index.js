@@ -7,7 +7,7 @@ const env = new nunjucks.Environment();
 const pathFn = require('path');
 const fs = require('fs');
 const cheerio = require('cheerio');
-const urlFn = require('url');
+const { format, parse } = require('url');
 
 env.addFilter('uriencode', str => {
   return encodeURI(str);
@@ -18,10 +18,10 @@ env.addFilter('noControlChars', str => {
 });
 
 env.addFilter('urlencode', str => {
-  return urlFn.format({
-    protocol: urlFn.parse(str).protocol,
-    hostname: urlFn.parse(str).hostname,
-    pathname: encodeURI(urlFn.parse(str).pathname)
+  return format({
+    protocol: parse(str).protocol,
+    hostname: parse(str).hostname,
+    pathname: encodeURI(parse(str).pathname)
   });
 });
 
@@ -186,10 +186,10 @@ describe('Feed generator', () => {
       const $ = cheerio.load(result.data);
 
       if (url[url.length - 1] !== '/') url += '/';
-      const punyIDN = urlFn.format({
-        protocol: urlFn.parse(url).protocol,
-        hostname: urlFn.parse(url).hostname,
-        pathname: encodeURI(urlFn.parse(url).pathname)
+      const punyIDN = format({
+        protocol: parse(url).protocol,
+        hostname: parse(url).hostname,
+        pathname: encodeURI(parse(url).pathname)
       });
 
       $('feed>id').text().should.eql(punyIDN);
