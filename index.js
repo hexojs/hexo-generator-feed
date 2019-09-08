@@ -1,7 +1,7 @@
 /* global hexo */
 'use strict';
 
-const pathFn = require('path');
+const { extname } = require('path');
 
 const config = hexo.config.feed = Object.assign({
   type: 'atom',
@@ -28,7 +28,7 @@ if (!config.path) {
 }
 
 // Add extension name if don't have
-if (!pathFn.extname(config.path)) {
+if (!extname(config.path)) {
   config.path += '.xml';
 }
 
