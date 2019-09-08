@@ -1,6 +1,6 @@
 'use strict';
 
-const should = require('chai').should(); // eslint-disable-line
+require('chai').should();
 const Hexo = require('hexo');
 const nunjucks = require('nunjucks');
 const env = new nunjucks.Environment();
