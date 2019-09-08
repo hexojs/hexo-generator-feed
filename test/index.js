@@ -7,6 +7,7 @@ const env = new nunjucks.Environment();
 const { join } = require('path');
 const { readFileSync } = require('fs');
 const cheerio = require('cheerio');
+const { encodeURL } = require('hexo-util');
 
 env.addFilter('uriencode', str => {
   return encodeURI(str);
@@ -148,7 +149,6 @@ describe('Feed generator', () => {
       const $ = cheerio.load(result.data);
 
       $('feed>id').text().should.eql(valid);
-      $('feed>entry>link').attr('href').should.eql(valid);
     };
 
     checkURL('http://localhost/', '/', 'http://localhost/');
@@ -170,20 +170,21 @@ describe('Feed generator', () => {
       path: 'atom.xml'
     };
 
-    const checkURL = function(url, root, valid) {
+    const checkURL = function(url, root) {
       hexo.config.url = url;
       hexo.config.root = root;
 
       const result = generator(locals);
       const $ = cheerio.load(result.data);
 
-      $('feed>id').text().should.eql(valid);
-      $('feed>entry>link').attr('href').should.eql(valid);
+      if (url[url.length - 1] !== '/') url += '/';
+      const punyIDN = encodeURL(url);
+      $('feed>id').text().should.eql(punyIDN);
     };
-    const IDN = 'http://gôg.com/';
-    checkURL(IDN, '/', IDN);
 
-    checkURL(IDN, 'blo g/', IDN);
+    checkURL('http://gôg.com/', '/');
+
+    checkURL('http://gôg.com/bár', '/bár/');
   });
 
   it('Root encoding', () => {
