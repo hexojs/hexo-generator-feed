@@ -1,11 +1,11 @@
 'use strict';
 
-const should = require('chai').should(); // eslint-disable-line
+require('chai').should();
 const Hexo = require('hexo');
 const nunjucks = require('nunjucks');
 const env = new nunjucks.Environment();
-const pathFn = require('path');
-const fs = require('fs');
+const { join } = require('path');
+const { readFileSync } = require('fs');
 const cheerio = require('cheerio');
 
 env.addFilter('uriencode', str => {
@@ -16,10 +16,10 @@ env.addFilter('noControlChars', str => {
   return str.replace(/[\x00-\x1F\x7F]/g, ''); // eslint-disable-line no-control-regex
 });
 
-const atomTmplSrc = pathFn.join(__dirname, '../atom.xml');
-const atomTmpl = nunjucks.compile(fs.readFileSync(atomTmplSrc, 'utf8'), env);
-const rss2TmplSrc = pathFn.join(__dirname, '../rss2.xml');
-const rss2Tmpl = nunjucks.compile(fs.readFileSync(rss2TmplSrc, 'utf8'), env);
+const atomTmplSrc = join(__dirname, '../atom.xml');
+const atomTmpl = nunjucks.compile(readFileSync(atomTmplSrc, 'utf8'), env);
+const rss2TmplSrc = join(__dirname, '../rss2.xml');
+const rss2Tmpl = nunjucks.compile(readFileSync(rss2TmplSrc, 'utf8'), env);
 
 const urlConfig = {
   url: 'http://localhost/',
