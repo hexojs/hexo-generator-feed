@@ -35,6 +35,6 @@ if (!extname(config.path)) {
 
 hexo.extend.generator.register('feed', require('./lib/generator'));
 
-if (hexo.config.feed.autodiscovery === true) {
+if (config.autodiscovery === true) {
   hexo.extend.filter.register('after_render:html', require('./lib/autodiscovery'));
 }
