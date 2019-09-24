@@ -235,3 +235,91 @@ describe('Feed generator', () => {
     checkURL('http://localhost/', '/', 'item:nth-of-type(3)>enclosure');
   });
 });
+
+describe('Meta Generator', () => {
+  const hexo = new Hexo();
+  const autoDiscovery = require('../lib/autodiscovery').bind(hexo);
+  hexo.config.title = 'foo';
+  hexo.config.feed = {
+    type: 'atom',
+    path: 'atom.xml',
+    autodiscovery: true
+  };
+
+  it('default', () => {
+    const content = '<head><link></head>';
+    const result = autoDiscovery(content);
+
+    const $ = cheerio.load(result);
+    $('link[type="application/atom+xml"]').length.should.eql(1);
+    $('link[type="application/atom+xml"]').attr('href').should.eql(hexo.config.feed.path);
+    $('link[type="application/atom+xml"]').attr('title').should.eql(hexo.config.title);
+
+    result.should.eql('<head><link><link rel="alternate" href="atom.xml" title="foo" type="application/atom+xml"></head>');
+  });
+
+  it('disable autodiscovery', () => {
+    hexo.config.feed.autodiscovery = false;
+    const content = '<head><link></head>';
+    const result = autoDiscovery(content);
+
+    const resultType = typeof result;
+    resultType.should.eql('undefined');
+    hexo.config.feed.autodiscovery = true;
+  });
+
+  it('no duplicate tag', () => {
+    const content = '<head><link>'
+      + '<link rel="alternate" href="atom.xml" title="foo" type="application/atom+xml"></head>';
+    const result = autoDiscovery(content);
+
+    const resultType = typeof result;
+    resultType.should.eql('undefined');
+  });
+
+  it('ignore empty head tag', () => {
+    const content = '<head></head>'
+      + '<head><link></head>'
+      + '<head></head>';
+    const result = autoDiscovery(content);
+
+    const $ = cheerio.load(result);
+    $('link[type="application/atom+xml"]').length.should.eql(1);
+
+    const expected = '<head></head>'
+    + '<head><link><link rel="alternate" href="atom.xml" title="foo" type="application/atom+xml"></head>'
+    + '<head></head>';
+    result.should.eql(expected);
+  });
+
+  it('apply to first non-empty head tag only', () => {
+    const content = '<head></head>'
+      + '<head><link></head>'
+      + '<head><link></head>';
+    const result = autoDiscovery(content);
+
+    const $ = cheerio.load(result);
+    $('link[type="application/atom+xml"]').length.should.eql(1);
+
+    const expected = '<head></head>'
+    + '<head><link><link rel="alternate" href="atom.xml" title="foo" type="application/atom+xml"></head>'
+    + '<head><link></head>';
+    result.should.eql(expected);
+  });
+
+  it('rss2', () => {
+    hexo.config.feed = {
+      type: 'rss2',
+      path: 'rss2.xml',
+      autodiscovery: true
+    };
+    const content = '<head><link></head>';
+    const result = autoDiscovery(content);
+
+    const $ = cheerio.load(result);
+    $('link[rel="alternate"]').attr('type').should.eql('application/rss+xml');
+
+    result.should.eql('<head><link><link rel="alternate" href="rss2.xml" title="foo" type="application/rss+xml"></head>');
+  });
+
+});
