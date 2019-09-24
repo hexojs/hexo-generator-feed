@@ -33,7 +33,7 @@ feed:
   content_limit: 140
   content_limit_delim: ' '
   order_by: -date
-  icon: icon.png,
+  icon: icon.png
   autodiscovery: true
 ```
 
