@@ -236,7 +236,7 @@ describe('Feed generator', () => {
   });
 });
 
-describe('Meta Generator', () => {
+describe('Autodiscovery', () => {
   const hexo = new Hexo();
   const autoDiscovery = require('../lib/autodiscovery').bind(hexo);
   hexo.config.title = 'foo';
