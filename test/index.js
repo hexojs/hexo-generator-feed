@@ -252,10 +252,22 @@ describe('Autodiscovery', () => {
 
     const $ = cheerio.load(result);
     $('link[type="application/atom+xml"]').length.should.eql(1);
-    $('link[type="application/atom+xml"]').attr('href').should.eql(hexo.config.feed.path);
+    $('link[type="application/atom+xml"]').attr('href').should.eql('/' + hexo.config.feed.path);
     $('link[type="application/atom+xml"]').attr('title').should.eql(hexo.config.title);
 
-    result.should.eql('<head><link><link rel="alternate" href="atom.xml" title="foo" type="application/atom+xml"></head>');
+    result.should.eql('<head><link><link rel="alternate" href="/atom.xml" title="foo" type="application/atom+xml"></head>');
+  });
+
+  it('prepend root', () => {
+    hexo.config.root = '/root/';
+    const content = '<head><link></head>';
+    const result = autoDiscovery(content);
+
+    const $ = cheerio.load(result);
+    $('link[type="application/atom+xml"]').attr('href').should.eql(hexo.config.root + hexo.config.feed.path);
+
+    result.should.eql('<head><link><link rel="alternate" href="/root/atom.xml" title="foo" type="application/atom+xml"></head>');
+    hexo.config.root = '/';
   });
 
   it('disable autodiscovery', () => {
@@ -270,7 +282,7 @@ describe('Autodiscovery', () => {
 
   it('no duplicate tag', () => {
     const content = '<head><link>'
-      + '<link rel="alternate" href="atom.xml" title="foo" type="application/atom+xml"></head>';
+      + '<link rel="alternate" href="/atom.xml" title="foo" type="application/atom+xml"></head>';
     const result = autoDiscovery(content);
 
     const resultType = typeof result;
@@ -287,7 +299,7 @@ describe('Autodiscovery', () => {
     $('link[type="application/atom+xml"]').length.should.eql(1);
 
     const expected = '<head></head>'
-    + '<head><link><link rel="alternate" href="atom.xml" title="foo" type="application/atom+xml"></head>'
+    + '<head><link><link rel="alternate" href="/atom.xml" title="foo" type="application/atom+xml"></head>'
     + '<head></head>';
     result.should.eql(expected);
   });
@@ -302,7 +314,7 @@ describe('Autodiscovery', () => {
     $('link[type="application/atom+xml"]').length.should.eql(1);
 
     const expected = '<head></head>'
-    + '<head><link><link rel="alternate" href="atom.xml" title="foo" type="application/atom+xml"></head>'
+    + '<head><link><link rel="alternate" href="/atom.xml" title="foo" type="application/atom+xml"></head>'
     + '<head><link></head>';
     result.should.eql(expected);
   });
@@ -319,7 +331,7 @@ describe('Autodiscovery', () => {
     const $ = cheerio.load(result);
     $('link[rel="alternate"]').attr('type').should.eql('application/rss+xml');
 
-    result.should.eql('<head><link><link rel="alternate" href="rss2.xml" title="foo" type="application/rss+xml"></head>');
+    result.should.eql('<head><link><link rel="alternate" href="/rss2.xml" title="foo" type="application/rss+xml"></head>');
   });
 
 });
