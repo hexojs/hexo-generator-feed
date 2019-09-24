@@ -33,7 +33,8 @@ feed:
   content_limit: 140
   content_limit_delim: ' '
   order_by: -date
-  icon: icon.png
+  icon: icon.png,
+  autodiscovery: true
 ```
 
 - **type** - Feed type. (atom/rss2)
@@ -45,3 +46,5 @@ feed:
 - **content_limit_delim** - (optional) If **content_limit** is used to shorten post contents, only cut at the last occurrence of this delimiter before reaching the character limit. Not used by default.
 - **order_by** - Feed order-by. (Default: -date)
 - **icon** - (optional) Custom feed icon. Defaults to a gravatar of email specified in the main config.
+- **autodiscovery** - Add feed [autodiscovery](http://www.rssboard.org/rss-autodiscovery). (Default: `true`)
+  * Many themes already offer this feature, so you may also need to adjust the theme's config if you wish to disable it.
