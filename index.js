@@ -10,7 +10,8 @@ const config = hexo.config.feed = Object.assign({
   content: true,
   content_limit: 140,
   content_limit_delim: '',
-  order_by: '-date'
+  order_by: '-date',
+  autodiscovery: true
 }, hexo.config.feed);
 
 const type = config.type.toLowerCase();
@@ -33,3 +34,7 @@ if (!extname(config.path)) {
 }
 
 hexo.extend.generator.register('feed', require('./lib/generator'));
+
+if (config.autodiscovery === true) {
+  hexo.extend.filter.register('after_render:html', require('./lib/autodiscovery'));
+}
