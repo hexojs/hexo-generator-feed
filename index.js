@@ -1,8 +1,6 @@
 /* global hexo */
 'use strict';
 
-const { extname } = require('path');
-
 const config = hexo.config.feed = Object.assign({
   type: 'atom',
   limit: 20,
@@ -14,26 +12,31 @@ const config = hexo.config.feed = Object.assign({
   autodiscovery: true
 }, hexo.config.feed);
 
-const type = config.type.toLowerCase();
+let type = config.type;
+const feedFn = require('./lib/generator');
 
-// Check feed type
-if (type !== 'atom' && type !== 'rss2') {
-  config.type = 'atom';
-} else {
+if (typeof type === 'string') {
+  type = type.toLowerCase();
+
+  // Check feed type
+  if (type !== 'atom' && type !== 'rss2') {
+    type = 'atom';
+  }
+
   config.type = type;
-}
 
-// Set default feed path
-if (!config.path) {
-  config.path = config.type + '.xml';
-}
+  hexo.extend.generator.register('feed', function(locals) {
+    return feedFn.call(hexo, locals, type);
+  });
+} else {
+  hexo.extend.generator.register('feed1', function(locals) {
+    return feedFn.call(hexo, locals, type[0]);
+  });
 
-// Add extension name if don't have
-if (!extname(config.path)) {
-  config.path += '.xml';
+  hexo.extend.generator.register('feed2', function(locals) {
+    return feedFn.call(hexo, locals, type[1]);
+  });
 }
-
-hexo.extend.generator.register('feed', require('./lib/generator'));
 
 if (config.autodiscovery === true) {
   hexo.extend.filter.register('after_render:html', require('./lib/autodiscovery'));
