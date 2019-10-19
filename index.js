@@ -40,8 +40,6 @@ if (!type || typeof type === 'string') {
     return feedFn.call(hexo, locals);
   });
 } else {
-  if (!type) type = ['atom', 'rss2'];
-
   if (!Array.isArray(type)) type = ['atom', 'rss2'];
   else if (!type.includes('atom') || !type.includes('rss2')
     || type.length !== 2) {
