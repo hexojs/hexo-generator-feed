@@ -29,6 +29,15 @@ if (typeof type === 'string') {
     return feedFn.call(hexo, locals, type);
   });
 } else {
+  type = type.map(str => str.toLowerCase());
+
+  if (type.length === 1) {
+    if (type[0] === 'atom') type.push('rss2');
+    else type.push('atom');
+  }
+
+  config.type = type;
+
   hexo.extend.generator.register('feed1', function(locals) {
     return feedFn.call(hexo, locals, type[0]);
   });
