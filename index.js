@@ -18,15 +18,15 @@ let type = config.type;
 let path = config.path;
 const feedFn = require('./lib/generator');
 
-if (typeof type === 'string') {
-  type = type.toLowerCase();
+if (!type || typeof type === 'string') {
+  if (!type) type = 'atom';
 
   // Check feed type
   if (type !== 'atom' && type !== 'rss2') {
     type = 'atom';
   }
 
-  if (!path) path = type.concat('.xml');
+  if (!path || typeof path !== 'string') path = type.concat('.xml');
 
   // Add extension name if not found
   if (!extname(path)) {
