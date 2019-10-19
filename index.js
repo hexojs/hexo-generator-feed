@@ -40,24 +40,18 @@ if (typeof type === 'string') {
     return feedFn.call(hexo, locals);
   });
 } else {
-  type = type.map(str => str.toLowerCase());
+  if (!type) type = ['atom', 'rss2'];
 
-  if (type.length === 1) {
-    if (type[0] === 'atom') type.push('rss2');
-    else if (type[0] === 'rss2') type.push('atom');
-    else {
-      type[0] = 'atom';
-      type.push('rss2');
-    }
+  if (!Array.isArray(type)) type = ['atom', 'rss2'];
+  else if (!type.includes('atom') || !type.includes('rss2')
+    || type.length !== 2) {
+    type = ['atom', 'rss2'];
   }
 
   if (!path) path = type.map(str => str.concat('.xml'));
 
-  if (typeof path === 'string') path = [path];
-
-  if (path.length === 1) {
-    if (path[0].toLowerCase().includes('atom')) path.push('rss2.xml');
-    else path.push('atom.xml');
+  if (!Array.isArray(path) || path.length !== 2) {
+    path = type.map(str => str.concat('.xml'));
   }
 
   path = path.map(str => {
