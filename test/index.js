@@ -333,6 +333,18 @@ describe('Autodiscovery', () => {
     $('link[rel="alternate"]').attr('type').should.eql('application/rss+xml');
 
     result.should.eql('<head><link><link rel="alternate" href="/rss2.xml" title="foo" type="application/rss+xml"></head>');
+
+    hexo.config.feed = {
+      type: 'atom',
+      path: 'atom.xml',
+      autodiscovery: true
+    };
   });
 
+  it('multi-line head tag', () => {
+    const content = '<head>\n<link>\n</head>';
+    const result = autoDiscovery(content);
+
+    result.should.eql('<head>\n<link>\n<link rel="alternate" href="/atom.xml" title="foo" type="application/atom+xml"></head>');
+  });
 });
