@@ -297,7 +297,7 @@ describe('Feed generator', () => {
   it('path must follow order of type', () => {
     hexo.config.feed = {
       type: ['rss2', 'atom'],
-      path: ['rss-awesome.xml', 'atom-awesome.xml'],
+      path: ['rss-awesome.xml', 'atom-awesome.xml']
     };
     hexo.config = Object.assign(hexo.config, urlConfig);
 
