@@ -304,6 +304,8 @@ describe('Autodiscovery', () => {
     path: 'atom.xml',
     autodiscovery: true
   };
+  hexo.config = Object.assign(hexo.config, urlConfig);
+
 
   it('default', () => {
     const content = '<head><link></head>';
@@ -311,7 +313,7 @@ describe('Autodiscovery', () => {
 
     const $ = cheerio.load(result);
     $('link[type="application/atom+xml"]').length.should.eql(1);
-    $('link[type="application/atom+xml"]').attr('href').should.eql('/' + hexo.config.feed.path);
+    $('link[type="application/atom+xml"]').attr('href').should.eql(urlConfig.root + hexo.config.feed.path);
     $('link[type="application/atom+xml"]').attr('title').should.eql(hexo.config.title);
 
     result.should.eql('<head><link><link rel="alternate" href="/atom.xml" title="foo" type="application/atom+xml"></head>');
@@ -404,5 +406,201 @@ describe('Autodiscovery', () => {
     const result = autoDiscovery(content);
 
     result.should.eql('<head>\n<link>\n<link rel="alternate" href="/atom.xml" title="foo" type="application/atom+xml"></head>');
+  });
+
+  it('enable by default', () => {
+    hexo.config.feed = {
+      type: 'atom',
+      path: 'atom.xml',
+      autodiscovery: undefined
+    };
+    const content = '<head><link></head>';
+    const result = autoDiscovery(content);
+    const resultType = typeof result;
+
+    resultType.should.not.eql('undefined');
+  });
+
+  it('defaults to atom when type is undefined', () => {
+    hexo.config.feed = {
+      type: undefined,
+      path: 'atom.xml',
+      autodiscovery: true
+    };
+    const content = '<head><link></head>';
+    const result = autoDiscovery(content);
+
+    const $ = cheerio.load(result);
+    $('link[type="application/atom+xml"]').length.should.eql(1);
+  });
+
+  it('defaults to atom when type is not atom/rss2', () => {
+    hexo.config.feed = {
+      type: 'foo',
+      path: 'atom.xml',
+      autodiscovery: true
+    };
+    const content = '<head><link></head>';
+    const result = autoDiscovery(content);
+
+    const $ = cheerio.load(result);
+    $('link[type="application/atom+xml"]').length.should.eql(1);
+  });
+
+  it('defaults to atom.xml', () => {
+    hexo.config.feed = {
+      type: 'atom',
+      path: undefined,
+      autodiscovery: true
+    };
+    hexo.config = Object.assign(hexo.config, urlConfig);
+
+    const content = '<head><link></head>';
+    const result = autoDiscovery(content);
+
+    const $ = cheerio.load(result);
+    $('link[type="application/atom+xml"]').attr('href').should.eql(urlConfig.root + 'atom.xml');
+  });
+
+  it('add xml file extension if not found', () => {
+    hexo.config.feed = {
+      type: 'atom',
+      path: 'atom',
+      autodiscovery: true
+    };
+    hexo.config = Object.assign(hexo.config, urlConfig);
+
+    const content = '<head><link></head>';
+    const result = autoDiscovery(content);
+
+    const $ = cheerio.load(result);
+    $('link[type="application/atom+xml"]').attr('href').should.eql(urlConfig.root + 'atom.xml');
+  });
+
+  it('atom + rss2', () => {
+    hexo.config.feed = {
+      type: ['atom', 'rss2'],
+      path: ['atom.xml', 'rss2.xml'],
+      autodiscovery: true
+    };
+    hexo.config = Object.assign(hexo.config, urlConfig);
+
+    const content = '<head><link></head>';
+    const result = autoDiscovery(content);
+
+    const $ = cheerio.load(result);
+    $('link[rel="alternate"]').length.should.eql(2);
+    $('link[rel="alternate"]').eq(0).attr('type').should.eql('application/atom+xml');
+    $('link[rel="alternate"]').eq(1).attr('type').should.eql('application/rss+xml');
+  });
+
+  it('defaults to atom + rss2 if type is an object', () => {
+    hexo.config.feed = {
+      type: { foo: 'bar' },
+      path: ['atom.xml', 'rss2.xml'],
+      autodiscovery: true
+    };
+    hexo.config = Object.assign(hexo.config, urlConfig);
+
+    const content = '<head><link></head>';
+    const result = autoDiscovery(content);
+
+    const $ = cheerio.load(result);
+    $('link[rel="alternate"]').length.should.eql(2);
+  });
+
+  it('defaults to atom + rss2 if type has invalid values', () => {
+    hexo.config.feed = {
+      type: ['foo', 'bar'],
+      path: ['atom.xml', 'rss2.xml'],
+      autodiscovery: true
+    };
+    hexo.config = Object.assign(hexo.config, urlConfig);
+
+    const content = '<head><link></head>';
+    const result = autoDiscovery(content);
+
+    const $ = cheerio.load(result);
+    $('link[rel="alternate"]').length.should.eql(2);
+  });
+
+  it('defaults to atom.xml + rss2.xml if type is undefined', () => {
+    hexo.config.feed = {
+      type: ['atom', 'rss2'],
+      path: undefined,
+      autodiscovery: true
+    };
+    hexo.config = Object.assign(hexo.config, urlConfig);
+
+    const content = '<head><link></head>';
+    const result = autoDiscovery(content);
+
+    const $ = cheerio.load(result);
+    $('link[type="application/atom+xml"]').attr('href').should.eql(urlConfig.root + 'atom.xml');
+    $('link[type="application/rss+xml"]').attr('href').should.eql(urlConfig.root + 'rss2.xml');
+  });
+
+  it('defaults to atom.xml + rss2.xml if type is an object', () => {
+    hexo.config.feed = {
+      type: ['atom', 'rss2'],
+      path: { foo: 'bar' },
+      autodiscovery: true
+    };
+    hexo.config = Object.assign(hexo.config, urlConfig);
+
+    const content = '<head><link></head>';
+    const result = autoDiscovery(content);
+
+    const $ = cheerio.load(result);
+    $('link[type="application/atom+xml"]').attr('href').should.eql(urlConfig.root + 'atom.xml');
+    $('link[type="application/rss+xml"]').attr('href').should.eql(urlConfig.root + 'rss2.xml');
+  });
+
+  it('defaults to atom.xml + rss2.xml if type has invalid values', () => {
+    hexo.config.feed = {
+      type: ['atom', 'rss2'],
+      path: ['foo', 'bar', 'baz'],
+      autodiscovery: true
+    };
+    hexo.config = Object.assign(hexo.config, urlConfig);
+
+    const content = '<head><link></head>';
+    const result = autoDiscovery(content);
+
+    const $ = cheerio.load(result);
+    $('link[type="application/atom+xml"]').attr('href').should.eql(urlConfig.root + 'atom.xml');
+    $('link[type="application/rss+xml"]').attr('href').should.eql(urlConfig.root + 'rss2.xml');
+  });
+
+  it('add xml file extension if not found (array)', () => {
+    hexo.config.feed = {
+      type: ['atom', 'rss2'],
+      path: ['atom', 'rss2'],
+      autodiscovery: true
+    };
+    hexo.config = Object.assign(hexo.config, urlConfig);
+
+    const content = '<head><link></head>';
+    const result = autoDiscovery(content);
+
+    const $ = cheerio.load(result);
+    $('link[type="application/atom+xml"]').attr('href').should.eql(urlConfig.root + 'atom.xml');
+    $('link[type="application/rss+xml"]').attr('href').should.eql(urlConfig.root + 'rss2.xml');
+  });
+
+  it('path must follow order of type', () => {
+    hexo.config.feed = {
+      type: ['rss2', 'atom'],
+      path: ['rss-awesome.xml', 'atom-awesome.xml'],
+      autodiscovery: true
+    };
+    hexo.config = Object.assign(hexo.config, urlConfig);
+
+    const content = '<head><link></head>';
+    const result = autoDiscovery(content);
+
+    const $ = cheerio.load(result);
+    $('link[type="application/rss+xml"]').attr('href').should.eql(urlConfig.root + hexo.config.feed.path[0]);
+    $('link[type="application/atom+xml"]').attr('href').should.eql(urlConfig.root + hexo.config.feed.path[1]);
   });
 });
