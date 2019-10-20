@@ -293,6 +293,20 @@ describe('Feed generator', () => {
 
     $('rss>channel>image').length.should.eql(0);
   });
+
+  it('path must follow order of type', () => {
+    hexo.config.feed = {
+      type: ['rss2', 'atom'],
+      path: ['rss-awesome.xml', 'atom-awesome.xml'],
+    };
+    hexo.config = Object.assign(hexo.config, urlConfig);
+
+    const rss = generator(locals, hexo.config.feed.type[0]);
+    rss.path.should.eql(hexo.config.feed.path[0]);
+
+    const atom = generator(locals, hexo.config.feed.type[1]);
+    atom.path.should.eql(hexo.config.feed.path[1]);
+  });
 });
 
 describe('Autodiscovery', () => {
