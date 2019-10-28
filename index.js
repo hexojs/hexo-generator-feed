@@ -18,7 +18,9 @@ let type = config.type;
 let path = config.path;
 const feedFn = require('./lib/generator');
 
-if (!type || typeof type === 'string' || !Array.isArray(type)) {
+if (typeof type === 'string') type = [type];
+
+if (!type || !Array.isArray(type)) {
   type = ['atom'];
 }
 
