@@ -57,7 +57,8 @@ describe('Feed generator', () => {
       limit: 3
     };
     hexo.config = Object.assign(hexo.config, urlConfig);
-    const result = generator(locals);
+    const feedCfg = hexo.config.feed;
+    const result = generator(locals, feedCfg.type, feedCfg.path);
 
     result.path.should.eql('atom.xml');
     result.data.should.eql(atomTmpl.render({
@@ -75,7 +76,8 @@ describe('Feed generator', () => {
       limit: 3
     };
     hexo.config = Object.assign(hexo.config, urlConfig);
-    const result = generator(locals);
+    const feedCfg = hexo.config.feed;
+    const result = generator(locals, feedCfg.type, feedCfg.path);
 
     result.path.should.eql('rss2.xml');
     result.data.should.eql(rss2Tmpl.render({
@@ -93,8 +95,8 @@ describe('Feed generator', () => {
       limit: 0
     };
     hexo.config = Object.assign(hexo.config, urlConfig);
-
-    const result = generator(locals);
+    const feedCfg = hexo.config.feed;
+    const result = generator(locals, feedCfg.type, feedCfg.path);
 
     result.path.should.eql('atom.xml');
     result.data.should.eql(atomTmpl.render({
@@ -111,7 +113,8 @@ describe('Feed generator', () => {
       path: 'rss2.xml',
       content: true
     };
-    let result = generator(locals);
+    let feedCfg = hexo.config.feed;
+    let result = generator(locals, feedCfg.type, feedCfg.path);
     let $ = cheerio.load(result.data, {xmlMode: true});
 
     let description = $('content\\:encoded').html()
@@ -125,7 +128,8 @@ describe('Feed generator', () => {
       path: 'atom.xml',
       content: true
     };
-    result = generator(locals);
+    feedCfg = hexo.config.feed;
+    result = generator(locals, feedCfg.type, feedCfg.path);
     $ = cheerio.load(result.data, {xmlMode: true});
     description = $('content[type="html"]').html()
       .replace(/^<!\[CDATA\[/, '')
@@ -145,7 +149,8 @@ describe('Feed generator', () => {
       hexo.config.url = url;
       hexo.config.root = root;
 
-      const result = generator(locals);
+      const feedCfg = hexo.config.feed;
+      const result = generator(locals, feedCfg.type, feedCfg.path);
       const $ = cheerio.load(result.data);
 
       $('feed>id').text().should.eql(valid);
@@ -174,7 +179,8 @@ describe('Feed generator', () => {
       hexo.config.url = url;
       hexo.config.root = root;
 
-      const result = generator(locals);
+      const feedCfg = hexo.config.feed;
+      const result = generator(locals, feedCfg.type, feedCfg.path);
       const $ = cheerio.load(result.data);
 
       if (url[url.length - 1] !== '/') url += '/';
@@ -200,7 +206,8 @@ describe('Feed generator', () => {
       hexo.config.url = domain;
       hexo.config.root = root;
 
-      const result = generator(locals);
+      const feedCfg = hexo.config.feed;
+      const result = generator(locals, feedCfg.type, feedCfg.path);
       const $ = cheerio.load(result.data);
 
       $('feed>link').attr('href').should.eql(valid);
@@ -220,7 +227,8 @@ describe('Feed generator', () => {
       hexo.config.url = url;
       hexo.config.root = root;
 
-      const result = generator(locals);
+      const feedCfg = hexo.config.feed;
+      const result = generator(locals, feedCfg.type, feedCfg.path);
       const $ = cheerio.load(result.data);
 
       $(selector).length.should.eq(1);

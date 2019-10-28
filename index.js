@@ -18,54 +18,43 @@ let type = config.type;
 let path = config.path;
 const feedFn = require('./lib/generator');
 
-if (!type || typeof type === 'string') {
-  if (!type) type = 'atom';
+if (!type || typeof type === 'string' || !Array.isArray(type)) {
+  type = ['atom'];
+}
 
-  // Check feed type
-  if (type !== 'atom' && type !== 'rss2') {
-    type = 'atom';
+if (Array.isArray(type) && type.length > 2) {
+  type = type.slice(0, 2);
+}
+
+type = type.map((str, i) => {
+  str = str.toLowerCase();
+  if (str !== 'atom' && str !== 'rss2') {
+    if (i === 0) str = 'atom';
+    else str = 'rss2';
   }
+  return str;
+});
 
-  if (!path || typeof path !== 'string') path = type.concat('.xml');
+if (!path || typeof path === 'string' || !Array.isArray(path)) {
+  path = type.map(str => str.concat('.xml'));
+}
 
-  // Add extension name if not found
-  if (!extname(path)) {
-    path += '.xml';
-  }
+if (Array.isArray(path) && path.length > 2) {
+  path = path.slice(0, 2);
+}
 
-  config.type = type;
-  config.path = path;
+path = path.map(str => {
+  if (!extname(str)) return str.concat('.xml');
+  return str;
+});
 
-  hexo.extend.generator.register('feed', function(locals) {
-    return feedFn.call(hexo, locals);
-  });
-} else {
-  if (!Array.isArray(type)) type = ['atom', 'rss2'];
-  else if (!type.includes('atom') || !type.includes('rss2')
-    || type.length !== 2) {
-    type = ['atom', 'rss2'];
-  }
+hexo.extend.generator.register('feed1', locals => {
+  return feedFn.call(hexo, locals, type[0], path[0]);
+});
 
-  if (!path) path = type.map(str => str.concat('.xml'));
-
-  if (!Array.isArray(path) || path.length !== 2) {
-    path = type.map(str => str.concat('.xml'));
-  }
-
-  path = path.map(str => {
-    if (!extname(str)) return str.concat('.xml');
-    return str;
-  });
-
-  config.type = type;
-  config.path = path;
-
-  hexo.extend.generator.register('feed1', function(locals) {
-    return feedFn.call(hexo, locals, type[0]);
-  });
-
-  hexo.extend.generator.register('feed2', function(locals) {
-    return feedFn.call(hexo, locals, type[1]);
+if (type.length === 2) {
+  hexo.extend.generator.register('feed2', locals => {
+    return feedFn.call(hexo, locals, type[1], path[1]);
   });
 }
 
