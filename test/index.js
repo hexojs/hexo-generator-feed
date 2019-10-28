@@ -323,8 +323,7 @@ describe('Autodiscovery', () => {
   hexo.config.title = 'foo';
   hexo.config.feed = {
     type: 'atom',
-    path: 'atom.xml',
-    autodiscovery: true
+    path: 'atom.xml'
   };
   hexo.config = Object.assign(hexo.config, urlConfig);
 
@@ -351,16 +350,6 @@ describe('Autodiscovery', () => {
 
     result.should.eql('<head><link><link rel="alternate" href="/root/atom.xml" title="foo" type="application/atom+xml"></head>');
     hexo.config.root = '/';
-  });
-
-  it('disable autodiscovery', () => {
-    hexo.config.feed.autodiscovery = false;
-    const content = '<head><link></head>';
-    const result = autoDiscovery(content);
-
-    const resultType = typeof result;
-    resultType.should.eql('undefined');
-    hexo.config.feed.autodiscovery = true;
   });
 
   it('no duplicate tag', () => {
@@ -405,8 +394,7 @@ describe('Autodiscovery', () => {
   it('rss2', () => {
     hexo.config.feed = {
       type: 'rss2',
-      path: 'rss2.xml',
-      autodiscovery: true
+      path: 'rss2.xml'
     };
     const content = '<head><link></head>';
     const result = autoDiscovery(content);
@@ -418,8 +406,7 @@ describe('Autodiscovery', () => {
 
     hexo.config.feed = {
       type: 'atom',
-      path: 'atom.xml',
-      autodiscovery: true
+      path: 'atom.xml'
     };
   });
 
@@ -430,24 +417,10 @@ describe('Autodiscovery', () => {
     result.should.eql('<head>\n<link>\n<link rel="alternate" href="/atom.xml" title="foo" type="application/atom+xml"></head>');
   });
 
-  it('enable by default', () => {
-    hexo.config.feed = {
-      type: 'atom',
-      path: 'atom.xml',
-      autodiscovery: undefined
-    };
-    const content = '<head><link></head>';
-    const result = autoDiscovery(content);
-    const resultType = typeof result;
-
-    resultType.should.not.eql('undefined');
-  });
-
   it('defaults to atom when type is undefined', () => {
     hexo.config.feed = {
       type: undefined,
-      path: 'atom.xml',
-      autodiscovery: true
+      path: 'atom.xml'
     };
     const content = '<head><link></head>';
     const result = autoDiscovery(content);
@@ -459,8 +432,7 @@ describe('Autodiscovery', () => {
   it('defaults to atom when type is not atom/rss2', () => {
     hexo.config.feed = {
       type: 'foo',
-      path: 'atom.xml',
-      autodiscovery: true
+      path: 'atom.xml'
     };
     const content = '<head><link></head>';
     const result = autoDiscovery(content);
@@ -472,8 +444,7 @@ describe('Autodiscovery', () => {
   it('defaults to atom.xml', () => {
     hexo.config.feed = {
       type: 'atom',
-      path: undefined,
-      autodiscovery: true
+      path: undefined
     };
     hexo.config = Object.assign(hexo.config, urlConfig);
 
@@ -487,8 +458,7 @@ describe('Autodiscovery', () => {
   it('add xml file extension if not found', () => {
     hexo.config.feed = {
       type: 'atom',
-      path: 'atom',
-      autodiscovery: true
+      path: 'atom'
     };
     hexo.config = Object.assign(hexo.config, urlConfig);
 
@@ -502,8 +472,7 @@ describe('Autodiscovery', () => {
   it('atom + rss2', () => {
     hexo.config.feed = {
       type: ['atom', 'rss2'],
-      path: ['atom.xml', 'rss2.xml'],
-      autodiscovery: true
+      path: ['atom.xml', 'rss2.xml']
     };
     hexo.config = Object.assign(hexo.config, urlConfig);
 
@@ -519,8 +488,7 @@ describe('Autodiscovery', () => {
   it('defaults to atom + rss2 if type is an object', () => {
     hexo.config.feed = {
       type: { foo: 'bar' },
-      path: ['atom.xml', 'rss2.xml'],
-      autodiscovery: true
+      path: ['atom.xml', 'rss2.xml']
     };
     hexo.config = Object.assign(hexo.config, urlConfig);
 
@@ -534,8 +502,7 @@ describe('Autodiscovery', () => {
   it('defaults to atom + rss2 if type has invalid values', () => {
     hexo.config.feed = {
       type: ['foo', 'bar'],
-      path: ['atom.xml', 'rss2.xml'],
-      autodiscovery: true
+      path: ['atom.xml', 'rss2.xml']
     };
     hexo.config = Object.assign(hexo.config, urlConfig);
 
@@ -549,8 +516,7 @@ describe('Autodiscovery', () => {
   it('defaults to atom.xml + rss2.xml if type is undefined', () => {
     hexo.config.feed = {
       type: ['atom', 'rss2'],
-      path: undefined,
-      autodiscovery: true
+      path: undefined
     };
     hexo.config = Object.assign(hexo.config, urlConfig);
 
@@ -565,8 +531,7 @@ describe('Autodiscovery', () => {
   it('defaults to atom.xml + rss2.xml if type is an object', () => {
     hexo.config.feed = {
       type: ['atom', 'rss2'],
-      path: { foo: 'bar' },
-      autodiscovery: true
+      path: { foo: 'bar' }
     };
     hexo.config = Object.assign(hexo.config, urlConfig);
 
@@ -581,8 +546,7 @@ describe('Autodiscovery', () => {
   it('defaults to atom.xml + rss2.xml if type has invalid values', () => {
     hexo.config.feed = {
       type: ['atom', 'rss2'],
-      path: ['foo', 'bar', 'baz'],
-      autodiscovery: true
+      path: ['foo', 'bar', 'baz']
     };
     hexo.config = Object.assign(hexo.config, urlConfig);
 
@@ -597,8 +561,7 @@ describe('Autodiscovery', () => {
   it('add xml file extension if not found (array)', () => {
     hexo.config.feed = {
       type: ['atom', 'rss2'],
-      path: ['atom', 'rss2'],
-      autodiscovery: true
+      path: ['atom', 'rss2']
     };
     hexo.config = Object.assign(hexo.config, urlConfig);
 
@@ -613,8 +576,7 @@ describe('Autodiscovery', () => {
   it('path must follow order of type', () => {
     hexo.config.feed = {
       type: ['rss2', 'atom'],
-      path: ['rss-awesome.xml', 'atom-awesome.xml'],
-      autodiscovery: true
+      path: ['rss-awesome.xml', 'atom-awesome.xml']
     };
     hexo.config = Object.assign(hexo.config, urlConfig);
 

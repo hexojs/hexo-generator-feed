@@ -58,6 +58,8 @@ if (type.length === 2) {
   });
 }
 
+if (typeof config.autodiscovery === 'undefined') config.autodiscovery = true;
+
 if (config.autodiscovery === true) {
   hexo.extend.filter.register('after_render:html', require('./lib/autodiscovery'));
 }
