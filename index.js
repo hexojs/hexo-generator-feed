@@ -53,13 +53,9 @@ path = path.map(str => {
 config.type = type;
 config.path = path;
 
-hexo.extend.generator.register('feed1', locals => {
-  return feedFn.call(hexo, locals, type[0], path[0]);
-});
-
-if (type.length === 2) {
-  hexo.extend.generator.register('feed2', locals => {
-    return feedFn.call(hexo, locals, type[1], path[1]);
+for (const feedType of type) {
+  hexo.extend.generator.register(feedType, locals => {
+    return feedFn.call(hexo, locals, feedType, path[type.indexOf(feedType)]);
   });
 }
 
