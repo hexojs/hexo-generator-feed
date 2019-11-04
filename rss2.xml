@@ -4,8 +4,12 @@
   xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>{{ config.title }}</title>
-    <url>{{ icon }}</url>
     <link>{{ url }}</link>
+    <image>
+      <url>{{ icon }}</url>
+      <title>{{ config.title }}</title>
+      <link>{{ url }}</link>
+    </image>
     <atom:link href="{{ feed_url | uriencode }}" rel="self" type="application/rss+xml"/>
     {% if config.feed.hub %}<atom:link href="{{ config.feed.hub | uriencode }}" rel="hub"/>{% endif %}
     <description>{{ config.description }}</description>
