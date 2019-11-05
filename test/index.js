@@ -254,7 +254,8 @@ describe('Feed generator', () => {
       icon: 'icon.svg'
     };
 
-    const result = generator(locals);
+    const feedCfg = hexo.config.feed;
+    const result = generator(locals, feedCfg.type, feedCfg.path);
     const $ = cheerio.load(result.data);
 
     $('feed>icon').text().should.eql(full_url_for.call(hexo, hexo.config.feed.icon));
@@ -267,7 +268,8 @@ describe('Feed generator', () => {
       icon: undefined
     };
 
-    const result = generator(locals);
+    const feedCfg = hexo.config.feed;
+    const result = generator(locals, feedCfg.type, feedCfg.path);
     const $ = cheerio.load(result.data);
 
     $('feed>icon').length.should.eql(0);
@@ -283,7 +285,8 @@ describe('Feed generator', () => {
       icon: 'icon.svg'
     };
 
-    const result = generator(locals);
+    const feedCfg = hexo.config.feed;
+    const result = generator(locals, feedCfg.type, feedCfg.path);
     const $ = cheerio.load(result.data);
 
     $('rss>channel>image>url').text().should.eql(full_url_for.call(hexo, hexo.config.feed.icon));
@@ -296,7 +299,8 @@ describe('Feed generator', () => {
       icon: undefined
     };
 
-    const result = generator(locals);
+    const feedCfg = hexo.config.feed;
+    const result = generator(locals, feedCfg.type, feedCfg.path);
     const $ = cheerio.load(result.data);
 
     $('rss>channel>image').length.should.eql(0);
@@ -309,10 +313,11 @@ describe('Feed generator', () => {
     };
     hexo.config = Object.assign(hexo.config, urlConfig);
 
-    const rss = generator(locals, hexo.config.feed.type[0]);
+    const feedCfg = hexo.config.feed;
+    const rss = generator(locals, feedCfg.type[0], feedCfg.path[0]);
     rss.path.should.eql(hexo.config.feed.path[0]);
 
-    const atom = generator(locals, hexo.config.feed.type[1]);
+    const atom = generator(locals, feedCfg.type[1], feedCfg.path[1]);
     atom.path.should.eql(hexo.config.feed.path[1]);
   });
 });
