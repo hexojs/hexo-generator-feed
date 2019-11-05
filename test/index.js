@@ -264,6 +264,35 @@ describe('Feed generator', () => {
 
     $('feed>icon').length.should.eql(0);
   });
+
+  it('Icon (rss2)', () => {
+    hexo.config.url = 'http://example.com';
+    hexo.config.root = '/';
+
+    hexo.config.feed = {
+      type: 'rss2',
+      path: 'rss2.xml',
+      icon: 'icon.svg'
+    };
+
+    const result = generator(locals);
+    const $ = cheerio.load(result.data);
+
+    $('rss>channel>image>url').text().should.eql(full_url_for.call(hexo, hexo.config.feed.icon));
+  });
+
+  it('Icon (rss2) - no icon', () => {
+    hexo.config.feed = {
+      type: 'rss2',
+      path: 'rss2.xml',
+      icon: undefined
+    };
+
+    const result = generator(locals);
+    const $ = cheerio.load(result.data);
+
+    $('rss>channel>image').length.should.eql(0);
+  });
 });
 
 describe('Autodiscovery', () => {
