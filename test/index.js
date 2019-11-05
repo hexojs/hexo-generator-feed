@@ -7,7 +7,7 @@ const env = new nunjucks.Environment();
 const { join } = require('path');
 const { readFileSync } = require('fs');
 const cheerio = require('cheerio');
-const { encodeURL } = require('hexo-util');
+const { encodeURL, full_url_for } = require('hexo-util');
 
 env.addFilter('uriencode', str => {
   return encodeURI(str);
@@ -234,6 +234,35 @@ describe('Feed generator', () => {
       content: true
     };
     checkURL('http://localhost/', '/', 'item:nth-of-type(3)>enclosure');
+  });
+
+  it('Icon (atom)', () => {
+    hexo.config.url = 'http://example.com';
+    hexo.config.root = '/';
+
+    hexo.config.feed = {
+      type: 'atom',
+      path: 'atom.xml',
+      icon: 'icon.svg'
+    };
+
+    const result = generator(locals);
+    const $ = cheerio.load(result.data);
+
+    $('feed>icon').text().should.eql(full_url_for.call(hexo, hexo.config.feed.icon));
+  });
+
+  it('Icon (atom) - no icon', () => {
+    hexo.config.feed = {
+      type: 'atom',
+      path: 'atom.xml',
+      icon: undefined
+    };
+
+    const result = generator(locals);
+    const $ = cheerio.load(result.data);
+
+    $('feed>icon').length.should.eql(0);
   });
 });
 
