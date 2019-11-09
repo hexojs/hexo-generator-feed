@@ -57,7 +57,8 @@ describe('Feed generator', () => {
       limit: 3
     };
     hexo.config = Object.assign(hexo.config, urlConfig);
-    const result = generator(locals);
+    const feedCfg = hexo.config.feed;
+    const result = generator(locals, feedCfg.type, feedCfg.path);
 
     result.path.should.eql('atom.xml');
     result.data.should.eql(atomTmpl.render({
@@ -75,7 +76,8 @@ describe('Feed generator', () => {
       limit: 3
     };
     hexo.config = Object.assign(hexo.config, urlConfig);
-    const result = generator(locals);
+    const feedCfg = hexo.config.feed;
+    const result = generator(locals, feedCfg.type, feedCfg.path);
 
     result.path.should.eql('rss2.xml');
     result.data.should.eql(rss2Tmpl.render({
@@ -93,8 +95,8 @@ describe('Feed generator', () => {
       limit: 0
     };
     hexo.config = Object.assign(hexo.config, urlConfig);
-
-    const result = generator(locals);
+    const feedCfg = hexo.config.feed;
+    const result = generator(locals, feedCfg.type, feedCfg.path);
 
     result.path.should.eql('atom.xml');
     result.data.should.eql(atomTmpl.render({
@@ -111,7 +113,8 @@ describe('Feed generator', () => {
       path: 'rss2.xml',
       content: true
     };
-    let result = generator(locals);
+    let feedCfg = hexo.config.feed;
+    let result = generator(locals, feedCfg.type, feedCfg.path);
     let $ = cheerio.load(result.data, {xmlMode: true});
 
     let description = $('content\\:encoded').html()
@@ -125,7 +128,8 @@ describe('Feed generator', () => {
       path: 'atom.xml',
       content: true
     };
-    result = generator(locals);
+    feedCfg = hexo.config.feed;
+    result = generator(locals, feedCfg.type, feedCfg.path);
     $ = cheerio.load(result.data, {xmlMode: true});
     description = $('content[type="html"]').html()
       .replace(/^<!\[CDATA\[/, '')
@@ -145,7 +149,8 @@ describe('Feed generator', () => {
       hexo.config.url = url;
       hexo.config.root = root;
 
-      const result = generator(locals);
+      const feedCfg = hexo.config.feed;
+      const result = generator(locals, feedCfg.type, feedCfg.path);
       const $ = cheerio.load(result.data);
 
       $('feed>id').text().should.eql(valid);
@@ -174,7 +179,8 @@ describe('Feed generator', () => {
       hexo.config.url = url;
       hexo.config.root = root;
 
-      const result = generator(locals);
+      const feedCfg = hexo.config.feed;
+      const result = generator(locals, feedCfg.type, feedCfg.path);
       const $ = cheerio.load(result.data);
 
       if (url[url.length - 1] !== '/') url += '/';
@@ -200,7 +206,8 @@ describe('Feed generator', () => {
       hexo.config.url = domain;
       hexo.config.root = root;
 
-      const result = generator(locals);
+      const feedCfg = hexo.config.feed;
+      const result = generator(locals, feedCfg.type, feedCfg.path);
       const $ = cheerio.load(result.data);
 
       $('feed>link').attr('href').should.eql(valid);
@@ -220,7 +227,8 @@ describe('Feed generator', () => {
       hexo.config.url = url;
       hexo.config.root = root;
 
-      const result = generator(locals);
+      const feedCfg = hexo.config.feed;
+      const result = generator(locals, feedCfg.type, feedCfg.path);
       const $ = cheerio.load(result.data);
 
       $(selector).length.should.eq(1);
@@ -246,7 +254,8 @@ describe('Feed generator', () => {
       icon: 'icon.svg'
     };
 
-    const result = generator(locals);
+    const feedCfg = hexo.config.feed;
+    const result = generator(locals, feedCfg.type, feedCfg.path);
     const $ = cheerio.load(result.data);
 
     $('feed>icon').text().should.eql(full_url_for.call(hexo, hexo.config.feed.icon));
@@ -259,7 +268,8 @@ describe('Feed generator', () => {
       icon: undefined
     };
 
-    const result = generator(locals);
+    const feedCfg = hexo.config.feed;
+    const result = generator(locals, feedCfg.type, feedCfg.path);
     const $ = cheerio.load(result.data);
 
     $('feed>icon').length.should.eql(0);
@@ -275,7 +285,8 @@ describe('Feed generator', () => {
       icon: 'icon.svg'
     };
 
-    const result = generator(locals);
+    const feedCfg = hexo.config.feed;
+    const result = generator(locals, feedCfg.type, feedCfg.path);
     const $ = cheerio.load(result.data);
 
     $('rss>channel>image>url').text().should.eql(full_url_for.call(hexo, hexo.config.feed.icon));
@@ -288,33 +299,51 @@ describe('Feed generator', () => {
       icon: undefined
     };
 
-    const result = generator(locals);
+    const feedCfg = hexo.config.feed;
+    const result = generator(locals, feedCfg.type, feedCfg.path);
     const $ = cheerio.load(result.data);
 
     $('rss>channel>image').length.should.eql(0);
+  });
+
+  it('path must follow order of type', () => {
+    hexo.config.feed = {
+      type: ['rss2', 'atom'],
+      path: ['rss-awesome.xml', 'atom-awesome.xml']
+    };
+    hexo.config = Object.assign(hexo.config, urlConfig);
+
+    const feedCfg = hexo.config.feed;
+    const rss = generator(locals, feedCfg.type[0], feedCfg.path[0]);
+    rss.path.should.eql(hexo.config.feed.path[0]);
+
+    const atom = generator(locals, feedCfg.type[1], feedCfg.path[1]);
+    atom.path.should.eql(hexo.config.feed.path[1]);
   });
 });
 
 describe('Autodiscovery', () => {
   const hexo = new Hexo();
   const autoDiscovery = require('../lib/autodiscovery').bind(hexo);
-  hexo.config.title = 'foo';
-  hexo.config.feed = {
-    type: 'atom',
-    path: 'atom.xml',
-    autodiscovery: true
+  hexo.config = {
+    title: 'foo',
+    root: '/'
   };
+  hexo.config.feed = {
+    type: ['atom'],
+    path: ['atom.xml']
+  };
+  hexo.config = Object.assign(hexo.config, urlConfig);
+
 
   it('default', () => {
     const content = '<head><link></head>';
-    const result = autoDiscovery(content);
+    const result = autoDiscovery(content).trim();
 
     const $ = cheerio.load(result);
     $('link[type="application/atom+xml"]').length.should.eql(1);
-    $('link[type="application/atom+xml"]').attr('href').should.eql('/' + hexo.config.feed.path);
+    $('link[type="application/atom+xml"]').attr('href').should.eql(urlConfig.root + hexo.config.feed.path);
     $('link[type="application/atom+xml"]').attr('title').should.eql(hexo.config.title);
-
-    result.should.eql('<head><link><link rel="alternate" href="/atom.xml" title="foo" type="application/atom+xml"></head>');
   });
 
   it('prepend root', () => {
@@ -325,18 +354,7 @@ describe('Autodiscovery', () => {
     const $ = cheerio.load(result);
     $('link[type="application/atom+xml"]').attr('href').should.eql(hexo.config.root + hexo.config.feed.path);
 
-    result.should.eql('<head><link><link rel="alternate" href="/root/atom.xml" title="foo" type="application/atom+xml"></head>');
     hexo.config.root = '/';
-  });
-
-  it('disable autodiscovery', () => {
-    hexo.config.feed.autodiscovery = false;
-    const content = '<head><link></head>';
-    const result = autoDiscovery(content);
-
-    const resultType = typeof result;
-    resultType.should.eql('undefined');
-    hexo.config.feed.autodiscovery = true;
   });
 
   it('no duplicate tag', () => {
@@ -356,11 +374,6 @@ describe('Autodiscovery', () => {
 
     const $ = cheerio.load(result);
     $('link[type="application/atom+xml"]').length.should.eql(1);
-
-    const expected = '<head></head>'
-    + '<head><link><link rel="alternate" href="/atom.xml" title="foo" type="application/atom+xml"></head>'
-    + '<head></head>';
-    result.should.eql(expected);
   });
 
   it('apply to first non-empty head tag only', () => {
@@ -371,18 +384,12 @@ describe('Autodiscovery', () => {
 
     const $ = cheerio.load(result);
     $('link[type="application/atom+xml"]').length.should.eql(1);
-
-    const expected = '<head></head>'
-    + '<head><link><link rel="alternate" href="/atom.xml" title="foo" type="application/atom+xml"></head>'
-    + '<head><link></head>';
-    result.should.eql(expected);
   });
 
   it('rss2', () => {
     hexo.config.feed = {
-      type: 'rss2',
-      path: 'rss2.xml',
-      autodiscovery: true
+      type: ['rss2'],
+      path: ['rss2.xml']
     };
     const content = '<head><link></head>';
     const result = autoDiscovery(content);
@@ -390,12 +397,9 @@ describe('Autodiscovery', () => {
     const $ = cheerio.load(result);
     $('link[rel="alternate"]').attr('type').should.eql('application/rss+xml');
 
-    result.should.eql('<head><link><link rel="alternate" href="/rss2.xml" title="foo" type="application/rss+xml"></head>');
-
     hexo.config.feed = {
-      type: 'atom',
-      path: 'atom.xml',
-      autodiscovery: true
+      type: ['atom'],
+      path: ['atom.xml']
     };
   });
 
@@ -403,6 +407,23 @@ describe('Autodiscovery', () => {
     const content = '<head>\n<link>\n</head>';
     const result = autoDiscovery(content);
 
-    result.should.eql('<head>\n<link>\n<link rel="alternate" href="/atom.xml" title="foo" type="application/atom+xml"></head>');
+    const $ = cheerio.load(result);
+    $('link[rel="alternate"]').length.should.eql(1);
+  });
+
+  it('atom + rss2', () => {
+    hexo.config.feed = {
+      type: ['atom', 'rss2'],
+      path: ['atom.xml', 'rss2.xml']
+    };
+    hexo.config = Object.assign(hexo.config, urlConfig);
+
+    const content = '<head><link></head>';
+    const result = autoDiscovery(content);
+
+    const $ = cheerio.load(result);
+    $('link[rel="alternate"]').length.should.eql(2);
+    $('link[rel="alternate"]').eq(0).attr('type').should.eql('application/atom+xml');
+    $('link[rel="alternate"]').eq(1).attr('type').should.eql('application/rss+xml');
   });
 });
