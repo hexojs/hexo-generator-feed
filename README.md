@@ -38,6 +38,20 @@ feed:
 ```
 
 - **type** - Feed type. `atom` or `rss2`. Specify `['atom', 'rss2']` to output both types. (Default: `atom`)
+  * Example:
+  ``` yaml
+  feed:
+    # Generate atom feed
+    type: atom
+
+    # Generate both atom and rss2 feeds
+    type:
+      - atom
+      - rss2
+    path:
+      - atom.xml
+      - rss2.xml
+  ```
 - **path** - Feed path. When both types are specified, path must follow the order of type value. (Default: atom.xml/rss2.xml)
 - **limit** - Maximum number of posts in the feed (Use `0` or `false` to show all posts)
 - **hub** - URL of the PubSubHubbub hubs (Leave it empty if you don't use it)
