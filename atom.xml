@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="https://www.w3.org/2005/Atom">
+<feed xmlns="http://www.w3.org/2005/Atom">
   <title>{{ config.title }}</title>
   {% if icon %}<icon>{{ icon }}</icon>{% endif %}
   {% if config.subtitle %}<subtitle>{{ config.subtitle }}</subtitle>{% endif %}
