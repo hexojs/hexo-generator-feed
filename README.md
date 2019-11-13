@@ -25,8 +25,10 @@ You can configure this plugin in `_config.yml`.
 
 ``` yaml
 feed:
-  type: atom
-  path: atom.xml
+  type: 
+    - atom
+  path: 
+    - atom.xml
   limit: 20
   hub:
   content:
@@ -42,7 +44,8 @@ feed:
   ``` yaml
   feed:
     # Generate atom feed
-    type: atom
+    type: 
+      - atom
 
     # Generate both atom and rss2 feeds
     type:
