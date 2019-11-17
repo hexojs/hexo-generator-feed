@@ -322,6 +322,30 @@ describe('Feed generator', () => {
   });
 });
 
+it('No posts', () => {
+  const hexo = new Hexo(__dirname, {
+    silent: true
+  });
+  const Post = hexo.model('Post');
+  const generator = require('../lib/generator').bind(hexo);
+
+  require('../node_modules/hexo/lib/plugins/helper')(hexo);
+
+  hexo.config.feed = {
+    type: 'atom',
+    path: 'atom.xml'
+  };
+  hexo.config = Object.assign(hexo.config, urlConfig);
+  const feedCfg = hexo.config.feed;
+
+  return Post.insert([]).then(data => {
+    const locals = hexo.locals.toObject();
+    const result = typeof generator(locals, feedCfg.type, feedCfg.path);
+
+    result.should.eql('undefined');
+  });
+});
+
 describe('Autodiscovery', () => {
   const hexo = new Hexo();
   const autoDiscovery = require('../lib/autodiscovery').bind(hexo);
@@ -331,10 +355,10 @@ describe('Autodiscovery', () => {
   };
   hexo.config.feed = {
     type: ['atom'],
-    path: ['atom.xml']
+    path: ['atom.xml'],
+    autodiscovery: true
   };
   hexo.config = Object.assign(hexo.config, urlConfig);
-
 
   it('default', () => {
     const content = '<head><link></head>';
@@ -344,6 +368,17 @@ describe('Autodiscovery', () => {
     $('link[type="application/atom+xml"]').length.should.eql(1);
     $('link[type="application/atom+xml"]').attr('href').should.eql(urlConfig.root + hexo.config.feed.path);
     $('link[type="application/atom+xml"]').attr('title').should.eql(hexo.config.title);
+  });
+
+  it('disable', () => {
+    hexo.config.feed.autodiscovery = false;
+    const content = '<head><link></head>';
+    const result = autoDiscovery(content);
+
+    const resultType = typeof result;
+    resultType.should.eql('undefined');
+
+    hexo.config.feed.autodiscovery = true;
   });
 
   it('prepend root', () => {
