@@ -355,10 +355,10 @@ describe('Autodiscovery', () => {
   };
   hexo.config.feed = {
     type: ['atom'],
-    path: ['atom.xml']
+    path: ['atom.xml'],
+    autodiscovery: true
   };
   hexo.config = Object.assign(hexo.config, urlConfig);
-
 
   it('default', () => {
     const content = '<head><link></head>';
@@ -368,6 +368,17 @@ describe('Autodiscovery', () => {
     $('link[type="application/atom+xml"]').length.should.eql(1);
     $('link[type="application/atom+xml"]').attr('href').should.eql(urlConfig.root + hexo.config.feed.path);
     $('link[type="application/atom+xml"]').attr('title').should.eql(hexo.config.title);
+  });
+
+  it('disable', () => {
+    hexo.config.feed.autodiscovery = false;
+    const content = '<head><link></head>';
+    const result = autoDiscovery(content);
+
+    const resultType = typeof result;
+    resultType.should.eql('undefined');
+
+    hexo.config.feed.autodiscovery = true;
   });
 
   it('prepend root', () => {
