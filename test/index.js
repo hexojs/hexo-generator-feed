@@ -322,6 +322,30 @@ describe('Feed generator', () => {
   });
 });
 
+it('No posts', () => {
+  const hexo = new Hexo(__dirname, {
+    silent: true
+  });
+  const Post = hexo.model('Post');
+  const generator = require('../lib/generator').bind(hexo);
+
+  require('../node_modules/hexo/lib/plugins/helper')(hexo);
+
+  hexo.config.feed = {
+    type: 'atom',
+    path: 'atom.xml'
+  };
+  hexo.config = Object.assign(hexo.config, urlConfig);
+  const feedCfg = hexo.config.feed;
+
+  return Post.insert([]).then(data => {
+    const locals = hexo.locals.toObject();
+    const result = typeof generator(locals, feedCfg.type, feedCfg.path);
+
+    result.should.eql('undefined');
+  });
+});
+
 describe('Autodiscovery', () => {
   const hexo = new Hexo();
   const autoDiscovery = require('../lib/autodiscovery').bind(hexo);
