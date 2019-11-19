@@ -16,6 +16,7 @@ const config = hexo.config.feed = Object.assign({
 
 let type = config.type;
 let path = config.path;
+let template = config.template;
 const feedFn = require('./lib/generator');
 
 if (!type || (typeof type !== 'string' && !Array.isArray(type))) {
@@ -67,8 +68,11 @@ if (typeof path === 'string') {
   if (!extname(path)) path += '.xml';
 }
 
+if (typeof template === 'string') template = [template];
+
 config.type = type;
 config.path = path;
+config.template = template;
 
 if (typeof type === 'string') {
   hexo.extend.generator.register(type, locals => {
