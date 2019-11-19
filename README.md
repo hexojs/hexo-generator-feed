@@ -68,6 +68,7 @@ feed:
   * It is possible to specify just one custom template, even when this plugin is configured to output both feed types,
   ``` yaml
   # (Optional) Exclude custom template from being copied into public/ folder
+  # Alternatively, you could also prepend an underscore to its filename, e.g. _custom.xml
   # https://hexo.io/docs/configuration#Include-Exclude-Files-or-Folders
   exclude:
     - 'custom.xml'
