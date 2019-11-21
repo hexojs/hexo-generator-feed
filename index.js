@@ -69,14 +69,13 @@ if (typeof path === 'string') {
   if (!extname(path)) path += '.xml';
 }
 
-if (typeof template === 'string' && template.length > 0) template = [template];
-
-if (Array.isArray(type) && template.length > 2) {
-  template = template.slice(0, 2);
+if (typeof template === 'string') {
+  if (template.length > 0) template = [template];
 }
 
-if (Array.isArray(template) && template.length < type.length) {
-  template.push(join(__dirname, `${type[1]}.xml`));
+if (Array.isArray(template)) {
+  if (template.length > 2) template = template.slice(0, 2);
+  if (template.length < type.length) template.push(join(__dirname, `${type[1]}.xml`));
 }
 
 config.type = type;
