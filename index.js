@@ -70,12 +70,18 @@ if (typeof path === 'string') {
 }
 
 if (typeof template === 'string') {
-  if (template.length > 0) template = [template];
+  if (template.length >= 1) template = [template];
 }
 
 if (Array.isArray(template)) {
-  if (template.length > 2) template = template.slice(0, 2);
-  if (template.length < type.length) template.push(join(__dirname, `${type[1]}.xml`));
+  if (template.length >= 1) {
+    if (template.length > 2) template = template.slice(0, 2);
+    if (template.length < type.length) template.push(join(__dirname, `${type[1]}.xml`));
+  } else {
+    template = null;
+  }
+} else {
+  template = null;
 }
 
 config.type = type;
