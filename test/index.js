@@ -366,7 +366,7 @@ describe('Autodiscovery', () => {
 
     const $ = cheerio.load(result);
     $('link[type="application/atom+xml"]').length.should.eql(1);
-    $('link[type="application/atom+xml"]').attr('href').should.eql(urlConfig.root + hexo.config.feed.path);
+    $('link[type="application/atom+xml"]').attr('href').should.eql(urlConfig.root + hexo.config.feed.path[0]);
     $('link[type="application/atom+xml"]').attr('title').should.eql(hexo.config.title);
   });
 
@@ -403,7 +403,7 @@ describe('Autodiscovery', () => {
     const result = autoDiscovery(content);
 
     const $ = cheerio.load(result);
-    $('link[type="application/atom+xml"]').attr('href').should.eql(hexo.config.root + hexo.config.feed.path);
+    $('link[type="application/atom+xml"]').attr('href').should.eql(hexo.config.root + hexo.config.feed.path[0]);
 
     hexo.config.root = '/';
   });
