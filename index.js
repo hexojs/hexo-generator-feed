@@ -37,12 +37,18 @@ type = type.map((str, i) => {
   return str;
 });
 
-if (!path || typeof path === 'string' || !Array.isArray(path)) {
+if (typeof path === 'string') path = [path];
+
+if (!path || !Array.isArray(path)) {
   path = type.map(str => str.concat('.xml'));
 }
 
-if (Array.isArray(path) && path.length > 2) {
-  path = path.slice(0, 2);
+if (Array.isArray(path)) {
+  if (path.length !== type.length) {
+    if (path.length > type.length) path = path.slice(0, type.length);
+    else if (path.length === 0) path = type.map(str => str.concat('.xml'));
+    else path.push(type[1].concat('.xml'));
+  }
 }
 
 path = path.map(str => {
