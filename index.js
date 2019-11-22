@@ -18,29 +18,29 @@ let type = config.type;
 let path = config.path;
 const feedFn = require('./lib/generator');
 
-if (typeof type === 'string') type = [type];
-
-if (!type || !Array.isArray(type)) {
-  type = ['atom'];
+if (!type || (typeof type !== 'string' && !Array.isArray(type))) {
+  type = 'atom';
 }
 
-if (Array.isArray(type) && type.length > 2) {
-  type = type.slice(0, 2);
+if (Array.isArray(type)) {
+  if (type.length > 2) type = type.slice(0, 2);
+  type = type.map((str, i) => {
+    str = str.toLowerCase();
+    if (str !== 'atom' && str !== 'rss2') {
+      if (i === 0) str = 'atom';
+      else str = 'rss2';
+    }
+    return str;
+  });
 }
 
-type = type.map((str, i) => {
-  str = str.toLowerCase();
-  if (str !== 'atom' && str !== 'rss2') {
-    if (i === 0) str = 'atom';
-    else str = 'rss2';
-  }
-  return str;
-});
+if (typeof type === 'string') {
+  if (type !== 'atom' && type !== 'rss2') type = 'atom';
+}
 
-if (typeof path === 'string') path = [path];
-
-if (!path || !Array.isArray(path)) {
-  path = type.map(str => str.concat('.xml'));
+if (!path || typeof path !== typeof type) {
+  if (typeof type === 'string') path = type.concat('.xml');
+  else path = type.map(str => str.concat('.xml'));
 }
 
 if (Array.isArray(path)) {
@@ -49,20 +49,30 @@ if (Array.isArray(path)) {
     else if (path.length === 0) path = type.map(str => str.concat('.xml'));
     else path.push(type[1].concat('.xml'));
   }
+
+  path = path.map(str => {
+    if (!extname(str)) return str.concat('.xml');
+    return str;
+  });
 }
 
-path = path.map(str => {
-  if (!extname(str)) return str.concat('.xml');
-  return str;
-});
+if (typeof path === 'string') {
+  if (!extname(path)) path += '.xml';
+}
 
 config.type = type;
 config.path = path;
 
-for (const feedType of type) {
-  hexo.extend.generator.register(feedType, locals => {
-    return feedFn.call(hexo, locals, feedType, path[type.indexOf(feedType)]);
+if (typeof type === 'string') {
+  hexo.extend.generator.register(type, locals => {
+    return feedFn.call(hexo, locals, type, path);
   });
+} else {
+  for (const feedType of type) {
+    hexo.extend.generator.register(feedType, locals => {
+      return feedFn.call(hexo, locals, feedType, path[type.indexOf(feedType)]);
+    });
+  }
 }
 
 if (typeof config.autodiscovery === 'undefined') config.autodiscovery = true;
