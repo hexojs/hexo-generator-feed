@@ -44,10 +44,10 @@ if (!path || !Array.isArray(path)) {
 }
 
 if (Array.isArray(path)) {
-  if (path.length > 2) path = path.slice(0, 2);
   if (path.length !== type.length) {
-    if (path.length === 0) path = type.map(str => str.concat('.xml'));
-    else path.push(type[1]);
+    if (path.length > type.length) path = path.slice(0, type.length);
+    else if (path.length === 0) path = type.map(str => str.concat('.xml'));
+    else path.push(type[1].concat('.xml'));
   }
 }
 
