@@ -65,7 +65,7 @@ for (const feedType of type) {
   });
 }
 
-if (typeof config.autodiscovery === 'undefined') config.autodiscovery = true;
+if (typeof config.autodiscovery !== 'boolean') config.autodiscovery = true;
 
 if (config.autodiscovery === true) {
   hexo.extend.filter.register('after_render:html', require('./lib/autodiscovery'));
