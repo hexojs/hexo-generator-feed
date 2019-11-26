@@ -24,14 +24,21 @@ if (!type || (typeof type !== 'string' && !Array.isArray(type))) {
 
 if (Array.isArray(type)) {
   if (type.length > 2) type = type.slice(0, 2);
-  type = type.map((str, i) => {
-    str = str.toLowerCase();
-    if (str !== 'atom' && str !== 'rss2') {
-      if (i === 0) str = 'atom';
-      else str = 'rss2';
-    }
-    return str;
-  });
+  switch (type.length) {
+    case 0:
+      type = 'atom';
+      break;
+    case 1:
+      if (type[0] !== 'atom' && type[0] !== 'rss2') {
+        type = 'atom';
+      }
+      break;
+    case 2:
+      if (type !== ['atom', 'rss2'] && type !== ['rss2', 'atom']) {
+        type = ['atom', 'rss2'];
+      }
+      break;
+  }
 }
 
 if (typeof type === 'string') {
