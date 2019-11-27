@@ -1,7 +1,7 @@
 /* global hexo */
 'use strict';
 
-const { extname } = require('path');
+const { extname, join } = require('path');
 
 const config = hexo.config.feed = Object.assign({
   type: 'atom',
@@ -11,11 +11,13 @@ const config = hexo.config.feed = Object.assign({
   content_limit: 140,
   content_limit_delim: '',
   order_by: '-date',
-  autodiscovery: true
+  autodiscovery: true,
+  template: ''
 }, hexo.config.feed);
 
 let type = config.type;
 let path = config.path;
+let template = config.template;
 const feedFn = require('./lib/generator');
 
 if (!type || (typeof type !== 'string' && !Array.isArray(type))) {
@@ -67,8 +69,22 @@ if (typeof path === 'string') {
   if (!extname(path)) path += '.xml';
 }
 
+if (typeof template !== 'string' && !Array.isArray(template)) {
+  template = null;
+}
+
+if (Array.isArray(template)) {
+  if (template.length >= 1) {
+    if (template.length > type.length) template = template.slice(0, type.length);
+    else if (template.length < type.length) template.push(join(__dirname, `${type[1]}.xml`));
+  } else {
+    template = null;
+  }
+}
+
 config.type = type;
 config.path = path;
+config.template = template;
 
 if (typeof type === 'string') {
   hexo.extend.generator.register(type, locals => {

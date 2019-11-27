@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<aaa>
+  {% for post in posts.toArray() %}
+  <entry>
+    <published>{{ post.date.toISOString() }}</published>
+  </entry>
+  {% endfor %}
+</aaa>

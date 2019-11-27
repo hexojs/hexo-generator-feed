@@ -21,6 +21,8 @@ const atomTmplSrc = join(__dirname, '../atom.xml');
 const atomTmpl = nunjucks.compile(readFileSync(atomTmplSrc, 'utf8'), env);
 const rss2TmplSrc = join(__dirname, '../rss2.xml');
 const rss2Tmpl = nunjucks.compile(readFileSync(rss2TmplSrc, 'utf8'), env);
+const customTmplSrc = join(__dirname, 'custom.xml');
+const customTmlp = nunjucks.compile(readFileSync(customTmplSrc, 'utf8'), env);
 
 const urlConfig = {
   url: 'http://localhost/',
@@ -319,6 +321,24 @@ describe('Feed generator', () => {
 
     const atom = generator(locals, feedCfg.type[1], feedCfg.path[1]);
     atom.path.should.eql(hexo.config.feed.path[1]);
+  });
+
+  it('custom template', () => {
+    hexo.config.feed = {
+      type: ['atom'],
+      path: 'atom.xml',
+      template: ['test/custom.xml']
+    };
+    hexo.config = Object.assign(hexo.config, urlConfig);
+    const feedCfg = hexo.config.feed;
+    const result = generator(locals, feedCfg.type[0], feedCfg.path);
+
+    result.data.should.eql(customTmlp.render({
+      config: hexo.config,
+      url: urlConfig.url,
+      posts,
+      feed_url: hexo.config.root + feedCfg.path
+    }));
   });
 });
 

@@ -36,6 +36,7 @@ feed:
   order_by: -date
   icon: icon.png
   autodiscovery: true
+  template:
 ```
 
 - **type** - Feed type. `atom` or `rss2`. Specify `['atom', 'rss2']` to output both types. (Default: `atom`)
@@ -63,3 +64,20 @@ feed:
 - **icon** - (optional) Custom feed icon. Defaults to a gravatar of email specified in the main config.
 - **autodiscovery** - Add feed [autodiscovery](http://www.rssboard.org/rss-autodiscovery). (Default: `true`)
   * Many themes already offer this feature, so you may also need to adjust the theme's config if you wish to disable it.
+- **template** - Custom template path(s). This file will be used to generate feed xml file, see the default templates: [atom.xml](atom.xml) and [rss2.xml](rss2.xml).
+  * It is possible to specify just one custom template, even when this plugin is configured to output both feed types,
+  ``` yaml
+  # (Optional) Exclude custom template from being copied into public/ folder
+  # Alternatively, you could also prepend an underscore to its filename, e.g. _custom.xml
+  # https://hexo.io/docs/configuration#Include-Exclude-Files-or-Folders
+  exclude:
+    - 'custom.xml'
+  feed:
+    type:
+      - atom
+      - rss2
+    template:
+      - ./source/custom.xml
+    # atom will be generated using custom.xml
+    # rss2 will be generated using the default template instead
+  ```
