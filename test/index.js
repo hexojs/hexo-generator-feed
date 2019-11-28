@@ -57,7 +57,9 @@ describe('Feed generator', () => {
     await Post.insert([
       {source: 'foo', slug: 'foo', content: '<h6>TestHTML</h6>', date: 1e8},
       {source: 'bar', slug: 'bar', date: 1e8 + 1},
-      {source: 'baz', slug: 'baz', title: 'With Image', image: 'test.png', date: 1e8 - 1}
+      {source: 'baz', slug: 'baz', title: 'With Image', image: 'test.png', date: 1e8 - 1},
+      {source: 'date', slug: 'date', title: 'date', date: 1e8 - 2, updated: undefined},
+      {source: 'updated', slug: 'updated', title: 'updated', date: 1e8 - 2, updated: 1e8 + 10}
     ]);
     posts = Post.sort('-date');
     locals = hexo.locals.toObject();
@@ -395,6 +397,40 @@ describe('Feed generator', () => {
       posts,
       feed_url: 'http://localhost/atom.xml'
     }));
+  });
+
+  it('no updated date', async () => {
+    hexo.config.feed = {
+      type: 'atom',
+      path: 'atom.xml'
+    };
+    hexo.config = Object.assign(hexo.config, urlConfig);
+    const feedCfg = hexo.config.feed;
+    const result = generator(locals, feedCfg.type, feedCfg.path);
+
+    const { items } = await p(result.data);
+    const post = items.filter(({ title }) => title === 'date');
+    const { date, updated } = post[0];
+
+    updated.should.eql(date);
+  });
+
+  it('updated date', async () => {
+    hexo.config.feed = {
+      type: 'atom',
+      path: 'atom.xml'
+    };
+    hexo.config = Object.assign(hexo.config, urlConfig);
+    const feedCfg = hexo.config.feed;
+    const result = generator(locals, feedCfg.type, feedCfg.path);
+
+    const { items } = await p(result.data);
+    const post = items.filter(({ title }) => title === 'updated');
+    const { date, updated } = post[0];
+    const expected = new Date(1e8 + 10).toISOString();
+
+    updated.should.eql(expected);
+    date.should.not.eql(updated);
   });
 });
 
