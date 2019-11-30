@@ -3,7 +3,7 @@
 
 const { extname, join } = require('path');
 
-const config = hexo.config.feed = Object.assign({
+hexo.config.feed = Object.assign({
   type: 'atom',
   limit: 20,
   hub: '',
@@ -14,6 +14,8 @@ const config = hexo.config.feed = Object.assign({
   autodiscovery: true,
   template: ''
 }, hexo.config.feed);
+
+const config = hexo.config.feed;
 
 let type = config.type;
 let path = config.path;
