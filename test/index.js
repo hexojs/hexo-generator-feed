@@ -8,6 +8,7 @@ const { join } = require('path');
 const { readFileSync } = require('fs');
 const cheerio = require('cheerio');
 const { encodeURL, full_url_for } = require('hexo-util');
+const p = require('./parse');
 
 env.addFilter('uriencode', str => {
   return encodeURI(str);
@@ -41,15 +42,14 @@ describe('Feed generator', () => {
   let posts = {};
   let locals = {};
 
-  before(() => {
-    return Post.insert([
+  before(async () => {
+    await Post.insert([
       {source: 'foo', slug: 'foo', content: '<h6>TestHTML</h6>', date: 1e8},
       {source: 'bar', slug: 'bar', date: 1e8 + 1},
       {source: 'baz', slug: 'baz', title: 'With Image', image: 'test.png', date: 1e8 - 1}
-    ]).then(data => {
-      posts = Post.sort('-date');
-      locals = hexo.locals.toObject();
-    });
+    ]);
+    posts = Post.sort('-date');
+    locals = hexo.locals.toObject();
   });
 
   it('type = atom', () => {
@@ -109,7 +109,7 @@ describe('Feed generator', () => {
     }));
   });
 
-  it('Preserves HTML in the content field', () => {
+  it('Preserves HTML in the content field', async () => {
     hexo.config.feed = {
       type: 'rss2',
       path: 'rss2.xml',
@@ -117,13 +117,9 @@ describe('Feed generator', () => {
     };
     let feedCfg = hexo.config.feed;
     let result = generator(locals, feedCfg.type, feedCfg.path);
-    let $ = cheerio.load(result.data, {xmlMode: true});
 
-    let description = $('content\\:encoded').html()
-      .replace(/^<!\[CDATA\[/, '')
-      .replace(/\]\]>$/, '');
-
-    description.should.be.equal('<h6>TestHTML</h6>');
+    const rss = await p(result.data);
+    rss.items[1].description.includes('<h6>TestHTML</h6>').should.eql(true);
 
     hexo.config.feed = {
       type: 'atom',
@@ -132,70 +128,65 @@ describe('Feed generator', () => {
     };
     feedCfg = hexo.config.feed;
     result = generator(locals, feedCfg.type, feedCfg.path);
-    $ = cheerio.load(result.data, {xmlMode: true});
-    description = $('content[type="html"]').html()
-      .replace(/^<!\[CDATA\[/, '')
-      .replace(/\]\]>$/, '');
-
-    description.should.be.equal('<h6>TestHTML</h6>');
-
+    const atom = await p(result.data);
+    atom.items[1].description.includes('<h6>TestHTML</h6>').should.eql(true);
   });
 
-  it('Relative URL handling', () => {
+  it('Relative URL handling', async () => {
     hexo.config.feed = {
       type: 'atom',
       path: 'atom.xml'
     };
 
-    const checkURL = function(url, root, valid) {
+    const checkURL = async function(url, root, valid) {
       hexo.config.url = url;
       hexo.config.root = root;
 
       const feedCfg = hexo.config.feed;
       const result = generator(locals, feedCfg.type, feedCfg.path);
-      const $ = cheerio.load(result.data);
 
-      $('feed>id').text().should.eql(valid);
+      const atom = await p(result.data);
+      atom.id.should.eql(valid);
     };
 
-    checkURL('http://localhost/', '/', 'http://localhost/');
+    await checkURL('http://localhost/', '/', 'http://localhost/');
 
     const GOOD = 'http://localhost/blog/';
 
-    checkURL('http://localhost/blog', '/blog/', GOOD);
-    checkURL('http://localhost/blog', '/blog', GOOD);
-    checkURL('http://localhost/blog/', '/blog/', GOOD);
-    checkURL('http://localhost/blog/', '/blog', GOOD);
+    await checkURL('http://localhost/blog', '/blog/', GOOD);
+    await checkURL('http://localhost/blog', '/blog', GOOD);
+    await checkURL('http://localhost/blog/', '/blog/', GOOD);
+    await checkURL('http://localhost/blog/', '/blog', GOOD);
 
-    checkURL('http://localhost/b/l/o/g', '/', 'http://localhost/b/l/o/g/');
+    await checkURL('http://localhost/b/l/o/g', '/', 'http://localhost/b/l/o/g/');
 
   });
 
-  it('IDN handling', () => {
+  it('IDN handling', async () => {
     hexo.config.feed = {
       type: 'atom',
       path: 'atom.xml'
     };
 
-    const checkURL = function(url, root) {
+    const checkURL = async function(url, root) {
       hexo.config.url = url;
       hexo.config.root = root;
 
       const feedCfg = hexo.config.feed;
       const result = generator(locals, feedCfg.type, feedCfg.path);
-      const $ = cheerio.load(result.data);
 
       if (url[url.length - 1] !== '/') url += '/';
       const punyIDN = encodeURL(url);
-      $('feed>id').text().should.eql(punyIDN);
+      const atom = await p(result.data);
+      atom.id.should.eql(punyIDN);
     };
 
-    checkURL('http://gôg.com/', '/');
+    await checkURL('http://gôg.com/', '/');
 
-    checkURL('http://gôg.com/bár', '/bár/');
+    await checkURL('http://gôg.com/bár', '/bár/');
   });
 
-  it('Root encoding', () => {
+  it('Root encoding', async () => {
     const file = 'atom.xml';
     hexo.config.feed = {
       type: 'atom',
@@ -204,49 +195,50 @@ describe('Feed generator', () => {
 
     const domain = 'http://example.com/';
 
-    const checkURL = function(root, valid) {
+    const checkURL = async function(root, valid) {
       hexo.config.url = domain;
       hexo.config.root = root;
 
       const feedCfg = hexo.config.feed;
       const result = generator(locals, feedCfg.type, feedCfg.path);
-      const $ = cheerio.load(result.data);
 
-      $('feed>link').attr('href').should.eql(valid);
+      const atom = await p(result.data);
+      atom.link.should.eql(valid);
     };
-    checkURL('/', '/' + file);
 
-    checkURL('blo g/', 'blo%20g/' + file);
+    await checkURL('/', '/' + file);
+
+    await checkURL('blo g/', 'blo%20g/' + file);
   });
 
-  it('Prints an enclosure on `image` metadata', () => {
+  it('Prints an enclosure on `image` metadata', async () => {
     hexo.config.feed = {
       type: 'atom',
       path: 'atom.xml'
     };
 
-    const checkURL = function(url, root, selector) {
+    const checkURL = async function(url, root, index) {
       hexo.config.url = url;
       hexo.config.root = root;
 
       const feedCfg = hexo.config.feed;
       const result = generator(locals, feedCfg.type, feedCfg.path);
-      const $ = cheerio.load(result.data);
 
-      $(selector).length.should.eq(1);
+      const feed = await p(result.data);
+      feed.items[index].image.should.not.eql('');
     };
 
-    checkURL('http://localhost/', '/', 'feed>entry:nth-of-type(3)>content[type="image"]');
+    await checkURL('http://localhost/', '/', 2);
 
     hexo.config.feed = {
       type: 'rss2',
       path: 'rss2.xml',
       content: true
     };
-    checkURL('http://localhost/', '/', 'item:nth-of-type(3)>enclosure');
+    await checkURL('http://localhost/', '/', 2);
   });
 
-  it('Icon (atom)', () => {
+  it('Icon (atom)', async () => {
     hexo.config.url = 'http://example.com';
     hexo.config.root = '/';
 
@@ -258,12 +250,12 @@ describe('Feed generator', () => {
 
     const feedCfg = hexo.config.feed;
     const result = generator(locals, feedCfg.type, feedCfg.path);
-    const $ = cheerio.load(result.data);
+    const atom = await p(result.data);
 
-    $('feed>icon').text().should.eql(full_url_for.call(hexo, hexo.config.feed.icon));
+    atom.icon.should.eql(full_url_for.call(hexo, hexo.config.feed.icon));
   });
 
-  it('Icon (atom) - no icon', () => {
+  it('Icon (atom) - no icon', async () => {
     hexo.config.feed = {
       type: 'atom',
       path: 'atom.xml',
@@ -272,12 +264,12 @@ describe('Feed generator', () => {
 
     const feedCfg = hexo.config.feed;
     const result = generator(locals, feedCfg.type, feedCfg.path);
-    const $ = cheerio.load(result.data);
+    const atom = await p(result.data);
 
-    $('feed>icon').length.should.eql(0);
+    atom.icon.length.should.eql(0);
   });
 
-  it('Icon (rss2)', () => {
+  it('Icon (rss2)', async () => {
     hexo.config.url = 'http://example.com';
     hexo.config.root = '/';
 
@@ -289,12 +281,12 @@ describe('Feed generator', () => {
 
     const feedCfg = hexo.config.feed;
     const result = generator(locals, feedCfg.type, feedCfg.path);
-    const $ = cheerio.load(result.data);
+    const rss = await p(result.data);
 
-    $('rss>channel>image>url').text().should.eql(full_url_for.call(hexo, hexo.config.feed.icon));
+    rss.icon.url.should.eql(full_url_for.call(hexo, hexo.config.feed.icon));
   });
 
-  it('Icon (rss2) - no icon', () => {
+  it('Icon (rss2) - no icon', async () => {
     hexo.config.feed = {
       type: 'rss2',
       path: 'rss2.xml',
@@ -303,9 +295,9 @@ describe('Feed generator', () => {
 
     const feedCfg = hexo.config.feed;
     const result = generator(locals, feedCfg.type, feedCfg.path);
-    const $ = cheerio.load(result.data);
+    const rss = await p(result.data);
 
-    $('rss>channel>image').length.should.eql(0);
+    rss.icon.url.length.should.eql(0);
   });
 
   it('path must follow order of type', () => {
