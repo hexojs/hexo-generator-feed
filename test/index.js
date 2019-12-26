@@ -109,27 +109,30 @@ describe('Feed generator', () => {
     }));
   });
 
-  it('Preserves HTML in the content field', async () => {
-    hexo.config.feed = {
-      type: 'rss2',
-      path: 'rss2.xml',
-      content: true
-    };
-    let feedCfg = hexo.config.feed;
-    let result = generator(locals, feedCfg.type, feedCfg.path);
-
-    const rss = await p(result.data);
-    rss.items[1].description.includes('<h6>TestHTML</h6>').should.eql(true);
-
+  it('Preserves HTML in the content field - atom', async () => {
     hexo.config.feed = {
       type: 'atom',
       path: 'atom.xml',
       content: true
     };
-    feedCfg = hexo.config.feed;
-    result = generator(locals, feedCfg.type, feedCfg.path);
+    const feedCfg = hexo.config.feed;
+    const result = generator(locals, feedCfg.type, feedCfg.path);
     const atom = await p(result.data);
+
     atom.items[1].description.includes('<h6>TestHTML</h6>').should.eql(true);
+  });
+
+  it('Preserves HTML in the content field - rss2', async () => {
+    hexo.config.feed = {
+      type: 'rss2',
+      path: 'rss2.xml',
+      content: true
+    };
+    const feedCfg = hexo.config.feed;
+    const result = generator(locals, feedCfg.type, feedCfg.path);
+    const rss = await p(result.data);
+
+    rss.items[1].description.includes('<h6>TestHTML</h6>').should.eql(true);
   });
 
   it('Relative URL handling', async () => {
