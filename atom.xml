@@ -25,35 +25,33 @@
     {% if config.feed.content and post.content %}
     <content type="html"><![CDATA[{{ post.content | noControlChars | safe }}]]></content>
     {% endif %}
-    <summary type="html">
     {% if post.description %}
-      {{ post.description }}
+    <summary type="html">{{ post.description }}</summary>
     {% elif post.intro %}
-      {{ post.intro }}
+    <summary type="html">{{ post.intro }}</summary>
     {% elif post.excerpt %}
-      {{ post.excerpt }}
+    <summary type="html">{{ post.excerpt }}</summary>
     {% elif post.content %}
       {% set short_content = post.content.substring(0, config.feed.content_limit) %}
       {% if config.feed.content_limit_delim %}
         {% set delim_pos = short_content.lastIndexOf(config.feed.content_limit_delim) %}
         {% if delim_pos > -1 %}
-          {{ short_content.substring(0, delim_pos) }}
+    <summary type="html">{{ short_content.substring(0, delim_pos) }}</summary>
         {% else %}
-          {{ short_content }}
+    <summary type="html">{{ short_content }}</summary>
         {% endif %}
       {% else %}
-        {{ short_content }}
+    <summary type="html">{{ short_content }}</summary>
       {% endif %}
     {% endif %}
-    </summary>
     {% if post.image %}
-    <content src="{{ url + post.image | uriencode }}" type="image" />
+    <content src="{{ url + post.image | uriencode }}" type="image"/>
     {% endif %}
     {% for category in post.categories.toArray() %}
-      <category term="{{ category.name }}" scheme="{{ url + category.path | uriencode }}"/>
+    <category term="{{ category.name }}" scheme="{{ url + category.path | uriencode }}"/>
     {% endfor %}
     {% for tag in post.tags.toArray() %}
-      <category term="{{ tag.name }}" scheme="{{ url + tag.path | uriencode }}"/>
+    <category term="{{ tag.name }}" scheme="{{ url + tag.path | uriencode }}"/>
     {% endfor %}
   </entry>
   {% endfor %}
