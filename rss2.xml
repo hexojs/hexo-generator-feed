@@ -23,29 +23,27 @@
       <link>{{ post.permalink | uriencode }}</link>
       <guid>{{ post.permalink | uriencode }}</guid>
       <pubDate>{{ post.date.toDate().toUTCString() }}</pubDate>
-      <description>
       {% if post.description %}
-        {{ post.description }}
+      <description>{{ post.description }}</description>
       {% elif post.intro %}
-        {{ post.intro }}
+      <description>{{ post.intro }}</description>
       {% elif post.excerpt %}
-        {{ post.excerpt }}
+      <description>{{ post.excerpt }}</description>
       {% elif post.content %}
         {% set short_content = post.content.substring(0, config.feed.content_limit) %}
         {% if config.feed.content_limit_delim %}
           {% set delim_pos = short_content.lastIndexOf(config.feed.content_limit_delim) %}
           {% if delim_pos > -1 %}
-            {{ short_content.substring(0, delim_pos) }}
+      <description>{{ short_content.substring(0, delim_pos) }}</description>
           {% else %}
-            {{ short_content }}
+      <description>{{ short_content }}</description>
           {% endif %}
         {% else %}
-          {{ short_content }}
+      <description>{{ short_content }}</description>
         {% endif %}
       {% endif %}
-      </description>
       {% if post.image %}
-      <enclosure url="{{ url + post.image | uriencode }}" type="image" />
+      <enclosure url="{{ url + post.image | uriencode }}" type="image"/>
       {% endif %}
       {% if config.feed.content and post.content %}
       <content:encoded><![CDATA[{{ post.content | noControlChars | safe }}]]></content:encoded>
