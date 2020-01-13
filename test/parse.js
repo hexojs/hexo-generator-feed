@@ -12,7 +12,7 @@ const { transform } = require('camaro');
 const template = {
   rss: {
     title: 'rss/channel/title',
-    link: 'rss/channel/link|rss/channel/atom:link',
+    link: 'rss/channel/link|rss/channel/atom:link/@href',
     icon: {
       url: 'rss/channel/image/url',
       title: 'rss/channel/image/title',
