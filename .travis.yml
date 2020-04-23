@@ -1,11 +1,7 @@
 language: node_js
 
-sudo: false
-
 cache:
-  apt: true
-  directories:
-    - node_modules
+  npm: true
 
 node_js:
   - "10"
