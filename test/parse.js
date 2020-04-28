@@ -53,7 +53,7 @@ const template = {
 };
 
 const detectFeedType = async xml => {
-  ready();
+  await ready();
   const sample = await transform(xml, {
     rss: 'rss/channel/title',
     atom: 'feed/title'
@@ -65,6 +65,7 @@ const detectFeedType = async xml => {
 };
 
 const parseFeed = async xml => {
+  await ready();
   const type = await detectFeedType(xml);
   const output = await transform(xml, template[type]);
   return output;
