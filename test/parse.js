@@ -7,7 +7,7 @@
  */
 
 
-const { transform } = require('camaro');
+const { ready, transform } = require('camaro');
 
 const template = {
   rss: {
@@ -53,6 +53,7 @@ const template = {
 };
 
 const detectFeedType = async xml => {
+  ready();
   const sample = await transform(xml, {
     rss: 'rss/channel/title',
     atom: 'feed/title'
