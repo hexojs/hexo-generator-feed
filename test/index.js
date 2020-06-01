@@ -7,7 +7,7 @@ const env = new nunjucks.Environment();
 const { join } = require('path');
 const { readFileSync } = require('fs');
 const cheerio = require('cheerio');
-const { encodeURL, full_url_for } = require('hexo-util');
+const { encodeURL } = require('hexo-util');
 const p = require('./parse');
 
 env.addFilter('uriencode', str => {
@@ -26,8 +26,14 @@ const customTmplSrc = join(__dirname, 'custom.xml');
 const customTmlp = nunjucks.compile(readFileSync(customTmplSrc, 'utf8'), env);
 
 const urlConfig = {
-  url: 'http://localhost/',
+  url: 'http://localhost',
   root: '/'
+};
+
+const urlConfigSubfolder = {
+  // subdirectory configuration as per hexo documentation
+  url: 'http://localhost/blog',
+  root: '/blog/'
 };
 
 describe('Feed generator', () => {
@@ -65,9 +71,28 @@ describe('Feed generator', () => {
     result.path.should.eql('atom.xml');
     result.data.should.eql(atomTmpl.render({
       config: hexo.config,
-      url: urlConfig.url,
+      url: 'http://localhost/',
       posts: posts.limit(3),
-      feed_url: hexo.config.root + 'atom.xml'
+      feed_url: 'http://localhost/atom.xml'
+    }));
+  });
+
+  it('type = atom (subfolder)', () => {
+    hexo.config.feed = {
+      type: 'atom',
+      path: 'atom.xml',
+      limit: 3
+    };
+    hexo.config = Object.assign(hexo.config, urlConfigSubfolder);
+    const feedCfg = hexo.config.feed;
+    const result = generator(locals, feedCfg.type, feedCfg.path);
+
+    result.path.should.eql('atom.xml');
+    result.data.should.eql(atomTmpl.render({
+      config: hexo.config,
+      url: 'http://localhost/blog/',
+      posts: posts.limit(3),
+      feed_url: 'http://localhost/blog/atom.xml'
     }));
   });
 
@@ -84,9 +109,9 @@ describe('Feed generator', () => {
     result.path.should.eql('rss2.xml');
     result.data.should.eql(rss2Tmpl.render({
       config: hexo.config,
-      url: urlConfig.url,
+      url: 'http://localhost/',
       posts: posts.limit(3),
-      feed_url: hexo.config.root + 'rss2.xml'
+      feed_url: 'http://localhost/rss2.xml'
     }));
   });
 
@@ -103,9 +128,9 @@ describe('Feed generator', () => {
     result.path.should.eql('atom.xml');
     result.data.should.eql(atomTmpl.render({
       config: hexo.config,
-      url: urlConfig.url,
+      url: 'http://localhost/',
       posts: posts,
-      feed_url: hexo.config.root + 'atom.xml'
+      feed_url: 'http://localhost/atom.xml'
     }));
   });
 
@@ -196,9 +221,7 @@ describe('Feed generator', () => {
       path: file
     };
 
-    const domain = 'http://example.com/';
-
-    const checkURL = async function(root, valid) {
+    const checkURL = async function(root, domain, valid) {
       hexo.config.url = domain;
       hexo.config.root = root;
 
@@ -209,9 +232,9 @@ describe('Feed generator', () => {
       atom.link.should.eql(valid);
     };
 
-    await checkURL('/', '/' + file);
+    await checkURL('/', 'http://example.com', 'http://example.com/' + file);
 
-    await checkURL('blo g/', 'blo%20g/' + file);
+    await checkURL('blo g/', 'http://example.com/blo%20g', 'http://example.com/blo%20g/' + file);
   });
 
   it('Prints an enclosure on `image` metadata', async () => {
@@ -255,7 +278,7 @@ describe('Feed generator', () => {
     const result = generator(locals, feedCfg.type, feedCfg.path);
     const atom = await p(result.data);
 
-    atom.icon.should.eql(full_url_for.call(hexo, hexo.config.feed.icon));
+    atom.icon.should.eql('http://example.com/icon.svg');
   });
 
   it('Icon (atom) - no icon', async () => {
@@ -286,7 +309,7 @@ describe('Feed generator', () => {
     const result = generator(locals, feedCfg.type, feedCfg.path);
     const rss = await p(result.data);
 
-    rss.icon.url.should.eql(full_url_for.call(hexo, hexo.config.feed.icon));
+    rss.icon.url.should.eql('http://example.com/icon.svg');
   });
 
   it('Icon (rss2) - no icon', async () => {
@@ -301,6 +324,23 @@ describe('Feed generator', () => {
     const rss = await p(result.data);
 
     rss.icon.url.length.should.eql(0);
+  });
+
+  it('Icon (rss2) - subdirectory', async () => {
+    hexo.config.url = 'http://example.com/blog';
+    hexo.config.root = '/blog/';
+
+    hexo.config.feed = {
+      type: 'rss2',
+      path: 'rss2.xml',
+      icon: 'icon.svg'
+    };
+
+    const feedCfg = hexo.config.feed;
+    const result = generator(locals, feedCfg.type, feedCfg.path);
+    const rss = await p(result.data);
+
+    rss.icon.url.should.eql('http://example.com/blog/icon.svg');
   });
 
   it('path must follow order of type', () => {
@@ -330,9 +370,9 @@ describe('Feed generator', () => {
 
     result.data.should.eql(customTmlp.render({
       config: hexo.config,
-      url: urlConfig.url,
+      url: 'http://localhost/',
       posts,
-      feed_url: hexo.config.root + feedCfg.path
+      feed_url: 'http://localhost/atom.xml'
     }));
   });
 });
