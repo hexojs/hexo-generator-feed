@@ -7,7 +7,7 @@ const env = new nunjucks.Environment();
 const { join } = require('path');
 const { readFileSync } = require('fs');
 const cheerio = require('cheerio');
-const { encodeURL } = require('hexo-util');
+const { encodeURL, full_url_for } = require('hexo-util');
 const p = require('./parse');
 
 env.addFilter('uriencode', str => {
@@ -40,6 +40,11 @@ describe('Feed generator', () => {
   const hexo = new Hexo(__dirname, {
     silent: true
   });
+
+  env.addFilter('formatUrl', str => {
+    return full_url_for.call(hexo, str);
+  });
+
   const Post = hexo.model('Post');
   const generator = require('../lib/generator').bind(hexo);
 
@@ -262,6 +267,21 @@ describe('Feed generator', () => {
       content: true
     };
     await checkURL('http://localhost/', '/', 2);
+  });
+
+  it('Image should have full link', async () => {
+    hexo.config.feed = {
+      type: 'atom',
+      path: 'atom.xml',
+      limit: 3
+    };
+    hexo.config = Object.assign(hexo.config, urlConfig);
+    const feedCfg = hexo.config.feed;
+    const result = generator(locals, feedCfg.type, feedCfg.path);
+    const { items } = await p(result.data);
+    const postImg = items.filter(({ image }) => image.length)[0];
+
+    postImg.image.should.eql(full_url_for.call(hexo, 'test.png'));
   });
 
   it('Icon (atom)', async () => {
