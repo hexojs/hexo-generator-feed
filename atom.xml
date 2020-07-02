@@ -45,13 +45,13 @@
       {% endif %}
     {% endif %}
     {% if post.image %}
-    <content src="{{ url + post.image | uriencode }}" type="image"/>
+    <content src="{{ post.image | formatUrl }}" type="image"/>
     {% endif %}
     {% for category in post.categories.toArray() %}
-    <category term="{{ category.name }}" scheme="{{ url + category.path | uriencode }}"/>
+    <category term="{{ category.name }}" scheme="{{ category.permalink }}"/>
     {% endfor %}
     {% for tag in post.tags.toArray() %}
-    <category term="{{ tag.name }}" scheme="{{ url + tag.path | uriencode }}"/>
+    <category term="{{ tag.name }}" scheme="{{ tag.permalink }}"/>
     {% endfor %}
   </entry>
   {% endfor %}
