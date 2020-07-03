@@ -256,7 +256,7 @@ describe('Feed generator', () => {
       const result = generator(locals, feedCfg.type, feedCfg.path);
 
       const { items } = await p(result.data);
-      const postImg = items.filter(({ image }) => image.length)[0];
+      const [postImg] = items.filter(({ image }) => image.length);
       postImg.image.length.should.not.eql(0);
     };
 
@@ -280,7 +280,7 @@ describe('Feed generator', () => {
     const feedCfg = hexo.config.feed;
     const result = generator(locals, feedCfg.type, feedCfg.path);
     const { items } = await p(result.data);
-    const postImg = items.filter(({ image }) => image.length)[0];
+    const [postImg] = items.filter(({ image }) => image.length);
 
     postImg.image.should.eql(full_url_for.call(hexo, 'test.png'));
   });
