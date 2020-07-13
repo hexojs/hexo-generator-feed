@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
-    "camaro": "^5.0.0",
+    "camaro": "^6.0.3",
     "chai": "^4.2.0",
     "cheerio": "^0.22.0",
     "eslint": "^7.0.0",
