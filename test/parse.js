@@ -43,6 +43,7 @@ const template = {
       id: 'id',
       title: 'title',
       date: 'published',
+      updated: 'updated',
       description: 'summary',
       content: 'content[@type="html"]',
       image: 'content[@type="image"]/@src',
