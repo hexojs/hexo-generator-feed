@@ -42,7 +42,7 @@
     "cheerio": "^0.22.0",
     "eslint": "^7.0.0",
     "eslint-config-hexo": "^4.1.0",
-    "hexo": "hexojs/hexo",
+    "hexo": "^5.0.0",
     "mocha": "^8.0.1",
     "nyc": "^15.1.0"
   },
