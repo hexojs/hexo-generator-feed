@@ -6,7 +6,7 @@
   <link href="{{ feed_url | uriencode }}" rel="self"/>
   {% if config.feed.hub %}<link href="{{ config.feed.hub | uriencode }}" rel="hub"/>{% endif %}
   <link href="{{ url | uriencode }}"/>
-  <updated>{{ posts.first().updated.toISOString() }}</updated>
+  <updated>{% if posts.first().updated %}{{ posts.first().updated.toISOString() }}{% else %}{{ posts.first().date.toISOString() }}{% endif %}</updated>
   <id>{{ url | uriencode }}</id>
   {% if config.author %}
   <author>
@@ -21,39 +21,37 @@
     <link href="{{ post.permalink | uriencode }}"/>
     <id>{{ post.permalink | uriencode }}</id>
     <published>{{ post.date.toISOString() }}</published>
-    <updated>{{ post.updated.toISOString() }}</updated>
+    <updated>{% if post.updated %}{{ post.updated.toISOString() }}{% else %}{{ post.date.toISOString() }}{% endif %}</updated>
     {% if config.feed.content and post.content %}
     <content type="html"><![CDATA[{{ post.content | noControlChars | safe }}]]></content>
     {% endif %}
-    <summary type="html">
     {% if post.description %}
-      {{ post.description }}
+    <summary type="html">{{ post.description }}</summary>
     {% elif post.intro %}
-      {{ post.intro }}
+    <summary type="html">{{ post.intro }}</summary>
     {% elif post.excerpt %}
-      {{ post.excerpt }}
+    <summary type="html">{{ post.excerpt }}</summary>
     {% elif post.content %}
       {% set short_content = post.content.substring(0, config.feed.content_limit) %}
       {% if config.feed.content_limit_delim %}
         {% set delim_pos = short_content.lastIndexOf(config.feed.content_limit_delim) %}
         {% if delim_pos > -1 %}
-          {{ short_content.substring(0, delim_pos) }}
+    <summary type="html">{{ short_content.substring(0, delim_pos) }}</summary>
         {% else %}
-          {{ short_content }}
+    <summary type="html">{{ short_content }}</summary>
         {% endif %}
       {% else %}
-        {{ short_content }}
+    <summary type="html">{{ short_content }}</summary>
       {% endif %}
     {% endif %}
-    </summary>
     {% if post.image %}
-    <content src="{{ url + post.image | uriencode }}" type="image" />
+    <content src="{{ post.image | formatUrl }}" type="image"/>
     {% endif %}
     {% for category in post.categories.toArray() %}
-      <category term="{{ category.name }}" scheme="{{ url + category.path | uriencode }}"/>
+    <category term="{{ category.name }}" scheme="{{ category.permalink }}"/>
     {% endfor %}
     {% for tag in post.tags.toArray() %}
-      <category term="{{ tag.name }}" scheme="{{ url + tag.path | uriencode }}"/>
+    <category term="{{ tag.name }}" scheme="{{ tag.permalink }}"/>
     {% endfor %}
   </entry>
   {% endfor %}

@@ -1,16 +1,12 @@
 language: node_js
 
-sudo: false
-
 cache:
-  apt: true
-  directories:
-    - node_modules
+  npm: true
 
 node_js:
-  - "8"
   - "10"
-  - "node"
+  - "12"
+  - "14"
 
 script:
   - npm run eslint
