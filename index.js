@@ -4,6 +4,7 @@
 const { extname } = require('path');
 
 const config = hexo.config.feed = Object.assign({
+  enable: true,
   type: 'atom',
   limit: 20,
   hub: '',
@@ -13,6 +14,10 @@ const config = hexo.config.feed = Object.assign({
   order_by: '-date',
   autodiscovery: true
 }, hexo.config.feed);
+
+if(!config.enable) {
+  return;
+}
 
 let type = config.type;
 let path = config.path;
