@@ -18,7 +18,7 @@ hexo.config.feed = Object.assign({
 
 const config = hexo.config.feed;
 
-if(!config.enable) {
+if (!config.enable) {
   return;
 }
 
