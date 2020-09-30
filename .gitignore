@@ -6,7 +6,3 @@ tmp/
 .nyc_output/
 package-lock.json
 yarn.lock
-*_BACKUP_*
-*_BASE_*
-*_LOCAL_*
-*_REMOTE_*
