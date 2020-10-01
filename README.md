@@ -26,6 +26,7 @@ You can configure this plugin in `_config.yml`.
 
 ``` yaml
 feed:
+  enable: true
   type: atom
   path: atom.xml
   limit: 20
@@ -38,7 +39,7 @@ feed:
   autodiscovery: true
   template:
 ```
-
+- **enable** - Enables or disables this plugin. Enabled by default.
 - **type** - Feed type. `atom` or `rss2`. Specify `['atom', 'rss2']` to output both types. (Default: `atom`)
   * Example:
   ``` yaml
