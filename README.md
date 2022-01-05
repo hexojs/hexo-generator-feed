@@ -1,6 +1,6 @@
 # hexo-generator-feed
 
-[![Build Status](https://travis-ci.org/hexojs/hexo-generator-feed.svg?branch=master)](https://travis-ci.org/hexojs/hexo-generator-feed)
+[![Build Status](https://github.com/hexojs/hexo-generator-feed/workflows/Tester/badge.svg)](https://github.com/hexojs/hexo-generator-feed/actions?query=workflow%3ATester)
 [![NPM version](https://badge.fury.io/js/hexo-generator-feed.svg)](https://www.npmjs.com/package/hexo-generator-feed)
 [![Coverage Status](https://img.shields.io/coveralls/hexojs/hexo-generator-feed.svg)](https://coveralls.io/r/hexojs/hexo-generator-feed?branch=master)
 
@@ -12,7 +12,7 @@ Generate Atom 1.0 or RSS 2.0 feed.
 $ npm install hexo-generator-feed --save
 ```
 
-- Hexo 4: 2.x
+- Hexo 4+: 2.x
 - Hexo 3: 1.x
 - Hexo 2: 0.x
 
@@ -63,7 +63,7 @@ feed:
 - **content_limit_delim** - (optional) If **content_limit** is used to shorten post contents, only cut at the last occurrence of this delimiter before reaching the character limit. Not used by default.
 - **order_by** - Feed order-by. (Default: -date)
 - **icon** - (optional) Custom feed icon. Defaults to a gravatar of email specified in the main config.
-- **autodiscovery** - Add feed [autodiscovery](http://www.rssboard.org/rss-autodiscovery). (Default: `true`)
+- **autodiscovery** - Add feed [autodiscovery](https://www.rssboard.org/rss-autodiscovery). (Default: `true`)
   * Many themes already offer this feature, so you may also need to adjust the theme's config if you wish to disable it.
 - **template** - Custom template path(s). This file will be used to generate feed xml file, see the default templates: [atom.xml](atom.xml) and [rss2.xml](rss2.xml).
   * It is possible to specify just one custom template, even when this plugin is configured to output both feed types,

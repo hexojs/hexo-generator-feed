@@ -6,7 +6,7 @@
   "scripts": {
     "eslint": "eslint .",
     "test": "mocha test/index.js",
-    "test-cov": "nyc npm run test"
+    "test-cov": "nyc --reporter=lcovonly npm run test"
   },
   "directories": {
     "lib": "./lib"
@@ -32,21 +32,21 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "hexo-util": "^2.1.0",
-    "nunjucks": "^3.0.0"
+    "hexo-util": "^2.5.0",
+    "nunjucks": "^3.2.3"
   },
   "devDependencies": {
-    "babel-eslint": "^10.0.1",
-    "camaro": "^5.0.0",
-    "chai": "^4.2.0",
+    "babel-eslint": "^10.1.0",
+    "camaro": "^5.0.3",
+    "chai": "^4.3.4",
     "cheerio": "^0.22.0",
-    "eslint": "^8.0.1",
-    "eslint-config-hexo": "^4.1.0",
+    "eslint": "^8.6.0",
+    "eslint-config-hexo": "^4.2.0",
     "hexo": "^6.0.0",
     "mocha": "^9.1.3",
     "nyc": "^15.1.0"
   },
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=12.13.0"
   }
 }
