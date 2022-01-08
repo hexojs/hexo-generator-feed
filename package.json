@@ -41,7 +41,7 @@
     "chai": "^4.3.4",
     "cheerio": "^0.22.0",
     "eslint": "^8.6.0",
-    "eslint-config-hexo": "^4.2.0",
+    "eslint-config-hexo": "^5.0.0",
     "hexo": "^6.0.0",
     "mocha": "^9.1.3",
     "nyc": "^15.1.0"
