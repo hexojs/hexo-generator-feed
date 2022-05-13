@@ -43,7 +43,7 @@ if (Array.isArray(type)) {
       }
       break;
     case 2:
-      if (type !== ['atom', 'rss2'] && type !== ['rss2', 'atom']) {
+      if (!(type[0] === 'atom' && type[1] === 'rss2') && !(type[0] === 'rss2' && type[1] === 'atom')) {
         type = ['atom', 'rss2'];
       }
       break;
