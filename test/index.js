@@ -15,7 +15,9 @@ env.addFilter('uriencode', str => {
 });
 
 env.addFilter('noControlChars', str => {
-  return str.replace(/[\x00-\x1F\x7F]/g, ''); // eslint-disable-line no-control-regex
+  // eslint-disable-line no-control-regex
+  str = str.replace(/[\x0A\x0D]/g, ' ');
+  return str.replace(/[\x00-\x1F\x7F]/g, '');
 });
 
 const atomTmplSrc = join(__dirname, '../atom.xml');
