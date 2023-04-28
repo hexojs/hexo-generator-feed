@@ -18,7 +18,7 @@
   {% for post in posts.toArray() %}
   <entry>
     <title>{{ post.title }}</title>
-    <link href="{{ post.permalink | uriencode }}"/>
+    <link href="{% if post.link %}{{post.link | uriencode}}{% else %}{{ post.permalink | uriencode }}{% endif %}"/>
     <id>{{ post.permalink | uriencode }}</id>
     <published>{{ post.date.toISOString() }}</published>
     <updated>{% if post.updated %}{{ post.updated.toISOString() }}{% else %}{{ post.date.toISOString() }}{% endif %}</updated>

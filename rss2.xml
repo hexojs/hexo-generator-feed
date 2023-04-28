@@ -20,7 +20,7 @@
     {% for post in posts.toArray() %}
     <item>
       <title>{{ post.title }}</title>
-      <link>{{ post.permalink | uriencode }}</link>
+      <link>{% if post.link %}{{post.link | uriencode}}{% else %}{{ post.permalink | uriencode }}{% endif %}</link>
       <guid>{{ post.permalink | uriencode }}</guid>
       <pubDate>{{ post.date.toDate().toUTCString() }}</pubDate>
       {% if post.description %}
@@ -55,7 +55,7 @@
       <category domain="{{ url + tag.path | uriencode }}">{{ tag.name }}</category>
       {% endfor %}
       {% if post.comments %}
-      <comments>{{ post.permalink | uriencode }}#disqus_thread</comments>
+      <comments>{% if post.link %}{{post.link | uriencode}}{% else %}{{ post.permalink | uriencode }}{% endif %}#disqus_thread</comments>
       {% endif %}
     </item>
     {% endfor %}
