@@ -48,7 +48,7 @@ describe('Feed generator', () => {
   const Post = hexo.model('Post');
   const generator = require('../lib/generator').bind(hexo);
 
-  require('../node_modules/hexo/lib/plugins/helper')(hexo);
+  require('../node_modules/hexo/dist/plugins/helper')(hexo);
 
   let posts = {};
   let locals = {};
@@ -441,7 +441,7 @@ it('No posts', () => {
   const Post = hexo.model('Post');
   const generator = require('../lib/generator').bind(hexo);
 
-  require('../node_modules/hexo/lib/plugins/helper')(hexo);
+  require('../node_modules/hexo/dist/plugins/helper')(hexo);
 
   hexo.config.feed = {
     type: 'atom',
