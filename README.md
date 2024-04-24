@@ -9,7 +9,7 @@ Generate Atom 1.0 or RSS 2.0 feed.
 ## Install
 
 ``` bash
-$ npm install hexo-generator-feed --save
+npm install hexo-generator-feed --save
 ```
 
 - Hexo 4+: 2.x
