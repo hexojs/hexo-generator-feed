@@ -39,7 +39,7 @@
     "babel-eslint": "^10.1.0",
     "camaro": "^6.2.0",
     "chai": "^4.3.4",
-    "cheerio": "^0.22.0",
+    "cheerio": "^1.0.0",
     "eslint": "^8.6.0",
     "eslint-config-hexo": "^5.0.0",
     "hexo": "^7.0.0",
