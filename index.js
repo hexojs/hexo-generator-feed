@@ -7,13 +7,11 @@ hexo.config.feed = Object.assign({
   enable: true,
   type: 'atom',
   limit: 20,
-  hub: '',
   content: true,
   content_limit: 140,
   content_limit_delim: '',
   order_by: '-date',
-  autodiscovery: true,
-  template: ''
+  autodiscovery: true
 }, hexo.config.feed);
 
 const config = hexo.config.feed;
