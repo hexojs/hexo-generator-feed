@@ -35,7 +35,24 @@ describe('Feed generator', () => {
       {source: 'bar', slug: 'bar', date: 1e8 + 1},
       {source: 'baz', slug: 'baz', title: 'With Image', image: 'test.png', date: 1e8 - 1},
       {source: 'date', slug: 'date', title: 'date', date: 1e8 - 2, updated: undefined},
-      {source: 'updated', slug: 'updated', title: 'updated', date: 1e8 - 2, updated: 1e8 + 10}
+      {source: 'updated', slug: 'updated', title: 'updated', date: 1e8 - 2, updated: 1e8 + 10},
+      {source: 'description', slug: 'description', title: 'description', description: '<h6>description</h6>', date: 1e8},
+      {source: 'intro', slug: 'intro', title: 'intro', intro: '<h6>intro</h6>', date: 1e8},
+      {source: 'excerpt', slug: 'excerpt', title: 'excerpt', excerpt: '<h6>excerpt</h6>', date: 1e8},
+      {
+        source: 'delim-test',
+        slug: 'delim-test',
+        title: 'Delimiter Test',
+        content: 'This is the beginning.<!-- more -->This is after delimiter.',
+        date: 1e8
+      },
+      {
+        source: 'no-delim-test',
+        slug: 'no-delim-test',
+        title: 'No Delimiter Test',
+        content: 'This content has no delimiter and should be truncated at content_limit.',
+        date: 1e8
+      }
     ]);
     locals = hexo.locals.toObject();
   });
@@ -123,7 +140,7 @@ describe('Feed generator', () => {
 
     // Verify all articles are shown when no limit is set
     const atom = await p(result.data);
-    atom.items.should.have.length(5); // All articles
+    atom.items.should.have.length(Post.length); // All articles
   });
 
   it('Preserves HTML in the content field - atom', async () => {
@@ -276,8 +293,7 @@ describe('Feed generator', () => {
   it('Image should have full link', async () => {
     hexo.config.feed = {
       type: 'atom',
-      path: 'atom.xml',
-      limit: 3
+      path: 'atom.xml'
     };
     hexo.config = Object.assign(hexo.config, urlConfig);
     const feedCfg = hexo.config.feed;
@@ -418,6 +434,68 @@ describe('Feed generator', () => {
 
     updated.should.eql(expected);
     date.should.not.eql(updated);
+  });
+
+  it('Support description, intro and excerpt', async () => {
+    hexo.config.feed = {
+      type: 'atom',
+      path: 'atom.xml'
+    };
+    hexo.config = Object.assign(hexo.config, urlConfig);
+    const feedCfg = hexo.config.feed;
+    const result = generator(locals, feedCfg.type, feedCfg.path);
+
+    const { items } = await p(result.data);
+    for (const key of ['description', 'intro', 'excerpt']) {
+      const post = items.filter(({ title }) => title === key);
+      post.length.should.eql(1, `Post with title "${key}" should exist`);
+      const { description } = post[0];
+      const expected = `<h6>${key}</h6>`;
+
+      description.should.eql(expected);
+    }
+  });
+
+  it('content_limit_delim - delimiter found', async () => {
+    hexo.config.feed = {
+      type: 'atom',
+      path: 'atom.xml',
+      content_limit: 100,
+      content_limit_delim: '<!-- more -->'
+    };
+    hexo.config = Object.assign(hexo.config, urlConfig);
+    const feedCfg = hexo.config.feed;
+    const updatedLocals = hexo.locals.toObject();
+    const result = generator(updatedLocals, feedCfg.type, feedCfg.path);
+
+    const { items } = await p(result.data);
+    const post = items.filter(({ title }) => title === 'Delimiter Test');
+    post.length.should.eql(1);
+    const { description } = post[0];
+
+    // Should only include content before the delimiter
+    description.should.eql('This is the beginning.');
+  });
+
+  it('content_limit_delim - delimiter not found', async () => {
+    hexo.config.feed = {
+      type: 'atom',
+      path: 'atom.xml',
+      content_limit: 29,
+      content_limit_delim: '<!-- more -->'
+    };
+    hexo.config = Object.assign(hexo.config, urlConfig);
+    const feedCfg = hexo.config.feed;
+    const updatedLocals = hexo.locals.toObject();
+    const result = generator(updatedLocals, feedCfg.type, feedCfg.path);
+
+    const { items } = await p(result.data);
+    const post = items.filter(({ title }) => title === 'No Delimiter Test');
+    post.length.should.eql(1);
+    const { description } = post[0];
+
+    // Should be truncated at content_limit since delimiter not found
+    description.should.eql('This content has no delimiter');
   });
 });
 
