@@ -32,7 +32,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "feed": "^5.1.0",
+    "feedsmith": "^2.2.0",
     "hexo-util": "^3.0.1"
   },
   "devDependencies": {

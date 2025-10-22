@@ -73,7 +73,7 @@ describe('Feed generator', () => {
     result.data.should.match(/^<\?xml version="1\.0" encoding="utf-8"\?>/);
     result.data.should.include('<feed xmlns="http://www.w3.org/2005/Atom">');
     result.data.should.include('<title>Hexo</title>');
-    result.data.should.include('<link rel="self" href="http://localhost/atom.xml"/>');
+    result.data.should.include('<link href="http://localhost/atom.xml" rel="self"/>');
     result.data.should.include('<generator>Hexo</generator>');
 
     // Verify feed parser can parse correctly
@@ -95,7 +95,7 @@ describe('Feed generator', () => {
     result.path.should.eql('atom.xml');
 
     // Verify subdirectory URL handling is correct
-    result.data.should.include('<link rel="self" href="http://localhost/blog/atom.xml"/>');
+    result.data.should.include('<link href="http://localhost/blog/atom.xml" rel="self"/>');
     result.data.should.include('<id>http://localhost/blog/</id>');
 
     const atom = await p(result.data);
