@@ -7,6 +7,7 @@ hexo.config.feed = Object.assign({
   enable: true,
   type: 'atom',
   limit: 20,
+  hub: '',
   content: true,
   content_limit: 140,
   content_limit_delim: '',

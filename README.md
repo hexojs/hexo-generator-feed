@@ -30,6 +30,7 @@ feed:
   type: atom
   path: atom.xml
   limit: 20
+  hub:
   content:
   content_limit: 140
   content_limit_delim: ' '
@@ -55,6 +56,7 @@ feed:
   ```
 - **path** - Feed path. When both types are specified, path must follow the order of type value. (Default: atom.xml/rss2.xml)
 - **limit** - Maximum number of posts in the feed (Use `0` or `false` to show all posts)
+- **hub** - (optional) URL of the PubSubHubbub hubs (Leave it empty if you don't use it)
 - **content** - (optional) set to 'true' to include the contents of the entire post in the feed.
 - **content_limit** - (optional) Default length of post content used in summary. Only used, if **content** setting is false and no custom post description present.
 - **content_limit_delim** - (optional) If **content_limit** is used to shorten post contents, only cut at the last occurrence of this delimiter before reaching the character limit. Not used by default.

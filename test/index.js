@@ -74,7 +74,7 @@ describe('Feed generator', () => {
     result.data.should.include('<feed xmlns="http://www.w3.org/2005/Atom">');
     result.data.should.include('<title>Hexo</title>');
     result.data.should.include('<link href="http://localhost/atom.xml" rel="self"/>');
-    result.data.should.include('<generator>Hexo</generator>');
+    result.data.should.include('<generator uri="https://hexo.io/">Hexo</generator>');
 
     // Verify feed parser can parse correctly
     const atom = await p(result.data);
@@ -316,8 +316,10 @@ describe('Feed generator', () => {
 
     const feedCfg = hexo.config.feed;
     const result = generator(locals, feedCfg.type, feedCfg.path);
-    const atom = await p(result.data);
 
+    result.data.should.include('<icon>http://example.com/icon.svg</icon>');
+
+    const atom = await p(result.data);
     atom.icon.should.eql('http://example.com/icon.svg');
   });
 
@@ -381,6 +383,143 @@ describe('Feed generator', () => {
     const rss = await p(result.data);
 
     rss.icon.url.should.eql('http://example.com/blog/icon.svg');
+  });
+
+  it('Hub (atom)', async () => {
+    hexo.config.feed = {
+      type: 'atom',
+      path: 'atom.xml',
+      hub: 'https://pubsubhubbub.appspot.com/'
+    };
+    hexo.config = Object.assign(hexo.config, urlConfig);
+    const feedCfg = hexo.config.feed;
+    const result = generator(locals, feedCfg.type, feedCfg.path);
+
+    result.data.should.include('<link href="https://pubsubhubbub.appspot.com/" rel="hub"/>');
+
+    // Verify feed parser can parse correctly
+    const atom = await p(result.data);
+    atom.title.should.eql('Hexo');
+  });
+
+  it('Hub (rss2)', async () => {
+    hexo.config.feed = {
+      type: 'rss2',
+      path: 'rss2.xml',
+      hub: 'https://pubsubhubbub.appspot.com/'
+    };
+    hexo.config = Object.assign(hexo.config, urlConfig);
+    const feedCfg = hexo.config.feed;
+    const result = generator(locals, feedCfg.type, feedCfg.path);
+
+    result.data.should.include('<atom:link href="https://pubsubhubbub.appspot.com/" rel="hub"/>');
+
+    // Verify feed parser can parse correctly
+    const rss = await p(result.data);
+    rss.title.should.eql('Hexo');
+  });
+
+  it('Hub (atom) - no hub', async () => {
+    hexo.config.feed = {
+      type: 'atom',
+      path: 'atom.xml'
+    };
+    hexo.config = Object.assign(hexo.config, urlConfig);
+    const feedCfg = hexo.config.feed;
+    const result = generator(locals, feedCfg.type, feedCfg.path);
+
+    result.data.should.not.include('rel="hub"');
+
+    // Verify feed parser can parse correctly
+    const atom = await p(result.data);
+    atom.title.should.eql('Hexo');
+  });
+
+  it('Author (rss2) - both name and email', () => {
+    hexo.config.author = 'John Doe';
+    hexo.config.email = 'john@example.com';
+    hexo.config.feed = {
+      type: 'rss2',
+      path: 'rss2.xml'
+    };
+    hexo.config = Object.assign(hexo.config, urlConfig);
+    const feedCfg = hexo.config.feed;
+    const result = generator(locals, feedCfg.type, feedCfg.path);
+
+    result.data.should.include('john@example.com (John Doe)');
+  });
+
+  it('Author (rss2) - email only', () => {
+    hexo.config.author = undefined;
+    hexo.config.email = 'john@example.com';
+    hexo.config.feed = {
+      type: 'rss2',
+      path: 'rss2.xml'
+    };
+    hexo.config = Object.assign(hexo.config, urlConfig);
+    const feedCfg = hexo.config.feed;
+    const result = generator(locals, feedCfg.type, feedCfg.path);
+
+    result.data.should.include('john@example.com');
+    result.data.should.not.include('(');
+  });
+
+  it('Author (rss2) - name only', () => {
+    hexo.config.author = 'John Doe';
+    hexo.config.email = undefined;
+    hexo.config.feed = {
+      type: 'rss2',
+      path: 'rss2.xml'
+    };
+    hexo.config = Object.assign(hexo.config, urlConfig);
+    const feedCfg = hexo.config.feed;
+    const result = generator(locals, feedCfg.type, feedCfg.path);
+
+    result.data.should.include('John Doe');
+  });
+
+  it('Author (atom) - both name and email', () => {
+    hexo.config.author = 'Jane Doe';
+    hexo.config.email = 'jane@example.com';
+    hexo.config.feed = {
+      type: 'atom',
+      path: 'atom.xml'
+    };
+    hexo.config = Object.assign(hexo.config, urlConfig);
+    const feedCfg = hexo.config.feed;
+    const result = generator(locals, feedCfg.type, feedCfg.path);
+
+    result.data.should.include('<name>Jane Doe</name>');
+    result.data.should.include('<email>jane@example.com</email>');
+  });
+
+  it('Author (atom) - name only', () => {
+    hexo.config.author = 'Jane Doe';
+    hexo.config.email = undefined;
+    hexo.config.feed = {
+      type: 'atom',
+      path: 'atom.xml'
+    };
+    hexo.config = Object.assign(hexo.config, urlConfig);
+    const feedCfg = hexo.config.feed;
+    const result = generator(locals, feedCfg.type, feedCfg.path);
+
+    result.data.should.include('<name>Jane Doe</name>');
+    result.data.should.not.include('<email>');
+  });
+
+  it('Author (atom) - email only', () => {
+    hexo.config.author = undefined;
+    hexo.config.email = 'jane@example.com';
+    hexo.config.feed = {
+      type: 'atom',
+      path: 'atom.xml'
+    };
+    hexo.config = Object.assign(hexo.config, urlConfig);
+    const feedCfg = hexo.config.feed;
+    const result = generator(locals, feedCfg.type, feedCfg.path);
+
+    result.data.should.not.include('<author>');
   });
 
   it('path must follow order of type', () => {

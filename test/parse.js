@@ -35,7 +35,7 @@ const template = {
   },
   atom: {
     title: 'feed/title',
-    icon: 'feed/logo',
+    icon: 'feed/icon',
     updated: 'feed/updated',
     link: 'feed/link/@href',
     id: 'feed/id',
