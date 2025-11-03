@@ -33,16 +33,16 @@
   "license": "MIT",
   "dependencies": {
     "feedsmith": "^2.2.0",
-    "hexo-util": "^3.0.1"
+    "hexo-util": "^4.0.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
     "camaro": "^6.2.0",
     "chai": "^4.3.4",
-    "cheerio": "^0.22.0",
+    "cheerio": "^1.1.2",
     "eslint": "^9.26.0",
     "eslint-config-hexo": "^6.0.0",
-    "hexo": "^7.0.0",
+    "hexo": "^8.0.0",
     "mocha": "^11.1.0",
     "nyc": "^17.1.0"
   },
