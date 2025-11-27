@@ -46,7 +46,7 @@ const template = {
       updated: 'updated',
       description: 'summary',
       content: 'content[@type="html"]',
-      image: 'content[@type="image"]/@src',
+      image: 'link[@rel="enclosure"]/@href',
       link: 'link',
       categories: ['category', '@term']
     }]

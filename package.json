@@ -32,8 +32,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "hexo-util": "^4.0.0",
-    "nunjucks": "^3.2.3"
+    "feedsmith": "^2.4.0",
+    "hexo-util": "^4.0.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
