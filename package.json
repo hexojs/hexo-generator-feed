@@ -13,11 +13,12 @@
   },
   "files": [
     "lib/",
-    "atom.xml",
-    "index.js",
-    "rss2.xml"
+    "index.js"
   ],
-  "repository": "hexojs/hexo-generator-feed",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hexojs/hexo-generator-feed.git"
+  },
   "homepage": "https://hexo.io/",
   "keywords": [
     "hexo",
@@ -36,7 +37,6 @@
     "hexo-util": "^4.0.0"
   },
   "devDependencies": {
-    "babel-eslint": "^10.1.0",
     "camaro": "^6.2.0",
     "chai": "^6.2.1",
     "cheerio": "^1.1.2",
