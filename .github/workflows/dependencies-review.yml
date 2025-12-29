@@ -1,5 +1,10 @@
 name: 'Dependency Review'
-on: [pull_request]
+on:
+  pull_request:
+    paths:
+      - 'package.json'
+      - 'package-lock.json'
+  workflow_dispatch:
 
 permissions:
   contents: read
