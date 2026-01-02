@@ -33,18 +33,18 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "feedsmith": "^2.4.0",
-    "hexo-util": "^4.0.0"
+    "feedsmith": "2.8.0",
+    "hexo-util": "4.0.0"
   },
   "devDependencies": {
-    "camaro": "^6.2.0",
-    "chai": "^6.2.1",
-    "cheerio": "^1.1.2",
-    "eslint": "^9.26.0",
-    "eslint-config-hexo": "^6.0.0",
-    "hexo": "^8.0.0",
-    "mocha": "^11.1.0",
-    "nyc": "^17.1.0"
+    "camaro": "6.2.3",
+    "chai": "6.2.2",
+    "cheerio": "1.1.2",
+    "eslint": "9.39.2",
+    "eslint-config-hexo": "6.0.0",
+    "hexo": "8.1.1",
+    "mocha": "11.7.5",
+    "nyc": "17.1.0"
   },
   "engines": {
     "node": ">=20.19.0"
