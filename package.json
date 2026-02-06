@@ -39,7 +39,7 @@
   "devDependencies": {
     "camaro": "6.2.3",
     "chai": "6.2.2",
-    "cheerio": "1.1.2",
+    "cheerio": "1.2.0",
     "eslint": "9.39.2",
     "eslint-config-hexo": "6.0.0",
     "hexo": "8.1.1",
