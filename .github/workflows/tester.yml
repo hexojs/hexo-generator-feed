@@ -2,7 +2,25 @@ name: Tester
 
 on: [push, pull_request]
 
+permissions:
+  contents: read
+
 jobs:
+  linter:
+    runs-on: ubuntu-slim
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          cache: "npm"
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Eslint
+        run: npm run eslint
+
   tester:
     runs-on: ${{ matrix.os }}
     strategy:
