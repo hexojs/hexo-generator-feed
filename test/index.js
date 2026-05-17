@@ -595,6 +595,46 @@ describe('Feed generator', () => {
     }
   });
 
+  it('guid/id should be set to the post permalink (rss2)', async () => {
+    hexo.config.feed = {
+      type: 'rss2',
+      path: 'rss2.xml'
+    };
+    hexo.config = Object.assign(hexo.config, urlConfig);
+    const feedCfg = hexo.config.feed;
+    const result = generator(locals, feedCfg.type, feedCfg.path);
+
+    const rss = await p(result.data);
+    rss.items.forEach(item => {
+      item.id.should.be.a('string').and.not.be.empty;
+      item.id.should.eql(item.link);
+    });
+    result.data.should.include('<guid isPermaLink="true">');
+  });
+
+  it('guid/id should be set to the post permalink (atom)', async () => {
+    hexo.config.feed = {
+      type: 'atom',
+      path: 'atom.xml'
+    };
+    hexo.config = Object.assign(hexo.config, urlConfig);
+    const feedCfg = hexo.config.feed;
+    const result = generator(locals, feedCfg.type, feedCfg.path);
+
+    const atom = await p(result.data);
+    atom.items.forEach(item => {
+      item.id.should.be.a('string').and.not.be.empty;
+      item.id.should.match(/^http/);
+    });
+
+    const $ = cheerio.load(result.data, { xml: true });
+    $('entry').each(function() {
+      const id = $(this).find('id').text();
+      const link = $(this).find('link').attr('href');
+      id.should.eql(link);
+    });
+  });
+
   it('content_limit_delim - delimiter found', async () => {
     hexo.config.feed = {
       type: 'atom',
