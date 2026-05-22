@@ -43,7 +43,7 @@
     "eslint": "9.39.2",
     "eslint-config-hexo": "6.0.0",
     "hexo": "8.1.2",
-    "mocha": "11.7.5",
+    "mocha": "11.7.6",
     "nyc": "18.0.0"
   },
   "engines": {
