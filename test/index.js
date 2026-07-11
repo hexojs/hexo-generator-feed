@@ -52,6 +52,13 @@ describe('Feed generator', () => {
         title: 'No Delimiter Test',
         content: 'This content has no delimiter and should be truncated at content_limit.',
         date: 1e8
+      },
+      {
+        source: 'lazyload-test',
+        slug: 'lazyload-test',
+        title: 'LazyLoad Test',
+        content: '<img data-src="https://example.com/image.png" alt="Test" class="lazyload" src="data:image/gif;base64,...">',
+        date: 1e8
       }
     ]);
     locals = hexo.locals.toObject();
@@ -635,6 +642,26 @@ describe('Feed generator', () => {
 
     // Should be truncated at content_limit since delimiter not found
     description.should.eql('This content has no delimiter');
+  });
+
+  it('Reverts lazyloaded images in content', async () => {
+    hexo.config.feed = {
+      type: 'atom',
+      path: 'atom.xml',
+      content: true
+    };
+    hexo.config = Object.assign(hexo.config, urlConfig);
+    const feedCfg = hexo.config.feed;
+    const updatedLocals = hexo.locals.toObject();
+    const result = generator(updatedLocals, feedCfg.type, feedCfg.path);
+
+    const { items } = await p(result.data);
+    const post = items.filter(({ title }) => title === 'LazyLoad Test');
+    post.length.should.eql(1);
+    const { description } = post[0];
+
+    description.should.include('src="https://example.com/image.png"');
+    description.should.not.include('data-src');
   });
 });
 
