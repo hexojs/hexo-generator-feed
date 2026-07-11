@@ -154,6 +154,20 @@ describe('Feed generator', () => {
     const atom = await p(result.data);
 
     atom.items[1].description.includes('<h6>TestHTML</h6>').should.eql(true);
+    atom.items[1].content.includes('<h6>TestHTML</h6>').should.eql(true);
+  });
+
+  it('Adds html type to Atom content', () => {
+    hexo.config.feed = {
+      type: 'atom',
+      path: 'atom.xml',
+      content: true
+    };
+    const feedCfg = hexo.config.feed;
+    const result = generator(locals, feedCfg.type, feedCfg.path);
+    const content = result.data.match(/<content type="html">[\s\S]*?<\/content>/)[0];
+
+    content.should.include('<h6>TestHTML</h6>');
   });
 
   it('Preserves HTML in the content field - rss2', async () => {
