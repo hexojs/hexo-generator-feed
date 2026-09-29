@@ -52,6 +52,16 @@ describe('Feed generator', () => {
         title: 'No Delimiter Test',
         content: 'This content has no delimiter and should be truncated at content_limit.',
         date: 1e8
+      },
+      {
+        source: 'relative-urls',
+        slug: 'relative-urls',
+        title: 'Relative urls',
+        content: '<p><a href="/other-post/">root</a> <img src="image.png">'
+          + ' <a href="#anchor">anchor</a> <a href="https://example.com/">external</a>'
+          + ' <a href="//cdn.example.com/lib.js">protocol relative</a>'
+          + ' <a href="mailto:someone@example.com">mail</a></p>',
+        date: 1e8 - 10
       }
     ]);
     locals = hexo.locals.toObject();
@@ -181,6 +191,53 @@ describe('Feed generator', () => {
     const rss = await p(result.data);
 
     rss.items[1].description.includes('<h6>TestHTML</h6>').should.eql(true);
+  });
+
+  it('Makes urls in the content absolute', async () => {
+    hexo.config.url = urlConfig.url;
+    hexo.config.root = urlConfig.root;
+    hexo.config.feed = {
+      type: 'atom',
+      path: 'atom.xml',
+      content: true
+    };
+    const feedCfg = hexo.config.feed;
+    const result = generator(locals, feedCfg.type, feedCfg.path);
+    const atom = await p(result.data);
+    const post = atom.items.find(item => item.title === 'Relative urls');
+
+    // rewritten against the post permalink
+    post.content.should.include('href="http://localhost/other-post/"');
+    post.content.should.include(`src="${post.id}image.png"`);
+    post.content.should.include(`href="${post.id}#anchor"`);
+
+    // left alone
+    post.content.should.include('href="https://example.com/"');
+    post.content.should.include('href="//cdn.example.com/lib.js"');
+    post.content.should.include('href="mailto:someone@example.com"');
+  });
+
+  it('Makes urls in the content absolute (subfolder)', async () => {
+    hexo.config.url = urlConfigSubfolder.url;
+    hexo.config.root = urlConfigSubfolder.root;
+    hexo.config.feed = {
+      type: 'atom',
+      path: 'atom.xml',
+      content: true
+    };
+    const feedCfg = hexo.config.feed;
+    const result = generator(locals, feedCfg.type, feedCfg.path);
+    const atom = await p(result.data);
+    const post = atom.items.find(item => item.title === 'Relative urls');
+
+    // a site-relative link keeps the subdirectory
+    post.content.should.include('href="http://localhost/blog/other-post/"');
+    // and nothing document-relative is left behind
+    post.content.should.not.include('src="image.png"');
+    post.content.should.include('href="//cdn.example.com/lib.js"');
+
+    hexo.config.url = urlConfig.url;
+    hexo.config.root = urlConfig.root;
   });
 
   it('Relative URL handling', async () => {
